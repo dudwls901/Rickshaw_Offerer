@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.example.capstone2.R;
 
-public class LoginActivity extends Activity {
+public class FindPasswordShowActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
