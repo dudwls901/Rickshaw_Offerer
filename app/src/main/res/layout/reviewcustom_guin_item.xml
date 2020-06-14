@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/reviewprofile"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/man"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/reviewname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이름 "
+        android:textColor="@android:color/black"
+        android:textSize="35dp"
+        app:layout_constraintLeft_toRightOf="@id/reviewprofile"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/reviewdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/line"
+        android:padding="2dp"
+        android:text="출근일자"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toRightOf="@id/reviewprofile"
+        app:layout_constraintTop_toBottomOf="@id/reviewname" />
+
+    <TextView
+        android:id="@+id/reviewfield"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:textSize="18dp"
+        android:text="현장이름"
+        app:layout_constraintLeft_toRightOf="@id/reviewname"
+        app:layout_constraintBottom_toTopOf="@id/guideline8" />
+    <TextView
+        android:id="@+id/reviewchoolgeun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:textSize="18dp"
+        android:text="출근날짜"
+        app:layout_constraintLeft_toRightOf="@id/reviewname"
+        app:layout_constraintTop_toTopOf="@id/guideline8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="41dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
