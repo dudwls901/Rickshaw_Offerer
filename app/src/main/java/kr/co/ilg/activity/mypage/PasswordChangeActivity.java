@@ -28,5 +28,6 @@ public class PasswordChangeActivity extends Activity {
                 startActivity(intent);
             }
         });
+        
     }
 }
