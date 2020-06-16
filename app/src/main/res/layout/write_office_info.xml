@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/officeNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="사무소명"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/officeNameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingLeft="110dp" />
+
+    <TextView
+        android:id="@+id/officeNumTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/officeNameET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_weight="1.3"
+        android:text="사무소 연락처"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/officeNumET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/officeNameET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingLeft="110dp" />
+
+
+    <TextView
+        android:id="@+id/officeAddressTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/officeNumET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_weight="1.3"
+        android:text="사무소 주소"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/officeAddressET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/officeNumET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingLeft="110dp" />
+
+
+    <TextView
+        android:id="@+id/managerNameTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/officeAddressET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_weight="1.3"
+        android:text="담당자 이름"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/managerNameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/officeAddressET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingLeft="110dp" />
+
+
+    <TextView
+        android:id="@+id/managerNumTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/managerNameET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_weight="1.3"
+        android:text="담당자 연락처"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/managerNumET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/managerNameET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingLeft="110dp" />
+
+    <Button
+        android:id="@+id/writeBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/managerNumET"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:text="입력" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

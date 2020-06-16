@@ -9,13 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="kr.co.ilg.activity.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="kr.co.ilg.activity.findwork.MainActivity" android:label="일자리 찾기"/>
+        <activity android:name="kr.co.ilg.activity.login.BusinessLicenseConfirmActivity" android:label="사업자 등록번호 인증"/>
+        <activity android:name="kr.co.ilg.activity.login.SignupPasswordActivity" android:label="회원가입"/>
+        <activity android:name="kr.co.ilg.activity.mypage.WriteOfficeInfoActivity" android:label="사무소 정보 입력"/>
+        <activity android:name="kr.co.ilg.activity.mypage.AccountAddActivity" android:label="계좌 등록"/>
+        <activity android:name="kr.co.ilg.activity.login.FindPasswordInfoActivity" android:label="비밀번호 찾기"/>
+        <activity android:name="kr.co.ilg.activity.login.FindPasswordShowActivity" android:label="비밀번호 확인"/>
     </application>
 
 </manifest>
