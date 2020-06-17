@@ -48,6 +48,9 @@
         <activity android:name="kr.co.ilg.activity.findwork.OfficeInfoActivity" android:label="인력사무소 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.WorkMapActivity" android:label="일자리 지도"/>
         <activity android:name="kr.co.ilg.activity.findwork.WritePostingActivity" android:label="일자리 게시"/>
+        <activity android:name="kr.co.ilg.activity.workermanage.FieldListActivity" android:label="인력 관리"/>
+        <activity android:name="kr.co.ilg.activity.workermanage.WorkerListActivity" android:label="인력 관리"/>
+        <activity android:name="kr.co.ilg.activity.mypage.MypageMainActivity" android:label="내 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.ApplyStateActivity" android:label="지원자 현황"/>
         <activity android:name="kr.co.ilg.activity.findwork.PickStateActivity" android:label="선발자 현황"/>
     </application>

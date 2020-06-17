@@ -13,11 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.capstone2.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import kr.co.ilg.activity.mypage.MypageMainActivity;
+import kr.co.ilg.activity.workermanage.FieldListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView urgency_RecyclerView;
     RecyclerView.LayoutManager layoutManager;
     FloatingActionButton fab_btn;
-    //BottomNavigationView bottomNavigationView;
-
+    BottomNavigationView bottomNavigationView;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
         spinner1_array=new ArrayList();
         spinner2_array=new ArrayList();
 
-        spinner_who_array.add("전체");
-        spinner_who_array.add("내 구인글");
-        spinner1_array.add(" 서울 ");
-        spinner2_array.add(" 마포구 ");
-        spinner2_array.add(" 영등포구 ");
+        spinner_who_array.add("                                               전체");
+        spinner_who_array.add("                                             내 구인글");
+        spinner1_array.add("                   서울 ");
+        spinner2_array.add("                  마포구 ");
+        spinner2_array.add("                  영등포구 ");
 
         spinner_who_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner_who_array);
         spinner1_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner1_array);
@@ -79,43 +81,37 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//        bottomNavigationView = findViewById(R.id.bottomNavigationView1); //프래그먼트 생성
-////        fragment1 = new Fragment1();
-////        fragment2 = new Fragment2();
-////        fragment3 = new Fragment3(); //제일 처음 띄워줄 뷰를 세팅해줍니다. commit();까지 해줘야 합니다.
-////        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment1).commitAllowingStateLoss(); //bottomnavigationview의 아이콘을 선택 했을때 원하는 프래그먼트가 띄워질 수 있도록 리스너를 추가합니다.
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                //  Log.d("chk",String.valueOf(menuItem.getItemId()));
-//                switch (menuItem.getItemId()) { //menu_bottom.xml에서 지정해줬던 아이디 값을 받아와서 각 아이디값마다 다른 이벤트를 발생시킵니다.
-//                    case R.id.tab1: {
-////                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment1).commitAllowingStateLoss();
-////                        return true;
-//
-//                        Intent intent1 = new Intent(MainActivity.this, MainActivity.class);
-//                        startActivity(intent1);
-//                        return false;
-//                    }
-//                    case R.id.tab2: {
-//
-////                        item2.setChecked(true);
-////                        item1.setChecked(false);
-//                        Intent intent2 = new Intent(MainActivity.this, MyFieldActivity.class);
-//                        startActivity(intent2);
-//                        return false;
-//                    }
-//                    case R.id.tab3: {
-////                       item3.setChecked(true);
-////                       item1.setChecked(false);
-//                        Intent intent3 = new Intent(MainActivity.this, MypageMainActivity.class);
-//                        startActivity(intent3);
-//                        return false;
-//                    }
-//                    default:
-//                        return false;
-//                }
-//            }
-//        });
+        bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch (menuItem.getItemId()) { //menu_bottom.xml에서 지정해줬던 아이디 값을 받아와서 각 아이디값마다 다른 이벤트를 발생시킵니다.
+                    case R.id.tab1: {
+
+
+                         intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        return false;
+                    }
+                    case R.id.tab2: {
+
+
+                         intent = new Intent(MainActivity.this, FieldListActivity.class);
+                        startActivity(intent);
+                        return false;
+                    }
+                    case R.id.tab3: {
+
+                         intent = new Intent(MainActivity.this, MypageMainActivity.class);
+                        startActivity(intent);
+                        return false;
+                    }
+                    default:
+                        return false;
+                }
+            }
+        });
     }
 }
