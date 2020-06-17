@@ -51,8 +51,19 @@
         <activity android:name="kr.co.ilg.activity.workermanage.FieldListActivity" android:label="인력 관리"/>
         <activity android:name="kr.co.ilg.activity.workermanage.WorkerListActivity" android:label="인력 관리"/>
         <activity android:name="kr.co.ilg.activity.mypage.MypageMainActivity" android:label="내 정보"/>
+        <activity android:name="kr.co.ilg.activity.mypage.MyOfficeInfoManageActivity" android:label="내 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.ApplyStateActivity" android:label="지원자 현황"/>
         <activity android:name="kr.co.ilg.activity.findwork.PickStateActivity" android:label="선발자 현황"/>
+        <activity android:name="kr.co.ilg.activity.mypage.AccountManageActivity" android:label="계좌 관리"/>
+        <activity android:name="kr.co.ilg.activity.mypage.ReviewmanageActivity" android:label="후기 관리"/>
+        <activity android:name="kr.co.ilg.activity.mypage.OptionActivity" android:label="설정"/>
+        <activity android:name="kr.co.ilg.activity.mypage.NoticeActivity" android:label="공지사항"/>
+        <activity android:name="kr.co.ilg.activity.mypage.NoticeInfoActivity" android:label="공지사항"/>
+        <activity android:name="kr.co.ilg.activity.mypage.ilgIntroductionActivity" android:label="인력거 안내"/>
+        <activity android:name="kr.co.ilg.activity.mypage.ServiceInfoActivity" android:label="이용약관"/>
+        <activity android:name="kr.co.ilg.activity.mypage.PasswordChangeActivity" android:label="비밀번호 변경"/>
+        <activity android:name="kr.co.ilg.activity.mypage.MemeberRemoveActivity" android:label="회원탈퇴"/>
+
     </application>
 
 </manifest>

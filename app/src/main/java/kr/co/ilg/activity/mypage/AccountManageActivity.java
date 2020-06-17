@@ -10,6 +10,8 @@ import android.widget.Spinner;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.capstone2.R;
+
 public class AccountManageActivity extends AppCompatActivity implements View.OnClickListener {
     ImageButton fix;
     @Override
