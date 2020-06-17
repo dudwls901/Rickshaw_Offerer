@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.capstone2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -14,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import kr.co.ilg.activity.findwork.MainActivity;
 import kr.co.ilg.activity.mypage.MypageMainActivity;
 
-public class FieldListActivity extends Activity {
+public class FieldListActivity extends AppCompatActivity {
     Intent intent;
     BottomNavigationView bottomNavigationView;
     @Override
