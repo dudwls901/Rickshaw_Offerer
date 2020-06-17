@@ -1,41 +1,39 @@
 package kr.co.ilg.activity.mypage;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.ListView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.capstone2.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.ilg.activity.findwork.MainActivity;
-import kr.co.ilg.activity.workermanage.FieldListActivity;
+public class MypageMainActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class MypageMainActivity extends AppCompatActivity {
-BottomNavigationView bottomNavigationView;
-    Intent intent;
+    Button myinform, accountmanage, reviewmanage;
+    Button[] buttons = {myinform, accountmanage, reviewmanage};
+    int[] buttonsid = {R.id.myinform, R.id.accountmanage, R.id.reviewmanage};
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage_main);
 
-        ListView listview = (ListView)findViewById(R.id.listview);
+        for(int i=0; i<3; i++){
+            buttons[i] = (Button) findViewById(buttonsid[i]);
+            buttons[i].setOnClickListener(this);
+        }
+
+
+        final ListView listview = (ListView) findViewById(R.id.listview);
 
 
         List<String> list = new ArrayList<>();
@@ -48,7 +46,17 @@ BottomNavigationView bottomNavigationView;
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                //intent
+                Intent intent;
+                switch (position){
+                    case 0 : intent = new Intent(MypageMainActivity.this, OptionActivity.class);
+                        startActivity(intent); break;
+                    case 1 : intent = new Intent(MypageMainActivity.this, NoticeActivity.class);
+                        startActivity(intent); break;
+                    case 2 : intent = new Intent(MypageMainActivity.this, ilgIntroductionActivity.class);
+                        startActivity(intent); break;
+                    case 3 : intent = new Intent(MypageMainActivity.this, kr.co.ilg.activity.login.LoginActivity.class);
+                        startActivity(intent); break;
+                }
             }
         });
 
@@ -56,41 +64,51 @@ BottomNavigationView bottomNavigationView;
         list.add("공지사항");
         list.add("인력거안내");
         list.add("로그아웃");
-
-
-
-        bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
-
+        /*bottomNavigationView = findViewById(R.id.bottomNavigationView3); //프래그먼트 생성
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
                 switch (menuItem.getItemId()) { //menu_bottom.xml에서 지정해줬던 아이디 값을 받아와서 각 아이디값마다 다른 이벤트를 발생시킵니다.
                     case R.id.tab1: {
-
-
-                         intent = new Intent(MypageMainActivity.this, MainActivity.class);
-                        startActivity(intent);
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, fragment1).commitAllowingStateLoss();
+//                        return true;
+                        Intent intent1 = new Intent(MypageMainActivity.this, MainActivity.class);
+                        startActivity(intent1);
                         return false;
                     }
                     case R.id.tab2: {
-
-
-                         intent = new Intent(MypageMainActivity.this, FieldListActivity.class);
-                        startActivity(intent);
+                        Intent intent2 = new Intent(MypageMainActivity.this, MyFieldActivity.class);
+                        startActivity(intent2);
                         return false;
                     }
                     case R.id.tab3: {
-
-                         intent = new Intent(MypageMainActivity.this, MypageMainActivity.class);
-                        startActivity(intent);
+                        Intent intent3 = new Intent(MypageMainActivity.this, MypageMainActivity.class);
+                        startActivity(intent3);
                         return false;
                     }
                     default:
                         return false;
                 }
             }
-        });
+        });*/
+
+
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+
+        switch (v.getId()){
+            case R.id.myinform : intent = new Intent(getApplicationContext(),MyOfficeInfoManageActivity.class);
+                startActivity(intent);break;
+            case R.id.accountmanage : intent = new Intent(getApplicationContext(),AccountManageActivity.class);
+                startActivity(intent);break;
+            case R.id.reviewmanage : intent = new Intent(getApplicationContext(),ReviewmanageActivity.class);
+                startActivity(intent);break;
+        }
 
     }
     }

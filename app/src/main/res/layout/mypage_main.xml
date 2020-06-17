@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,6 +49,7 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:text="내 정보 관리"
+            android:id="@+id/myinform"
             android:background="@drawable/line"
             android:textAlignment="center"
             android:textSize="20dp"
@@ -64,6 +64,7 @@
             android:textSize="20dp"
             android:layout_weight="1"
             android:textAlignment="center"
+            android:id="@+id/accountmanage"
             android:gravity="center"
             />
         <Button
@@ -71,6 +72,7 @@
             android:layout_height="80dp"
             android:text="리뷰 관리"
             android:background="@drawable/line"
+            android:id="@+id/reviewmanage"
             android:textSize="20dp"
             android:gravity="center"
             android:layout_weight="1"

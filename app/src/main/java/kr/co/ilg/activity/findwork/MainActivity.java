@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) { //menu_bottom.xml에서 지정해줬던 아이디 값을 받아와서 각 아이디값마다 다른 이벤트를 발생시킵니다.
                     case R.id.tab1: {
 
-
                          intent = new Intent(MainActivity.this, MainActivity.class);
                         startActivity(intent);
 
@@ -141,14 +140,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case R.id.tab2: {
 
-
                          intent = new Intent(MainActivity.this, FieldListActivity.class);
                         startActivity(intent);
                         return false;
                     }
                     case R.id.tab3: {
 
-                         intent = new Intent(MainActivity.this, MypageMainActivity.class);
+                         intent = new Intent(MainActivity.this, kr.co.ilg.activity.mypage.MypageMainActivity.class);
                         startActivity(intent);
                         return false;
                     }
