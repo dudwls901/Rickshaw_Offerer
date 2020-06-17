@@ -59,7 +59,8 @@
             android:layout_width="30dp"
             android:layout_height="20dp"
             android:layout_gravity="bottom"
-            android:src="@drawable/abc_vector_test" />
+            android:src="@drawable/abc_vector_test"
+            android:id="@+id/fix"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
