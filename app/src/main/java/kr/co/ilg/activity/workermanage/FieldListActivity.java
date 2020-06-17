@@ -8,16 +8,25 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.capstone2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
+import kr.co.ilg.activity.findwork.FieldListAdapter;
+import kr.co.ilg.activity.findwork.ListAdapter;
+import kr.co.ilg.activity.findwork.ListViewItem;
 import kr.co.ilg.activity.findwork.MainActivity;
 import kr.co.ilg.activity.mypage.MypageMainActivity;
 
 public class FieldListActivity extends AppCompatActivity {
     Intent intent;
     BottomNavigationView bottomNavigationView;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +34,22 @@ public class FieldListActivity extends AppCompatActivity {
 
 
 
+
+        recyclerView=findViewById(R.id.recyeclerView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        final ArrayList<ListViewItem> workInfoArrayList=new ArrayList<>();
+        workInfoArrayList.add(new ListViewItem("레미안 건축","서울 영등포구 여의나루로57","2020-06-14"));
+        workInfoArrayList.add(new ListViewItem("해모로 아파트 건축","서울 영등포구 당산로 219","2020-06-17"));
+        workInfoArrayList.add(new ListViewItem("자이아파트 신축","서울 영등포구 양평로24길 9","2020-06-20"));
+        workInfoArrayList.add(new ListViewItem("마포 체육관 보수 공사","서울 영등포구 양평로25길 9","2020-06-23"));
+        workInfoArrayList.add(new ListViewItem("명지전문대학 운동장 공사","명지전문대학","2020-07-04"));
+        workInfoArrayList.add(new ListViewItem("명지대학교 기숙사 철거","명지대학교","2020-07-05"));
+
+        FieldListAdapter fieldadapter=new FieldListAdapter(getApplicationContext(),workInfoArrayList);
+        recyclerView.setAdapter(fieldadapter);
 
 
 
