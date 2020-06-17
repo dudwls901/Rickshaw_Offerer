@@ -7,12 +7,13 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.capstone2.R;
 
 import kr.co.ilg.activity.findwork.MainActivity;
 
-public class BusinessLicenseConfirmActivity extends Activity {
+public class BusinessLicenseConfirmActivity extends AppCompatActivity {
 
     Button confirmBtn;
 
