@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Spinner
+        android:id="@+id/fieldSpn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fieldSpn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ProgressBar
+            android:id="@+id/pB"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_gravity="center"
+            android:progressDrawable="@drawable/custom_progressbar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100"
+            android:progress="80" />
+
+        <TextView
+            android:id="@+id/progressTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="8 / 10"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/checkAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/ll"
+        app:layout_constraintBottom_toBottomOf="@+id/cancelWorkerBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="5dp"
+        android:text="전체 선택"/>
+
+    <Button
+        android:id="@+id/cancelWorkerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/ll"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/custom_btn_lightclr"
+        android:text="선발 취소"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pickeStateRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cancelWorkerBtn"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
