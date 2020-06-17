@@ -99,7 +99,7 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/arrowR"
+        android:id="@+id/arrowRBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"

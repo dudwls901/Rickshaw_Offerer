@@ -62,7 +62,7 @@ public class ApplyStateActivity extends AppCompatActivity {
         wkList.add(new ApplyStateRVItem(R.drawable.man, "마뚜루", "26", "010-8163-4617"));
         wkList.add(new ApplyStateRVItem(R.drawable.man, "일개미", "23", "010-5127-9040"));
 
-        myAdapter = new ApplyStateRVAdapter(wkList);
+        myAdapter = new ApplyStateRVAdapter(getApplication(), wkList);
         mRecyclerView.setAdapter(myAdapter);
 
     }
