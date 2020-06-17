@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import com.example.capstone2.R;
-
 public class ilgIntroductionActivity extends Activity {
 
     @Override

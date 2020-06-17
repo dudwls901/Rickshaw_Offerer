@@ -53,7 +53,6 @@
         <activity android:name="kr.co.ilg.activity.mypage.MypageMainActivity" android:label="내 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.ApplyStateActivity" android:label="지원자 현황"/>
         <activity android:name="kr.co.ilg.activity.findwork.PickStateActivity" android:label="선발자 현황"/>
-        <activity android:name="kr.co.ilg.activity.workermanage.GujicProfileForGuin" android:label="구인자가 볼 구직자 프로필"/>
     </application>
 
 </manifest>
