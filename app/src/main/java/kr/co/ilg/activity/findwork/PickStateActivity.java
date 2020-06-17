@@ -68,7 +68,7 @@ public class PickStateActivity extends AppCompatActivity {
         wkList.add(new PickStateRVItem(R.drawable.man, "마뚜루", "26", "010-8163-4617"));
         wkList.add(new PickStateRVItem(R.drawable.man, "일개미", "23", "010-5127-9040"));
 
-        myAdapter = new PickStateRVAdapter(wkList);
+        myAdapter = new PickStateRVAdapter(getApplication(), wkList);
         mRecyclerView.setAdapter(myAdapter);
 
     }
