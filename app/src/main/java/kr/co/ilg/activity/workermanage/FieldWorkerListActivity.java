@@ -1,15 +1,11 @@
-package kr.co.ilg.activity.findwork;
+package kr.co.ilg.activity.workermanage;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,36 +19,30 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
+import kr.co.ilg.activity.findwork.MainActivity;
+import kr.co.ilg.activity.findwork.PickStateRVAdapter;
+import kr.co.ilg.activity.findwork.PickStateRVItem;
 import kr.co.ilg.activity.mypage.MypageMainActivity;
-import kr.co.ilg.activity.workermanage.FieldListActivity;
 
-public class PickStateActivity extends AppCompatActivity {
-
+public class FieldWorkerListActivity extends AppCompatActivity {
     Spinner fieldSpn;
-    ProgressBar pB;
-    TextView progressTV;
-    CheckBox checkAll;
-    Button cancelWorkerBtn;
     ArrayList fieldSpnList;
     ArrayAdapter fieldSpnAdapter;
     ArrayList<PickStateRVItem> wkList;
-    PickStateRVAdapter myAdapter;
+    FieldWorkerListAdapter myAdapter;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     Intent intent;
     BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pick_state);
+        setContentView(R.layout.field_workerlist);
+
 
         fieldSpn = findViewById(R.id.fieldSpn);
-        pB = findViewById(R.id.pB);
-        progressTV = findViewById(R.id.progressTV);
-        checkAll = findViewById(R.id.checkAll);
-        cancelWorkerBtn  = findViewById(R.id.cancelWorkerBtn);
-
-        mRecyclerView = findViewById(R.id.pickeStateRV);
+        mRecyclerView = findViewById(R.id.recyeclerView);
 
         fieldSpnList = new ArrayList();
         fieldSpnList.add("                                     레미안 건축 ");
@@ -76,9 +66,8 @@ public class PickStateActivity extends AppCompatActivity {
         wkList.add(new PickStateRVItem(R.drawable.man, "마뚜루", "26", "010-8163-4617"));
         wkList.add(new PickStateRVItem(R.drawable.man, "일개미", "23", "010-5127-9040"));
 
-        myAdapter = new PickStateRVAdapter(getApplication(), wkList);
+        myAdapter = new FieldWorkerListAdapter(getApplication(), wkList);
         mRecyclerView.setAdapter(myAdapter);
-
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
 
@@ -90,20 +79,20 @@ public class PickStateActivity extends AppCompatActivity {
                     case R.id.tab1: {
 
 
-                        intent = new Intent(PickStateActivity.this, MainActivity.class);
+                        intent = new Intent(FieldWorkerListActivity.this, MainActivity.class);
                         startActivity(intent);
                         return false;
                     }
                     case R.id.tab2: {
 
 
-                        intent = new Intent(PickStateActivity.this, FieldListActivity.class);
+                        intent = new Intent(FieldWorkerListActivity.this, FieldListActivity.class);
                         startActivity(intent);
                         return false;
                     }
                     case R.id.tab3: {
 
-                        intent = new Intent(PickStateActivity.this, MypageMainActivity.class);
+                        intent = new Intent(FieldWorkerListActivity.this, MypageMainActivity.class);
                         startActivity(intent);
                         return false;
                     }

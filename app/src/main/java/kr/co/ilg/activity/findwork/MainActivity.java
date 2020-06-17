@@ -1,15 +1,18 @@
 package kr.co.ilg.activity.findwork;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.capstone2.R;
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab_btn;
     BottomNavigationView bottomNavigationView;
     Intent intent;
+    View dialogView;
+    Button btnWorkInfo, btnSupply, btnPick;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +85,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // TODO 소연 내 구인글 만들어서 밑에 거 다 가져다가 내 구인글에서 RECYCLERVIEW.ITEM 클릭이벤트에 집어 넣기기
+       //        View dialogView;
+        //        Button btnWorkInfo, btnSupply, btnPick;
+        final AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+        dialogView = View.inflate(MainActivity.this,R.layout.myworkwritingdialog,null);
+        dlg.setView(dialogView);
+        btnWorkInfo=dialogView.findViewById(R.id.btnWorkInfo);
+        btnSupply=dialogView.findViewById(R.id.btnSupply);
+        btnPick=dialogView.findViewById(R.id.btnPick);
+        dlg.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        btnWorkInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               intent=new Intent(MainActivity.this,WorkInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnSupply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 intent=new Intent(MainActivity.this,ApplyStateActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnPick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(MainActivity.this,PickStateActivity.class);
+                startActivity(intent);
+            }
+        });
+        dlg.show();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
 
@@ -93,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
 
                          intent = new Intent(MainActivity.this, MainActivity.class);
                         startActivity(intent);
+
+
                         return false;
                     }
                     case R.id.tab2: {
@@ -115,3 +159,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+//TODO 액션바 커스텀 (돋보기(만들고 연결), 지도(연결)) 시간되면 바텀네비 아이콘 색상도

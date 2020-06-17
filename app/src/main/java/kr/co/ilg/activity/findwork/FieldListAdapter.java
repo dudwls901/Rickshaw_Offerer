@@ -14,6 +14,9 @@ import com.example.capstone2.R;
 
 import java.util.ArrayList;
 
+import kr.co.ilg.activity.workermanage.FieldListActivity;
+import kr.co.ilg.activity.workermanage.FieldWorkerListActivity;
+
 public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -56,9 +59,9 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-//                Context context=view.getContext();
-//                Intent intent=new Intent(context,WorkInfoActivity.class);
-//                context.startActivity(intent);
+                Context context=view.getContext();
+                Intent intent=new Intent(context, FieldWorkerListActivity.class);
+                context.startActivity(intent);
             }
         });
 

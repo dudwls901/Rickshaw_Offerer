@@ -38,7 +38,7 @@ public class PickStateRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private ArrayList<PickStateRVItem> wkList;
-    PickStateRVAdapter(Context c, ArrayList<PickStateRVItem> wkList){
+    public PickStateRVAdapter(Context c, ArrayList<PickStateRVItem> wkList){
         this.psContext = c;
         this.wkList = wkList;
     }
