@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,6 +13,8 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:background="@drawable/line"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/linear1"
         >
         <ImageView
             android:layout_width="50dp"
@@ -37,7 +41,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="3"
+        app:layout_constraintTop_toBottomOf="@+id/linear1"
+        android:id="@+id/linear2"
+        >
 
         <Button
             android:layout_width="0dp"
@@ -75,16 +82,33 @@
     
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/listview"
         android:divider="@android:color/black"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layout_constraintTop_toBottomOf="@+id/linear2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/WhiteColor"
+        app:itemIconSize="30dp"
+
+        app:itemTextColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:menu="@menu/menu_bottom"
         />
 
 
 
 
 
-
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

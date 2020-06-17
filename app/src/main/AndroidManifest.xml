@@ -50,6 +50,8 @@
         <activity android:name="kr.co.ilg.activity.findwork.WritePostingActivity" android:label="일자리 게시"/>
         <activity android:name="kr.co.ilg.activity.workermanage.FieldListActivity" android:label="인력 관리"/>
         <activity android:name="kr.co.ilg.activity.workermanage.WorkerListActivity" android:label="인력 관리"/>
+        <activity android:name="kr.co.ilg.activity.mypage.MypageMainActivity" android:label="내 정보"/>
+
     </application>
 
 </manifest>
