@@ -42,9 +42,11 @@ public class ReviewmanageActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),new LinearLayoutManager(this).getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        //myAdapter = new reviewinputinfo_adapter(List);
-        mRecyclerView.setAdapter(myAdapter);
+        cList = new ArrayList<>();
+        cList.add(new reviewinputinfo_item(R.drawable.man,"정선우","102호","2020.20.20","감사합니다"));
 
+        myAdapter = new reviewinputinfo_adapter(cList);
+        mRecyclerView.setAdapter(myAdapter);
 
         final GestureDetector gestureDetector = new GestureDetector(ReviewmanageActivity.this, new GestureDetector.SimpleOnGestureListener() {
             @Override
