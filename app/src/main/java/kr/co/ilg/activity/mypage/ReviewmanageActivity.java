@@ -22,8 +22,8 @@ import java.util.ArrayList;
 public class ReviewmanageActivity extends AppCompatActivity {
 
 
-    ArrayList<reviewinputinfo_item> cList;
-    reviewinputinfo_adapter myAdapter;
+    ArrayList<bankitem> cList;
+    bankAdapter myAdapter;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     @Override
@@ -43,9 +43,9 @@ public class ReviewmanageActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
         cList = new ArrayList<>();
-        cList.add(new reviewinputinfo_item(R.drawable.man,"정선우","102호","2020.20.20","감사합니다"));
+        cList.add(new bankitem("5.15","버섯 건물","20:40","입금","846,124","132,187,683"));
 
-        myAdapter = new reviewinputinfo_adapter(cList);
+        myAdapter = new bankAdapter(cList);
         mRecyclerView.setAdapter(myAdapter);
 
         final GestureDetector gestureDetector = new GestureDetector(ReviewmanageActivity.this, new GestureDetector.SimpleOnGestureListener() {
