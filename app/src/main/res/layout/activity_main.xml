@@ -52,10 +52,12 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_margin="30dp"
+        android:src="@drawable/ddongplus"
         app:fabSize="normal"
+        android:background="@color/colorPrimary"
         android:id="@+id/fab_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
