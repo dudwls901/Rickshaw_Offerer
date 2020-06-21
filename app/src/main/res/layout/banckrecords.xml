@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="10dp">
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:text="5.15"
+        android:textSize="20dp"
+        android:id="@+id/time"
+        android:gravity="center"
+        />
+
+    <LinearLayout
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="버섯 건물"
+            android:textSize="20dp"
+            android:id="@+id/fieldname"
+            android:textColor="@android:color/black"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="17dp"
+                android:text="20:40"
+                android:textSize="13dp"
+                android:id="@+id/banktime"
+                android:textColor="@android:color/darker_gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  |  "
+                />
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="17dp"
+                android:text="입금"
+                android:textSize="13dp"
+                android:id="@+id/bankIO"
+                android:textColor="@android:color/darker_gray"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="846,124"
+                android:textSize="20dp"
+                android:textAlignment="viewEnd"
+                android:id="@+id/bankIOcount"
+                android:textColor="@android:color/holo_blue_dark"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  원  "
+
+                android:textSize="20dp"
+                android:textColor="@android:color/holo_blue_dark"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="17dp"
+            android:text="132,187,683"
+            android:textSize="13dp"
+            android:layout_marginRight="3dp"
+            android:textAlignment="viewEnd"
+            android:id="@+id/bankbalane"
+            android:textColor="@android:color/darker_gray"/>
+
+    </LinearLayout>
+
+</LinearLayout>

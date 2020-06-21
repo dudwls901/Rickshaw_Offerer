@@ -14,4 +14,12 @@ public class ListViewItem {
         this.current_people=current_people;
         this.total_people=total_people;
     }
+    public ListViewItem(String title, String place, String date)
+    {
+        this.title = title;
+        this.place = place;
+        this.date = date;
+
+
+    }
 }

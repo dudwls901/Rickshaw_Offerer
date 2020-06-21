@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:text="게시글 상세"
+    android:textSize="20dp"
+    android:textColor="@color/colorPrimaryDark"
+    android:id="@+id/btnWorkInfo"
+    />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="지원 현황"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/btnSupply"
+            />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="선발자 현황"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/btnPick"
+        />
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="닫기"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_marginLeft="310dp"-->
+<!--        android:id="@+id/btndlgClose"-->
+<!--        />-->
+</LinearLayout>
