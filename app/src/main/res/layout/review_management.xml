@@ -35,7 +35,7 @@
         android:src="@drawable/line"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:id="@+id/reviewrecycle"
         />
 
