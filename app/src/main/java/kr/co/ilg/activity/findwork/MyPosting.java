@@ -72,8 +72,8 @@ public class MyPosting extends AppCompatActivity {
 
         spinner_who=findViewById(R.id.spinner_who);
         spinner_who_array=new ArrayList();
-        spinner_who_array.add("                                         전체");
         spinner_who_array.add("                                       내 구인글");
+        spinner_who_array.add("                                         전체");
         spinner_who_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner_who_array);
         spinner_who.setAdapter(spinner_who_Adapter);
 
