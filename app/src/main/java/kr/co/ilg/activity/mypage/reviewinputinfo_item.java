@@ -4,13 +4,14 @@ import android.widget.ImageView;
 
 
 public class reviewinputinfo_item {
-    public ImageView imageView;
-    public String name, date, field;
+    public int imageView;
+    public String name, date, contents, field;
 
-    public reviewinputinfo_item(ImageView imageView, String name, String date, String field){
+    public reviewinputinfo_item(int imageView, String name,  String field,String date, String contents){
         this.imageView = imageView;
         this.name = name;
         this.date = date;
         this.field = field;
+        this.contents = contents;
     }
 }

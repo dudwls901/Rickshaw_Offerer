@@ -9,7 +9,8 @@
         android:id="@+id/officeNameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/officeNameET"
+        app:layout_constraintBottom_toBottomOf="@id/officeNameET"
         app:layout_constraintLeft_toLeftOf="parent"
         android:text="사무소명"
         android:textSize="18sp" />
@@ -20,13 +21,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:paddingLeft="110dp" />
+        android:paddingLeft="115dp" />
 
     <TextView
         android:id="@+id/officeNumTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/officeNameET"
+        app:layout_constraintTop_toTopOf="@id/officeNumET"
+        app:layout_constraintBottom_toBottomOf="@id/officeNumET"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_weight="1.3"
         android:text="사무소 연락처"
@@ -38,14 +40,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/officeNameET"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:paddingLeft="110dp" />
-
+        android:inputType="number"
+        android:paddingLeft="115dp" />
 
     <TextView
         android:id="@+id/officeAddressTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/officeNumET"
+        app:layout_constraintTop_toTopOf="@id/officeAddressET"
+        app:layout_constraintBottom_toBottomOf="@id/officeAddressET"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_weight="1.3"
         android:text="사무소 주소"
@@ -57,14 +60,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/officeNumET"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:paddingLeft="110dp" />
+        android:paddingLeft="115dp" />
 
 
     <TextView
         android:id="@+id/managerNameTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/officeAddressET"
+        app:layout_constraintTop_toTopOf="@id/managerNameET"
+        app:layout_constraintBottom_toBottomOf="@id/managerNameET"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_weight="1.3"
         android:text="담당자 이름"
@@ -76,14 +80,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/officeAddressET"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:paddingLeft="110dp" />
+        android:paddingLeft="115dp" />
 
 
     <TextView
         android:id="@+id/managerNumTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/managerNameET"
+        app:layout_constraintTop_toTopOf="@id/managerNumET"
+        app:layout_constraintBottom_toBottomOf="@id/managerNumET"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_weight="1.3"
         android:text="담당자 연락처"
@@ -95,7 +100,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/managerNameET"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:paddingLeft="110dp" />
+        android:inputType="number"
+        android:paddingLeft="115dp" />
 
     <Button
         android:id="@+id/writeBtn"
@@ -104,7 +110,11 @@
         app:layout_constraintTop_toBottomOf="@id/managerNumET"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="10dp"
-        android:text="입력" />
+        android:background="@drawable/custom_btn_mainclr"
+        android:text="입력"
+        android:textColor="@color/WhiteColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
