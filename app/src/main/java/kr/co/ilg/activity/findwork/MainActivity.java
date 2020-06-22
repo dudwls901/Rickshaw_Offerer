@@ -4,18 +4,23 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.capstone2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -36,12 +41,37 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab_btn;
     BottomNavigationView bottomNavigationView;
     Intent intent;
+    Toolbar toolbar;
+    @Override
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_maintop, menu);
+        SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.map :
+                Toast.makeText(getApplicationContext(), "map 클릭", Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         spinner_who=findViewById(R.id.spinner_who);
         spinner1=findViewById(R.id.spinner1);
         spinner2=findViewById(R.id.spinner2);
@@ -91,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override   // position 으로 몇번째 것이 선택됬는지 값을 넘겨준다
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position==1) {
+                    finish();
                     Intent intent = new Intent(MainActivity.this, MyPosting.class);
                     startActivity(intent);
                 }

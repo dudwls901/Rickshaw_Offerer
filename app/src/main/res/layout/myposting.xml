@@ -5,9 +5,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="kr.co.ilg.activity.findwork.MyPosting">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="구인글"
+            android:textColor="@color/WhiteColor"
+            android:textSize="20sp"
+            android:layout_marginLeft="70dp"
+            />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.AppCompatSpinner
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/spinner_who"
         android:layout_width="fill_parent"
@@ -29,6 +47,20 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="?attr/actionBarSize" />
     </LinearLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginRight="30dp"
+        android:src="@drawable/ddongplus"
+        app:fabSize="normal"
+        android:id="@+id/fab_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintRight_toRightOf="parent"
+
+        />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"

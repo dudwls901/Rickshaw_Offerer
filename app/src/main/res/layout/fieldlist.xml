@@ -7,13 +7,30 @@
     tools:context="kr.co.ilg.activity.workermanage.FieldListActivity"
     >
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="현장 목록"
+            android:textColor="@color/WhiteColor"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyeclerView"
         android:layout_width="match_parent"
         android:layout_height="545dp"
         android:layout_marginBottom="?attr/actionBarSize"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         />
 
 

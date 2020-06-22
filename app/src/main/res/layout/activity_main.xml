@@ -5,8 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="kr.co.ilg.activity.findwork.MainActivity">
-    <androidx.appcompat.widget.AppCompatSpinner
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="100dp"
+            android:text="구인글"
+            android:textColor="@color/WhiteColor"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/spinner_who"
         android:layout_width="fill_parent"
