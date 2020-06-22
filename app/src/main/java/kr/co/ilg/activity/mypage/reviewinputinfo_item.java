@@ -7,7 +7,7 @@ public class reviewinputinfo_item {
     public int imageView;
     public String name, date, contents, field;
 
-    public reviewinputinfo_item(int imageView, String name, String date, String field, String contents){
+    public reviewinputinfo_item(int imageView, String name,  String field,String date, String contents){
         this.imageView = imageView;
         this.name = name;
         this.date = date;
