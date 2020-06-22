@@ -3,21 +3,28 @@ package kr.co.ilg.activity.findwork;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.capstone2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -32,11 +39,37 @@ public class MyPosting extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     BottomNavigationView bottomNavigationView;
     Intent intent;
+    FloatingActionButton fab_btn;
+    Toolbar toolbar;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_mypostingtop, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.map :
+                Toast.makeText(getApplicationContext(), "map 클릭", Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                return false;
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myposting);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         spinner_who=findViewById(R.id.spinner_who);
         spinner_who_array=new ArrayList();
         spinner_who_array.add("                                             내 구인글");
@@ -52,46 +85,34 @@ public class MyPosting extends AppCompatActivity {
         final ArrayList<ListViewItem> workInfoArrayList=new ArrayList<>();
         workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3"));
         workInfoArrayList.add(new ListViewItem("해모로 아파트 건축","2020-06-17","130,000","건축","광흥창 해모로 아파트","베짱이인력소","2","4"));
-        workInfoArrayList.add(new ListViewItem("자이아파트 신축","2020-06-20","160,000","건축","광흥창 자이 아파트","사람인력소","1","5"));
-        workInfoArrayList.add(new ListViewItem("마포 체육관 보수공사","2020-07-03","110,000","보수","마포구민체육관","당근인력소","1","3"));
+
 
         mypostAdapter urgencyAdapter=new mypostAdapter(getApplicationContext(),workInfoArrayList);
         urgency_RecyclerView.setAdapter(urgencyAdapter);
 
-//        final AlertDialog.Builder dlg = new AlertDialog.Builder(MyPosting.this);
-//        dialogView = View.inflate(MyPosting.this,R.layout.myworkwritingdialog,null);
-//        dlg.setView(dialogView);
-//        btnWorkInfo=dialogView.findViewById(R.id.btnWorkInfo);
-//        btnSupply=dialogView.findViewById(R.id.btnSupply);
-//        btnPick=dialogView.findViewById(R.id.btnPick);
-//        dlg.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//            }
-//        });
-//        btnWorkInfo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                intent=new Intent(MyPosting.this,WorkInfoActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        btnSupply.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                intent=new Intent(MyPosting.this,ApplyStateActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        btnPick.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                intent=new Intent(MyPosting.this,PickStateActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        dlg.show();
+        fab_btn=findViewById(R.id.fab_btn);
+        fab_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 intent=new Intent(MyPosting.this,WritePostingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        spinner_who.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override   // position 으로 몇번째 것이 선택됬는지 값을 넘겨준다
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position==1) {
+                   finish();
+                     intent = new Intent(MyPosting.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
 

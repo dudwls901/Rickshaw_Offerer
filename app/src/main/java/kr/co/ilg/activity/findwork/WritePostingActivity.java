@@ -2,11 +2,13 @@ package kr.co.ilg.activity.findwork;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.capstone2.R;
 
@@ -16,12 +18,27 @@ public class WritePostingActivity extends AppCompatActivity {
     Spinner spinner_job,spinner_date,spinner_st_time,spinner_fi_time;
     ArrayList spinner_job_array, spinner_date_array,spinner_sttime_array,spinner_fitime_array;
     ArrayAdapter spinner_job_Adapter,spinner_date_Adapter,spinner_sttime_Adapter,spinner_fitime_Adapter;
+    Toolbar toolbar;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home: {
+                finish();
 
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.write_posting);
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         spinner_job=findViewById(R.id.job);
         spinner_date=findViewById(R.id.date);
         spinner_st_time=findViewById(R.id.start_time);

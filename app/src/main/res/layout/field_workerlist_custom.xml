@@ -16,6 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:src="@drawable/man"
         android:layout_marginLeft="30dp"
+
         />
 
     <LinearLayout
