@@ -58,7 +58,6 @@
         <activity android:name="kr.co.ilg.activity.workermanage.PayActivity" android:label="급여 지급"/>
         <activity android:name="kr.co.ilg.activity.workermanage.PayConfirmActivity" android:label="급여 지급"/>
         <activity android:name="kr.co.ilg.activity.mypage.AccountManageActivity" android:label="계좌 관리"/>
-        <activity android:name="kr.co.ilg.activity.mypage.ReviewmanageActivity" android:label="후기 관리"/>
         <activity android:name="kr.co.ilg.activity.mypage.OptionActivity" android:label="설정"/>
         <activity android:name="kr.co.ilg.activity.mypage.NoticeActivity" android:label="공지사항"/>
         <activity android:name="kr.co.ilg.activity.mypage.NoticeInfoActivity" android:label="공지사항"/>
