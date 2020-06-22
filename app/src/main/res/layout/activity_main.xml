@@ -12,7 +12,6 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:gravity="center"
-
         ></androidx.appcompat.widget.AppCompatSpinner>
     <LinearLayout
         android:id="@+id/linear_spinner"
@@ -58,10 +57,11 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginRight="30dp"
+        android:src="@drawable/ddongplus"
         app:fabSize="normal"
         android:id="@+id/fab_btn"
         app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
-        android:layout_marginBottom="75dp"
+        android:layout_marginBottom="80dp"
         app:layout_constraintRight_toRightOf="parent"
 
         />

@@ -18,7 +18,7 @@ public class reviewinputinfo_adapter extends RecyclerView.Adapter<RecyclerView.V
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name, date, field;
+        TextView name, date, field, contents;
         ImageView imageView;
 
         MyViewHolder(View view){
@@ -27,17 +27,18 @@ public class reviewinputinfo_adapter extends RecyclerView.Adapter<RecyclerView.V
             date = view.findViewById(R.id.reviewdate);
             field = view.findViewById(R.id.reviewfield);
             imageView = view.findViewById(R.id.reviewprofile);
+            contents = view.findViewById(R.id.contents);
         }
     }
 
-    public ArrayList<reviewinputinfo_item>List;
+    public ArrayList<reviewinputinfo_item> List;
     reviewinputinfo_adapter(ArrayList<reviewinputinfo_item> List){
         this.List = List;
     }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_management,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.reviewcustom_guin_item,parent,false);
         return new MyViewHolder(v);
     }
 
@@ -46,9 +47,10 @@ public class reviewinputinfo_adapter extends RecyclerView.Adapter<RecyclerView.V
         MyViewHolder myViewHolder = (MyViewHolder) holder;
 
         myViewHolder.name.setText(List.get(position).name);
-        myViewHolder.date.setText(List.get(position).name);
+        myViewHolder.date.setText(List.get(position).date);
         myViewHolder.field.setText(List.get(position).field);
-        //myViewHolder.imageView.setImageResource(List.get(position).imageView);
+        myViewHolder.imageView.setImageResource(List.get(position).imageView);
+        myViewHolder.contents.setText(List.get(position).contents);
     }
 
     @Override

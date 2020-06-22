@@ -133,8 +133,12 @@
         android:background="@drawable/myinfomanage_guin_stroke">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:text="소개"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="안녕하세요## 개미인력입니다. 현재 영등포구에 보내는 인력만해도 17명이고, 마포구까지 일 있습니다~
+               단가도 평균 15만원~16만원 정도 합니다. 초보,경력 상관없이 다 일자리 있으니 많은 문의 및 신청 바랍니다."
+
+
         android:textSize="17dp"
         android:padding="5dp"
         />
@@ -164,13 +168,11 @@
         android:textSize="17dp"
         android:textColor="@android:color/black"
         />
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/myinfomanage_guin_stroke"
-        android:divider="@android:color/black"
-        android:overScrollMode="ifContentScrolls"
-        android:scrollbars="vertical"
-        android:id="@+id/listview1"/>
+        android:id="@+id/reviewrecycle2"
+        />
 
 </LinearLayout>

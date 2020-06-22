@@ -19,20 +19,20 @@ import com.example.capstone2.R;
 import java.util.ArrayList;
 
 
-public class NoticeActivity extends AppCompatActivity {
+public class ReviewmanageActivity extends AppCompatActivity {
 
 
-    ArrayList<noticeitem> cList;
-    noticeAdapter myAdapter;
+    ArrayList<reviewinputinfo_item> cList;
+    reviewinputinfo_adapter myAdapter;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.notice);
+        setContentView(R.layout.review_management);
 
-        mRecyclerView = findViewById(R.id.reviewrecycle1);
+        mRecyclerView = findViewById(R.id.reviewrecycle);
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -43,12 +43,12 @@ public class NoticeActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
         cList = new ArrayList<>();
-        cList.add(new noticeitem("인력거 공지사항!!!!!!!","2020.05.05"));
+        cList.add(new reviewinputinfo_item(R.drawable.man,"정선우","버섯건물","2020.05.12","너 왜 출력이 안되니"));
 
-        myAdapter = new noticeAdapter(cList);
+        myAdapter = new reviewinputinfo_adapter(cList);
         mRecyclerView.setAdapter(myAdapter);
 
-        final GestureDetector gestureDetector = new GestureDetector(NoticeActivity.this, new GestureDetector.SimpleOnGestureListener() {
+        final GestureDetector gestureDetector = new GestureDetector(ReviewmanageActivity.this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
                 return true;
