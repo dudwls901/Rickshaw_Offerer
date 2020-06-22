@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
         spinner1_array=new ArrayList();
         spinner2_array=new ArrayList();
 
-        spinner_who_array.add("                                               전체");
-        spinner_who_array.add("                                             내 구인글");
+        spinner_who_array.add("                                         전체");
+        spinner_who_array.add("                                       내 구인글");
         spinner1_array.add("                   서울 ");
         spinner2_array.add("                  마포구 ");
         spinner2_array.add("                  영등포구 ");
