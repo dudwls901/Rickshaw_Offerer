@@ -37,12 +37,12 @@
 
         <activity android:name="kr.co.ilg.activity.login.LoginActivity" android:label="로그인"/>
         <activity android:name="kr.co.ilg.activity.findwork.MainActivity" android:label="일자리 찾기"/>
-        <activity android:name="kr.co.ilg.activity.login.BusinessLicenseConfirmActivity" android:label="사업자 등록번호 인증" android:parentActivityName="kr.co.ilg.activity.login.LoginActivity"/>
-            <activity android:name="kr.co.ilg.activity.login.SignupPasswordActivity" android:label="비밀번호 설정" android:parentActivityName="kr.co.ilg.activity.login.BusinessLicenseConfirmActivity"/>
+        <activity android:name="kr.co.ilg.activity.login.BusinessLicenseConfirmActivity" android:label="사업자 등록번호 인증"/>
+        <activity android:name="kr.co.ilg.activity.login.SignupPasswordActivity" android:label="비밀번호 설정"/>
         <activity android:name="kr.co.ilg.activity.mypage.WriteOfficeInfoActivity" android:label="사무소 정보 입력"/>
         <activity android:name="kr.co.ilg.activity.mypage.AccountAddActivity" android:label="계좌 등록"/>
-        <activity android:name="kr.co.ilg.activity.login.FindPasswordInfoActivity" android:label="비밀번호 찾기" android:parentActivityName="kr.co.ilg.activity.login.LoginActivity"/>
-        <activity android:name="kr.co.ilg.activity.login.FindPasswordShowActivity" android:label="비밀번호 확인" android:parentActivityName="kr.co.ilg.activity.login.FindPasswordInfoActivity"/>
+        <activity android:name="kr.co.ilg.activity.login.FindPasswordInfoActivity" android:label="비밀번호 찾기"/>
+        <activity android:name="kr.co.ilg.activity.login.FindPasswordShowActivity" android:label="비밀번호 확인"/>
         <activity android:name="kr.co.ilg.activity.findwork.WorkInfoActivity" android:label="일자리 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.FieldInfoActivity" android:label="현장 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.OfficeInfoActivity" android:label="인력사무소 정보"/>
