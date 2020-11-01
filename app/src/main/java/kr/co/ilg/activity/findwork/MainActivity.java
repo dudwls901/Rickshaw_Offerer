@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     Intent intent;
     Toolbar toolbar;
+    String selectjob_name;
     @Override
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,8 +86,23 @@ public class MainActivity extends AppCompatActivity {
 
         spinner_who_array.add("                                         전체");
         spinner_who_array.add("                                       내 구인글");
-        spinner1_array.add(" 서울 마포구 ");
-        spinner2_array.add(" 전체 ");
+        spinner1_array.add("서울 마포구");
+        spinner2_array.add("전체");
+        spinner2_array.add("보통인부");
+        spinner2_array.add("목공");
+        spinner2_array.add("콘크리트공");
+        spinner2_array.add("미장/조적공");
+        spinner2_array.add("용접공");
+        spinner2_array.add("설비공");
+        spinner2_array.add("전기공");
+        spinner2_array.add("작업팀장");
+        spinner2_array.add("철근공");
+        spinner2_array.add("비계공");
+        spinner2_array.add("철거/할석공");
+        spinner2_array.add("타일공");
+        spinner2_array.add("경계석공");
+        spinner2_array.add("청소");
+        spinner2_array.add("칸막이");
 
 
         spinner_who_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner_who_array);
@@ -132,6 +149,26 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectjob_name = (String) spinner2_array.get(position);
+                Log.d("job_name=",selectjob_name);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+             //TODO 111111111111111111111111111111111직종 전체일때 리스트뷰 조지기
+                //   spinner2.setSelection(0); 스피너 초기값 주기(position)
+             //   workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3",true));
+                //php연동해서 리스트뷰에 add
+                
+
+            }
+        });
+
 //        // TODO 소연 내 구인글 만들어서 밑에 거 다 가져다가 내 구인글에서 RECYCLERVIEW.ITEM 클릭이벤트에 집어 넣기기
 //       //        View dialogView;
 //        //        Button btnWorkInfo, btnSupply, btnPick;

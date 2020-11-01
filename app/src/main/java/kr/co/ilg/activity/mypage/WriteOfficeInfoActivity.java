@@ -64,8 +64,6 @@ public class WriteOfficeInfoActivity extends Activity {
             }
         });
 
-
-
         Intent receiver = getIntent();
         business_reg_num = receiver.getExtras().getString("business_reg_num");
         manager_represent_name = receiver.getExtras().getString("manager_represent_name");
@@ -101,10 +99,17 @@ public class WriteOfficeInfoActivity extends Activity {
         // 두 번째 파라미터는 사용될 php에도 동일하게 사용해야함
         webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
         // web client 를 chrome 으로 설정
-        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onCloseWindow(WebView window)
+            {
+
+            }
+        });
         // webview url load
         webView.loadUrl("http://rickshaw.dothome.co.kr/getAddress.php");
     }
+
 
     private class AndroidBridge {
         @JavascriptInterface
