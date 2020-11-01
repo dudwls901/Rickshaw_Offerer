@@ -28,23 +28,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/businessNameTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/businessNameET"
-            app:layout_constraintBottom_toBottomOf="@+id/businessNameET"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="상호명"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/businessNameET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:paddingLeft="130dp" />
 
         <TextView
             android:id="@+id/ceoNameTV"
@@ -61,7 +44,7 @@
             android:id="@+id/ceoNameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/businessNameET"
+            app:layout_constraintBottom_toTopOf="@id/blnumET"
             app:layout_constraintLeft_toLeftOf="parent"
             android:paddingLeft="130dp" />
 

@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
         spinner_who_array.add("                                         전체");
         spinner_who_array.add("                                       내 구인글");
-        spinner1_array.add("                   서울 ");
-        spinner2_array.add("                  마포구 ");
-        spinner2_array.add("                  영등포구 ");
+        spinner1_array.add(" 서울 마포구 ");
+        spinner2_array.add(" 전체 ");
+
 
         spinner_who_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner_who_array);
         spinner1_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner1_array);

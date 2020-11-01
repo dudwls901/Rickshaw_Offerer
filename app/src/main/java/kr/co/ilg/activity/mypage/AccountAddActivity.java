@@ -5,17 +5,24 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.capstone2.R;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -28,7 +35,8 @@ public class AccountAddActivity extends AppCompatActivity {
     ArrayList<String> bSList;
     ArrayAdapter<String> bSAdapter;
     TextView nextTimeTV;
-
+    String business_reg_num, manager_represent_name, manager_pw, manager_office_name, manager_office_telnum, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, local_sido, local_sigugun;
+    EditText accountNumET;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,22 @@ public class AccountAddActivity extends AppCompatActivity {
         addBtn = findViewById(R.id.addBtn);
         nextTimeTV = findViewById(R.id.nextTimeTV);
         bankSelectSpn = findViewById(R.id.bankSelectSpn);
+        accountNumET = findViewById(R.id.accountNumET);
+
+        Intent receiver = getIntent();
+        business_reg_num = receiver.getExtras().getString("business_reg_num");
+        manager_pw = receiver.getExtras().getString("manager_pw");
+        manager_represent_name = receiver.getExtras().getString("manager_represent_name");
+        manager_office_name = receiver.getExtras().getString("manager_office_name");
+        manager_office_telnum = receiver.getExtras().getString("manager_office_telnum");
+        manager_office_address = receiver.getExtras().getString("manager_office_address");
+        manager_name = receiver.getExtras().getString("manager_name");
+        manager_phonenum = receiver.getExtras().getString("manager_phonenum");
+        local_sido = receiver.getExtras().getString("local_sido");
+        local_sigugun = receiver.getExtras().getString("local_sigugun");
+        Log.d("mytest",business_reg_num+""+manager_pw+manager_represent_name+manager_office_name+manager_office_telnum+manager_office_address+manager_name+manager_phonenum+local_sido+local_sigugun);
+        //manager_bankaccount
+        //manager_bankname
 
         bSList = new ArrayList<>();
         bSList.add("은행");
@@ -55,6 +79,7 @@ public class AccountAddActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // bSList.get(position)
+                manager_bankname = bSList.get(position);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -64,7 +89,35 @@ public class AccountAddActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                manager_bankaccount = accountNumET.getText().toString();
+                Response.Listener responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            Log.d("mytesstt", response);
+                            //           JSONObject jsonResponse = new JSONObject(response);
+                            JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"),response.lastIndexOf("}")+1));
+                            Log.d("mytesstt", response);
+                            Log.d("mytestlocal_sido", jsonResponse.getString("local_sido"));
+                            Log.d("mytestlocal_sigugun", jsonResponse.getString("local_sigugun"));
+
+                           Log.d("mytestlocal_code", jsonResponse.getString("local_code"));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.d("mytest3",e.toString());
+                        }
+                    }
+                };
+                ManagerDBRequest managerInsert = new ManagerDBRequest(business_reg_num, manager_pw, manager_represent_name, manager_office_name, manager_office_telnum,local_sido,local_sigugun, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(AccountAddActivity.this);
+                queue.add(managerInsert);
+                Log.d("mytesttttt",business_reg_num+ manager_represent_name+ manager_pw+ manager_office_name+ manager_office_telnum+local_sido + local_sigugun+ manager_office_address+ manager_name+ manager_phonenum+ manager_bankaccount+ manager_bankname);
+
                 Intent intent = new Intent(AccountAddActivity.this, LoginActivity.class);
+
                 startActivity(intent);
             }
         });
