@@ -20,6 +20,7 @@
             android:textSize="20sp" />
 
     </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
@@ -35,41 +36,41 @@
                 android:layout_height="wrap_content"
                 >
                     <RadioButton
+                        android:id="@+id/radio_usually"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="일반 구인"
                         android:textSize="19dp"
-                        android:id="@+id/radio_usually"
-                        android:layout_margin="3dp"
-                        android:padding="5dp"
-                        ></RadioButton>
+                        android:layout_marginRight="10dp"
+                        android:padding="5dp"/>
                     <RadioButton
+                        android:id="@+id/radio_urgency"
                         android:padding="5dp"
-                        android:layout_margin="3dp"
                         android:textSize="19dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="긴급 구인"
-                        android:id="@+id/radio_urgency"
-                        ></RadioButton>
+                        android:text="긴급 구인"/>
             </RadioGroup>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/radio_layout"
         android:orientation="horizontal"
-        android:id="@+id/layout_1"
-        >
+        android:paddingLeft="3dp"
+        android:paddingRight="7dp"
+        android:id="@+id/layout_1">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="left"
             android:id="@+id/title_text_layout"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            >
+            android:layout_marginTop="5dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_gravity="right"
@@ -77,8 +78,7 @@
                 android:text="게시글 제목 :"
                 android:padding="7dp"
                 android:textStyle="bold"
-                android:textSize="19dp"
-                ></TextView>
+                android:textSize="19sp"/>
             <TextView
                 android:layout_gravity="right"
                 android:layout_width="wrap_content"
@@ -86,8 +86,7 @@
                 android:textStyle="bold"
                 android:padding="7dp"
                 android:text="현장 이름 :"
-                android:textSize="19dp"
-                ></TextView>
+                android:textSize="19sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,8 +94,7 @@
                 android:padding="7dp"
                 android:textStyle="bold"
                 android:text="현장 주소 :"
-                android:textSize="19dp"
-                ></TextView>
+                android:textSize="19dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,8 +102,7 @@
                 android:layout_gravity="right"
                 android:textStyle="bold"
                 android:text="직종 :"
-                android:textSize="19dp"
-                ></TextView>
+                android:textSize="19sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,8 +110,7 @@
                 android:padding="7dp"
                 android:textStyle="bold"
                 android:text="단가 :"
-                android:textSize="19dp"
-                ></TextView>
+                android:textSize="19sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,181 +118,204 @@
                 android:text="모집인원 :"
                 android:layout_gravity="right"
                 android:padding="7dp"
-                android:textSize="19dp"
-                ></TextView>
+                android:textSize="19sp" />
+            <TextView
+                android:id="@+id/dateTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="7dp"
+                android:text="근무날짜 :"
+                android:textSize="19sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="7dp"
+                android:text="근무시간 :"
+                android:textSize="19sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="7dp"
+                android:text="상세정보 :"
+                android:textSize="19sp"
+                android:textStyle="bold"/>
+
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/content_text_layout"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            >
+            android:layout_marginTop="5dp">
+
             <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="게시글 제목"
                 android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="게시글 제목"
                 android:layout_gravity="left"
                 android:padding="7dp"
-                android:textSize="19dp"
-                ></EditText>
+                android:textSize="19sp"/>
+
             <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="현장이름"
                 android:id="@+id/field_name"
-                android:layout_gravity="left"
-                android:padding="7dp"
-                android:textSize="19dp"
-                ></EditText>
-            <EditText
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="현장주소"
-                android:id="@+id/field_address"
+                android:hint="현장이름"
                 android:layout_gravity="left"
                 android:padding="7dp"
-                android:textSize="19dp"
-                ></EditText>
+                android:textSize="19sp"/>
+
+            <EditText
+                android:id="@+id/field_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="현장주소"
+                android:layout_gravity="left"
+                android:padding="7dp"
+                android:textSize="19sp"/>
+
             <androidx.appcompat.widget.AppCompatSpinner
-                android:layout_width="200dp"
+                android:id="@+id/job"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:textStyle="bold"
                 android:text="직종선택"
-                android:id="@+id/job"
                 android:layout_gravity="left"
-                android:padding="7dp"
-                android:textSize="19dp"
-                ></androidx.appcompat.widget.AppCompatSpinner>
+                android:textSize="19sp"
+                android:spinnerMode="dialog"/>
+
             <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="단가"
                 android:id="@+id/pay"
-                android:layout_gravity="left"
-                android:padding="7dp"
-                android:textSize="19dp"
-                ></EditText>
-            <EditText
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="모집인원"
-                android:id="@+id/people_num"
+                android:hint="단가"
                 android:layout_gravity="left"
                 android:padding="7dp"
-                android:textSize="19dp"
-                ></EditText>
+                android:textSize="19sp"/>
+
+            <EditText
+                android:id="@+id/people_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="모집인원"
+                android:layout_gravity="left"
+                android:padding="7dp"
+                android:textSize="19sp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/dateET"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/dateBtn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:hint="근무날짜"
+                    android:layout_gravity="left"
+                    android:padding="7dp"
+                    android:layout_marginRight="5dp"
+                    android:textSize="19sp"/>
+
+                <ImageButton
+                    android:id="@+id/dateBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:backgroundTint="@color/WhiteColor"
+                    android:padding="0px"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/calendar32"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--
+                                    <androidx.appcompat.widget.AppCompatSpinner
+                                        android:id="@+id/work_date"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="40dp"
+                                        android:textStyle="bold"
+                                        android:text="근무날짜"
+                                        android:layout_gravity="left"
+                                        android:textSize="19sp"
+                                        android:spinnerMode="dialog"/>
+                        -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:weightSum="9">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/start_time"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="4"
+                    android:textStyle="bold"
+                    android:text="출근시간"
+                    android:textSize="19sp"
+                    android:spinnerMode="dialog"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text=" ~ "
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:textSize="19sp"
+                    android:textStyle="bold"/>
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/finish_time"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="4"
+                    android:textStyle="bold"
+                    android:text="퇴근시간"
+                    android:textSize="19sp"
+                    android:spinnerMode="dialog"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/detail_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:padding="7dp"
+                android:textSize="19sp"/>
+
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@id/layout_1"
-    app:layout_constraintLeft_toLeftOf="parent"
-    android:layout_marginLeft="52dp"
-    android:id="@+id/layout_2"
-    android:orientation="horizontal"
-    >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:padding="7dp"
-        android:text="근무날짜 :"
-        android:textSize="19dp"
-        android:textStyle="bold"></TextView>
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="근무날짜"
-            android:id="@+id/date"
-            android:textSize="19dp"
-            ></androidx.appcompat.widget.AppCompatSpinner>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layout_2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="52dp"
-        android:id="@+id/layout_3"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:padding="7dp"
-            android:text="근무시간 :"
-            android:textSize="19dp"
-            android:textStyle="bold"></TextView>
-        <androidx.appcompat.widget.AppCompatSpinner
-        android:layout_width="105dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:textStyle="bold"
-        android:text="출근시간"
-        android:id="@+id/start_time"
-        android:textSize="19dp"
-        ></androidx.appcompat.widget.AppCompatSpinner>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:text=" ~ "
-            android:layout_gravity="center_vertical"
-            android:textSize="19dp"
-            android:textStyle="bold"></TextView>
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:layout_width="105dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="퇴근시간"
-            android:layout_marginLeft="3dp"
-            android:id="@+id/finish_time"
-            android:textSize="19dp"
-            ></androidx.appcompat.widget.AppCompatSpinner>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layout_3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="52dp"
-        android:id="@+id/layout_4"
-        android:orientation="horizontal"
-        >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:padding="7dp"
-        android:text="상세정보 :"
-        android:textSize="19dp"
-        android:textStyle="bold"></TextView>
-        <EditText
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"></EditText>
-   </LinearLayout>
+
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/postingBtn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@color/colorPrimary"
-        android:text="게시"
-        android:textColor="@color/LightColor"
-        android:textSize="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        ></Button>
+        android:background="@drawable/custom_btn_mainclr"
+        android:text="글 게 시"
+        android:textColor="@color/WhiteColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
