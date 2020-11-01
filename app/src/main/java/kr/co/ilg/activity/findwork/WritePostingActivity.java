@@ -2,6 +2,7 @@ package kr.co.ilg.activity.findwork;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,15 +38,15 @@ import java.util.HashMap;
 
 public class WritePostingActivity extends AppCompatActivity {
 
-    Spinner spinner_job,spinner_st_time,spinner_fi_time;
+    Spinner spinner_job;
     ArrayList spinner_job_array, spinner_date_array,spinner_sttime_array,spinner_fitime_array;
     ArrayAdapter spinner_job_Adapter,spinner_date_Adapter,spinner_sttime_Adapter,spinner_fitime_Adapter;
     Toolbar toolbar;
     EditText title, field_name, field_address, pay, people_num, detail_info, dateET;
-    Button postingBtn;
+    Button postingBtn, startTimeBtn, finishTimeBtn;
     ImageButton dateBtn;
 
-    int y, m, d;
+    int y, m, d, timeFlag;
 
     String jobJSON;
     private static final String TAG_RESPONSE = "response";
@@ -58,7 +60,6 @@ public class WritePostingActivity extends AppCompatActivity {
         switch (id) {
             case android.R.id.home: {
                 finish();
-
             }
         }
         return super.onOptionsItemSelected(item);
@@ -81,53 +82,75 @@ public class WritePostingActivity extends AppCompatActivity {
         detail_info = findViewById(R.id.detail_info);
         dateET = findViewById(R.id.dateET);
         dateBtn = findViewById(R.id.dateBtn);
-
+        postingBtn = findViewById(R.id.postingBtn);
+        startTimeBtn = findViewById(R.id.startTimeBtn);
+        finishTimeBtn = findViewById(R.id.finishTimeBtn);
         spinner_job=findViewById(R.id.job);
-        spinner_st_time=findViewById(R.id.start_time);
-        spinner_fi_time=findViewById(R.id.finish_time);
 
         getData("http://rickshaw.dothome.co.kr/LoadTest.php");
 
         spinner_job_array=new ArrayList();
 
-        spinner_sttime_array=new ArrayList();
-        spinner_sttime_array.add("09:00");
-
-        spinner_fitime_array=new ArrayList();
-        spinner_fitime_array.add("17:00");
-
         spinner_job_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner_job_array);
         spinner_job.setAdapter(spinner_job_Adapter);
-        spinner_sttime_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner_sttime_array);
-        spinner_st_time.setAdapter(spinner_sttime_Adapter);
-        spinner_fitime_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner_fitime_array);
-        spinner_fi_time.setAdapter(spinner_fitime_Adapter);
 
         // 현재 날짜 가져오기 위한 Calendar 클래스
         Calendar calendar = Calendar.getInstance();
         y = calendar.get(Calendar.YEAR);
         m = calendar.get(Calendar.MONTH);  // m+1은 DatePickerDialog에서 해줌
         d = calendar.get(Calendar.DAY_OF_MONTH);
-//
-//        dateBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // DatePickerDialog 클래스
-//                // 날짜를 설정할 때 동작하는 이벤트 처리
-//                DatePickerDialog datePickerDialog2 = new DatePickerDialog(WritePostingActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                        // YYYY-MM-DD 형식으로 출력
-//                        dateET.setText(String.format("%d", year) + "-" + String.format("%02d", (month + 1)) + "-" + String.format("%02d", dayOfMonth));
-//                    }
-//                }, y, m, d);  // 기본으로 지정되어있는 날짜를 오늘 날짜로 설정
-//
-//                datePickerDialog2.getDatePicker().setCalendarViewShown(false);  // 스피너 형태로 설정
-//                datePickerDialog2.getWindow().setBackgroundDrawableResource(android.R.color.transparent);  // 데이트 피커를 띄워주는 대화상자의 배경을 투명하게 설정
-//                datePickerDialog2.show();  // 날짜 선택 대화상자 화면 출력
-//            }
-//        });
+
+        dateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // DatePickerDialog 클래스
+                // 날짜를 설정할 때 동작하는 이벤트 처리
+                DatePickerDialog datePickerDialog = new DatePickerDialog(WritePostingActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // YYYY-MM-DD 형식으로 출력
+                        dateET.setText(String.format("%d", year) + "-" + String.format("%02d", (month + 1)) + "-" + String.format("%02d", dayOfMonth));
+                    }
+                }, y, m, d);  // 기본으로 지정되어있는 날짜를 오늘 날짜로 설정
+
+                datePickerDialog.getDatePicker().setCalendarViewShown(false);  // 스피너 형태로 설정
+                datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);  // 데이트 피커를 띄워주는 대화상자의 배경을 투명하게 설정
+                datePickerDialog.show();  // 날짜 선택 대화상자 화면 출력
+            }
+        });
+
+        startTimeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timeFlag = 0;
+                TimePickerDialog timePickerDialog = new TimePickerDialog(WritePostingActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth, tpListener, 7, 0, false);
+                timePickerDialog.setTitle("출근시간");
+                timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                timePickerDialog.show();
+            }
+        });
+
+        finishTimeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timeFlag = 1;
+                TimePickerDialog timePickerDialog2 = new TimePickerDialog(WritePostingActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth, tpListener, 18, 0, false);
+                timePickerDialog2.setTitle("퇴근시간");
+                timePickerDialog2.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                timePickerDialog2.show();
+            }
+        });
     }
+
+    private TimePickerDialog.OnTimeSetListener tpListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            if(timeFlag == 0)
+                startTimeBtn.setText(String.format(" %02d", hourOfDay) + ":" + String.format("%02d", minute));
+            else
+                finishTimeBtn.setText(String.format(" %02d", hourOfDay) + ":" + String.format("%02d", minute));
+        }
+    };
 
     protected void showList() {
         try {

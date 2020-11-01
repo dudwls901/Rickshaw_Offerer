@@ -42,7 +42,8 @@
                         android:text="일반 구인"
                         android:textSize="19dp"
                         android:layout_marginRight="10dp"
-                        android:padding="5dp"/>
+                        android:padding="5dp"
+                        android:checked="true"/>
                     <RadioButton
                         android:id="@+id/radio_urgency"
                         android:padding="5dp"
@@ -136,6 +137,24 @@
                 android:text="근무시간 :"
                 android:textSize="19sp"
                 android:textStyle="bold"/>
+<!--
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="7dp"
+                android:text="근무시작시간 :"
+                android:textSize="19sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="7dp"
+                android:text="근무종료시간 :"
+                android:textSize="19sp"
+                android:textStyle="bold"/>
+-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -226,7 +245,8 @@
                     android:layout_gravity="left"
                     android:padding="7dp"
                     android:layout_marginRight="5dp"
-                    android:textSize="19sp"/>
+                    android:textSize="19sp"
+                    android:focusable="false"/>
 
                 <ImageButton
                     android:id="@+id/dateBtn"
@@ -242,24 +262,13 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--
-                                    <androidx.appcompat.widget.AppCompatSpinner
-                                        android:id="@+id/work_date"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="40dp"
-                                        android:textStyle="bold"
-                                        android:text="근무날짜"
-                                        android:layout_gravity="left"
-                                        android:textSize="19sp"
-                                        android:spinnerMode="dialog"/>
-                        -->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:weightSum="9">
 
+<!--
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/start_time"
                     android:layout_width="0dp"
@@ -269,6 +278,19 @@
                     android:text="출근시간"
                     android:textSize="19sp"
                     android:spinnerMode="dialog"/>
+-->
+
+                <Button
+                    android:id="@+id/startTimeBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="4"
+                    android:text="출근시간"
+                    android:textSize="18sp"
+                    android:textColor="@color/mainColor"
+                    android:textStyle="bold"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/radius_btn"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -280,17 +302,89 @@
                     android:textSize="19sp"
                     android:textStyle="bold"/>
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/finish_time"
+                <Button
+                    android:id="@+id/finishTimeBtn"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_weight="4"
-                    android:textStyle="bold"
                     android:text="퇴근시간"
-                    android:textSize="19sp"
-                    android:spinnerMode="dialog"/>
+                    android:textSize="18sp"
+                    android:textColor="@color/mainColor"
+                    android:textStyle="bold"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/radius_btn"/>
 
             </LinearLayout>
+
+<!--
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/startTimeET"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/startTimeBtn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:hint="근무날짜"
+                    android:layout_gravity="left"
+                    android:padding="7dp"
+                    android:layout_marginRight="5dp"
+                    android:textSize="19sp"
+                    android:focusable="false"/>
+
+                <ImageButton
+                    android:id="@+id/startTimeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:backgroundTint="@color/WhiteColor"
+                    android:padding="0px"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/calendar32"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/finishTimeET"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/finishTimeBtn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:hint="근무날짜"
+                    android:layout_gravity="left"
+                    android:padding="7dp"
+                    android:layout_marginRight="5dp"
+                    android:textSize="19sp"
+                    android:focusable="false"/>
+
+                <ImageButton
+                    android:id="@+id/finishTimeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:backgroundTint="@color/WhiteColor"
+                    android:padding="0px"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/calendar32"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+-->
 
             <EditText
                 android:id="@+id/detail_info"
