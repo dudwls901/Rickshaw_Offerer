@@ -9,12 +9,12 @@
         android:label="signiture"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version"/>
@@ -24,8 +24,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCPDPoKy_UbzVcIcrEtVKAtNaafvx42Nio"/>
@@ -38,10 +38,12 @@
         </activity>
 
         <activity android:name="kr.co.ilg.activity.login.LoginActivity" android:label="로그인"/>
+        <activity android:name="com.example.capstone2.MainActivity" android:label="로그인"/>
         <activity android:name="kr.co.ilg.activity.findwork.MainActivity" android:label="일자리 찾기"/>
         <activity android:name="kr.co.ilg.activity.login.BusinessLicenseConfirmActivity" android:label="사업자 등록번호 인증"/>
         <activity android:name="kr.co.ilg.activity.login.SignupPasswordActivity" android:label="비밀번호 설정"/>
         <activity android:name="kr.co.ilg.activity.mypage.WriteOfficeInfoActivity" android:label="사무소 정보 입력"/>
+        <activity android:name="kr.co.ilg.activity.mypage.LocalSelectActivity" android:label="활동 지역 입력"/>
         <activity android:name="kr.co.ilg.activity.mypage.AccountAddActivity" android:label="계좌 등록"/>
         <activity android:name="kr.co.ilg.activity.login.FindPasswordInfoActivity" android:label="비밀번호 찾기"/>
         <activity android:name="kr.co.ilg.activity.login.FindPasswordShowActivity" android:label="비밀번호 확인"/>

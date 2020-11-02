@@ -66,9 +66,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_urgency"
             android:layout_width="match_parent"
-            android:layout_height="460dp"
+            android:layout_height="560dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="?attr/actionBarSize"
+
             />
     </LinearLayout>
 
