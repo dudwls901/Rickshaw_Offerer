@@ -30,6 +30,7 @@
         android:id="@+id/radio_layout"
         android:orientation="horizontal">
             <RadioGroup
+                android:id="@+id/rg"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -183,7 +184,7 @@
                 android:textSize="19sp"/>
 
             <EditText
-                android:id="@+id/field_name"
+                android:id="@+id/field_name_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="현장이름"
@@ -192,7 +193,7 @@
                 android:textSize="19sp"/>
 
             <EditText
-                android:id="@+id/field_address"
+                android:id="@+id/field_address_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="현장주소"
