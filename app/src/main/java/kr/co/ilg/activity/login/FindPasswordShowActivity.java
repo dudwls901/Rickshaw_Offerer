@@ -25,11 +25,15 @@ public class FindPasswordShowActivity extends AppCompatActivity {
         showPwTV = findViewById(R.id.showPwTV);
         goLoginBtn = findViewById(R.id.goLoginBtn);
 
-        showPwTV.setText("일개미님의 비밀번호는\nantwork** 입니다.");
+        Intent inIntent = getIntent();
+        String manager_pw = inIntent.getStringExtra("pw");
+        String business_reg_num = inIntent.getStringExtra("brNum");
+
+        showPwTV.setText(business_reg_num + " 님의 비밀번호는\n" + manager_pw + " 입니다.");
         goLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FindPasswordShowActivity.this, LoginActivity.class);
+                Intent intent = new Intent(FindPasswordShowActivity.this, com.example.capstone2.MainActivity.class);
                 startActivity(intent);
             }
         });
