@@ -33,7 +33,7 @@ public class FindPasswordShowActivity extends AppCompatActivity {
         goLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FindPasswordShowActivity.this, LoginActivity.class);
+                Intent intent = new Intent(FindPasswordShowActivity.this, com.example.capstone2.MainActivity.class);
                 startActivity(intent);
             }
         });
