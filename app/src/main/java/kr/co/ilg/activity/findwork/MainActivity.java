@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner_who, spinner1, spinner2;
     ArrayList spinner_who_array, spinner1_array, spinner2_array;
     ArrayAdapter spinner_who_Adapter, spinner1_Adapter, spinner2_Adapter;
-    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people,jp_is_urgency;
+    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people,jp_is_urgency,apply_count;
     RecyclerView urgency_RecyclerView;
     RecyclerView.LayoutManager layoutManager;
     FloatingActionButton fab_btn;
@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-
                 try {
 
                     int index_search_start;
@@ -152,16 +151,18 @@ public class MainActivity extends AppCompatActivity {
                     index_search_start = response.indexOf("[",index_search_start)+1;
                     index_search_end = response.indexOf("]",index_search_end)+1;
                     JSONArray jsonArray_job = new JSONArray(response.substring(response.indexOf("[",index_search_start),response.indexOf("]",index_search_end)+1));
-
-                    Log.d("mmm12345",jsonArray_job.toString());
-                    Log.d("mmm1234",jsonArray_manager.toString());
-                    Log.d("mmm123",jsonArray_field.toString());
-
-                    Log.d("mmmm",jsonArray_jp.toString());
-                    Log.d("mmm",jsonArray_jp.getJSONObject(2).toString());
-                    Log.d("mmm",jsonArray_field.getJSONObject(2).toString());
-                    Log.d("mmm",jsonArray_manager.getJSONObject(2).toString());
-                    Log.d("mmm",jsonArray_job.getJSONObject(2).toString());
+                    index_search_start = response.indexOf("[",index_search_start)+1;
+                    index_search_end = response.indexOf("]",index_search_end)+1;
+                    JSONArray jsonArray_apply = new JSONArray(response.substring(response.indexOf("[",index_search_start),response.indexOf("]",index_search_end)+1));
+//                    Log.d("mmm12345",jsonArray_job.toString());
+//                    Log.d("mmm1234",jsonArray_manager.toString());
+//                    Log.d("mmm123",jsonArray_field.toString());
+//
+//                    Log.d("mmmm",jsonArray_jp.toString());
+//                    Log.d("mmm",jsonArray_jp.getJSONObject(2).toString());
+//                    Log.d("mmm",jsonArray_field.getJSONObject(2).toString());
+//                    Log.d("mmm",jsonArray_manager.getJSONObject(2).toString());
+//                    Log.d("mmm",jsonArray_job.getJSONObject(2).toString());
 
                     jp_title = new String[jsonArray_jp.length()];
                     jp_job_date = new String[jsonArray_jp.length()];
@@ -171,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
                     manager_office_name = new String[jsonArray_jp.length()];
                     jp_job_tot_people = new String[jsonArray_jp.length()];
                     jp_is_urgency = new String[jsonArray_jp.length()];
+                    apply_count = new String[jsonArray_jp.length()];
                     for(int i =0; i<jsonArray_jp.length();i++)
                     {
                         Log.d("mmmmmmmmmmmmmmmmmmmmm",String.valueOf(jsonArray_jp.length()));
@@ -182,13 +184,15 @@ public class MainActivity extends AppCompatActivity {
                         manager_office_name[i] = jsonArray_manager.getJSONObject(i).getString("manager_office_name");
                         jp_job_tot_people[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_tot_people");
                         jp_is_urgency[i] = jsonArray_jp.getJSONObject(i).getString("jp_is_urgency");
-                        Log.d("mmmmmm1111111",jp_title[i]);
-                        Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
-                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],"1",jp_job_tot_people[i],jp_is_urgency[i]));
+                        apply_count[i] = jsonArray_apply.getJSONObject(i).getString("COUNT(*)");
+ //                       Log.d("mmmmmm1111111",jp_title[i]);
+ //                       Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
+                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i]));
                         urgencyAdapter.notifyDataSetChanged() ;
-
+  //                      Log.d("aaaaaaaaaaaaaaaaaaaa",apply_count[i]);
+ //                       Log.d("aaaaaaaaaaaaaaaaaaaa",jsonArray_apply.getJSONObject(i).toString());
                     }
-                    Log.d("aaaaaaaaa",jp_title[0]);
+//                    Log.d("aaaaaaaaa",jp_title[0]);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("mytest3", e.toString());
