@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     jp_is_urgency = new String[jsonArray_jp.length()];
                     for(int i =0; i<jsonArray_jp.length();i++)
                     {
-
+                        Log.d("mmmmmmmmmmmmmmmmmmmmm",String.valueOf(jsonArray_jp.length()));
                         jp_title[i] = jsonArray_jp.getJSONObject(i).getString("jp_title");
                         jp_job_date[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_date");
                         jp_job_cost[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_cost");
