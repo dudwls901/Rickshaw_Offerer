@@ -23,9 +23,15 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.capstone2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -34,9 +40,10 @@ import kr.co.ilg.activity.workermanage.FieldListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Spinner spinner_who,spinner1, spinner2;
-    ArrayList spinner_who_array,spinner1_array, spinner2_array;
-    ArrayAdapter spinner_who_Adapter,spinner1_Adapter, spinner2_Adapter;
+    Spinner spinner_who, spinner1, spinner2;
+    ArrayList spinner_who_array, spinner1_array, spinner2_array;
+    ArrayAdapter spinner_who_Adapter, spinner1_Adapter, spinner2_Adapter;
+    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people;
     RecyclerView urgency_RecyclerView;
     RecyclerView.LayoutManager layoutManager;
     FloatingActionButton fab_btn;
@@ -44,24 +51,27 @@ public class MainActivity extends AppCompatActivity {
     Intent intent;
     Toolbar toolbar;
     String selectjob_name;
+    ListAdapter urgencyAdapter;
+    ArrayList<ListViewItem> workInfoArrayList;
     @Override
 
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_maintop, menu);
-        SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //return super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
-            case R.id.map :
+            case R.id.map:
                 //Toast.makeText(getApplicationContext(), "map 클릭", Toast.LENGTH_LONG).show();
-                Intent intent=new Intent(MainActivity.this,WorkMapActivity.class);
+                Intent intent = new Intent(MainActivity.this, WorkMapActivity.class);
                 startActivity(intent);
                 return true;
 
@@ -76,13 +86,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        spinner_who=findViewById(R.id.spinner_who);
-        spinner1=findViewById(R.id.spinner1);
-        spinner2=findViewById(R.id.spinner2);
+        spinner_who = findViewById(R.id.spinner_who);
+        spinner1 = findViewById(R.id.spinner1);
+        spinner2 = findViewById(R.id.spinner2);
 
-        spinner_who_array=new ArrayList();
-        spinner1_array=new ArrayList();
-        spinner2_array=new ArrayList();
+        spinner_who_array = new ArrayList();
+        spinner1_array = new ArrayList();
+        spinner2_array = new ArrayList();
 
         spinner_who_array.add("                                         전체");
         spinner_who_array.add("                                       내 구인글");
@@ -105,33 +115,95 @@ public class MainActivity extends AppCompatActivity {
         spinner2_array.add("칸막이");
 
 
-        spinner_who_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner_who_array);
-        spinner1_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner1_array);
-        spinner2_Adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,spinner2_array);
+        spinner_who_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_who_array);
+        spinner1_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner1_array);
+        spinner2_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner2_array);
 
         spinner_who.setAdapter(spinner_who_Adapter);
         spinner1.setAdapter(spinner1_Adapter);
         spinner2.setAdapter(spinner2_Adapter);
 
-        urgency_RecyclerView=findViewById(R.id.list_urgency);
+        urgency_RecyclerView = findViewById(R.id.list_urgency);
         urgency_RecyclerView.setHasFixedSize(true);
-        layoutManager=new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         urgency_RecyclerView.setLayoutManager(layoutManager);
 
-        final ArrayList<ListViewItem> workInfoArrayList=new ArrayList<>();
-        workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3",true));
-        workInfoArrayList.add(new ListViewItem("해모로 아파트 건축","2020-06-17","130,000","건축","광흥창 해모로 아파트","베짱이인력소","2","4",false));
-        workInfoArrayList.add(new ListViewItem("자이아파트 신축","2020-06-20","160,000","건축","광흥창 자이 아파트","사람인력소","1","5",false));
-        workInfoArrayList.add(new ListViewItem("마포 체육관 보수공사","2020-07-03","110,000","보수","마포구민체육관","당근인력소","1","3",false));
 
-        ListAdapter urgencyAdapter=new ListAdapter(getApplicationContext(),workInfoArrayList);
+         workInfoArrayList = new ArrayList<>();
+        urgencyAdapter = new ListAdapter(getApplicationContext(), workInfoArrayList);
         urgency_RecyclerView.setAdapter(urgencyAdapter);
 
-        fab_btn=findViewById(R.id.fab_btn);
+        Response.Listener responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+
+                try {
+
+                    int index_search_start;
+                    int index_search_end;
+                    JSONArray jsonArray_jp = new JSONArray(response.substring(response.indexOf("["),response.indexOf("]")+1));
+                    index_search_start = response.indexOf("[")+1;
+                    index_search_end = response.indexOf("]")+1;
+                    JSONArray jsonArray_field = new JSONArray(response.substring(response.indexOf("[",index_search_start),response.indexOf("]",index_search_end)+1));
+                    index_search_start = response.indexOf("[",index_search_start)+1;
+                    index_search_end = response.indexOf("]",index_search_end)+1;
+                    JSONArray jsonArray_manager = new JSONArray(response.substring(response.indexOf("[",index_search_start),response.indexOf("]",index_search_end)+1));
+                    index_search_start = response.indexOf("[",index_search_start)+1;
+                    index_search_end = response.indexOf("]",index_search_end)+1;
+                    JSONArray jsonArray_job = new JSONArray(response.substring(response.indexOf("[",index_search_start),response.indexOf("]",index_search_end)+1));
+
+                    Log.d("mmm12345",jsonArray_job.toString());
+                    Log.d("mmm1234",jsonArray_manager.toString());
+                    Log.d("mmm123",jsonArray_field.toString());
+
+                    Log.d("mmmm",jsonArray_jp.toString());
+                    Log.d("mmm",jsonArray_jp.getJSONObject(2).toString());
+                    Log.d("mmm",jsonArray_field.getJSONObject(2).toString());
+                    Log.d("mmm",jsonArray_manager.getJSONObject(2).toString());
+                    Log.d("mmm",jsonArray_job.getJSONObject(2).toString());
+
+                    jp_title = new String[jsonArray_jp.length()];
+                    jp_job_date = new String[jsonArray_jp.length()];
+                    jp_job_cost = new String[jsonArray_jp.length()];
+                    job_name = new String[jsonArray_jp.length()];
+                    field_address = new String[jsonArray_jp.length()];
+                    manager_office_name = new String[jsonArray_jp.length()];
+                    jp_job_tot_people = new String[jsonArray_jp.length()];
+                    for(int i =0; i<jsonArray_jp.length();i++)
+                    {
+
+                        jp_title[i] = jsonArray_jp.getJSONObject(i).getString("jp_title");
+                        jp_job_date[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_date");
+                        jp_job_cost[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_cost");
+                        job_name[i] = jsonArray_job.getJSONObject(i).getString("job_name");
+                        field_address[i] = jsonArray_field.getJSONObject(i).getString("field_address");
+                        manager_office_name[i] = jsonArray_manager.getJSONObject(i).getString("manager_office_name");
+                        jp_job_tot_people[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_tot_people");
+                        Log.d("mmmmmm1111111",jp_title[i]);
+                        Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
+                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],"1",jp_job_tot_people[i],true));
+                        urgencyAdapter.notifyDataSetChanged() ;
+
+                    }
+                    Log.d("aaaaaaaaa",jp_title[0]);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("mytest3", e.toString());
+                }
+            }
+        };
+        SelectJopPosting selectJopPosting = new SelectJopPosting("2", responseListener);
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        queue.add(selectJopPosting);
+//                Log.d("aaaaaaaaa",jp_title[0]);
+
+
+        fab_btn = findViewById(R.id.fab_btn);
         fab_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,WritePostingActivity.class);
+                Intent intent = new Intent(MainActivity.this, WritePostingActivity.class);
                 startActivity(intent);
             }
         });
@@ -139,12 +211,13 @@ public class MainActivity extends AppCompatActivity {
         spinner_who.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override   // position 으로 몇번째 것이 선택됬는지 값을 넘겨준다
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position==1) {
+                if (position == 1) {
                     finish();
                     Intent intent = new Intent(MainActivity.this, MyPosting.class);
                     startActivity(intent);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -155,57 +228,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectjob_name = (String) spinner2_array.get(position);
-                Log.d("job_name=",selectjob_name);
+                Log.d("job_name=", selectjob_name);
+
+
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-             //TODO 111111111111111111111111111111111직종 전체일때 리스트뷰 조지기
+                //TODO 111111111111111111111111111111111직종 전체일때 리스트뷰 조지기
                 //   spinner2.setSelection(0); 스피너 초기값 주기(position)
-             //   workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3",true));
+                //   workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3",true));
                 //php연동해서 리스트뷰에 add
-                
 
             }
         });
 
-//        // TODO 소연 내 구인글 만들어서 밑에 거 다 가져다가 내 구인글에서 RECYCLERVIEW.ITEM 클릭이벤트에 집어 넣기기
-//       //        View dialogView;
-//        //        Button btnWorkInfo, btnSupply, btnPick;
-//        final AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-//        dialogView = View.inflate(MainActivity.this,R.layout.myworkwritingdialog,null);
-//        dlg.setView(dialogView);
-//        btnWorkInfo=dialogView.findViewById(R.id.btnWorkInfo);
-//        btnSupply=dialogView.findViewById(R.id.btnSupply);
-//        btnPick=dialogView.findViewById(R.id.btnPick);
-//        dlg.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//            }
-//        });
-//        btnWorkInfo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               intent=new Intent(MainActivity.this,WorkInfoActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        btnSupply.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                 intent=new Intent(MainActivity.this,ApplyStateActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        btnPick.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                intent=new Intent(MainActivity.this,PickStateActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        dlg.show();
+
+
+
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
 
@@ -215,19 +256,19 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) { //menu_bottom.xml에서 지정해줬던 아이디 값을 받아와서 각 아이디값마다 다른 이벤트를 발생시킵니다.
                     case R.id.tab1: {
 
-                         intent = new Intent(MainActivity.this, MainActivity.class);
+                        intent = new Intent(MainActivity.this, MainActivity.class);
                         startActivity(intent);
                         return false;
                     }
                     case R.id.tab2: {
 
-                         intent = new Intent(MainActivity.this, FieldListActivity.class);
+                        intent = new Intent(MainActivity.this, FieldListActivity.class);
                         startActivity(intent);
                         return false;
                     }
                     case R.id.tab3: {
 
-                         intent = new Intent(MainActivity.this, kr.co.ilg.activity.mypage.MypageMainActivity.class);
+                        intent = new Intent(MainActivity.this, kr.co.ilg.activity.mypage.MypageMainActivity.class);
                         startActivity(intent);
                         return false;
                     }
