@@ -52,7 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder=(MyViewHolder) holder;
-        if (workInfo.get(position).urgency == false) {
+        if (workInfo.get(position).urgency.equals("0")) {
             myViewHolder.title.setText(workInfo.get(position).title);
             myViewHolder.date.setText(workInfo.get(position).date);
             myViewHolder.pay.setText(workInfo.get(position).pay);
@@ -62,7 +62,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             myViewHolder.current_people.setText(workInfo.get(position).current_people);
             myViewHolder.total_people.setText(workInfo.get(position).total_people);
         }
-        else if (workInfo.get(position).urgency == true) {
+        else if (workInfo.get(position).urgency.equals("1")) {
             myViewHolder.title.setText(workInfo.get(position).title);
             myViewHolder.date.setText(workInfo.get(position).date);
             myViewHolder.pay.setText(workInfo.get(position).pay);

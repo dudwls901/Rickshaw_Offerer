@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner_who, spinner1, spinner2;
     ArrayList spinner_who_array, spinner1_array, spinner2_array;
     ArrayAdapter spinner_who_Adapter, spinner1_Adapter, spinner2_Adapter;
-    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people;
+    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people,jp_is_urgency;
     RecyclerView urgency_RecyclerView;
     RecyclerView.LayoutManager layoutManager;
     FloatingActionButton fab_btn;
@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                     field_address = new String[jsonArray_jp.length()];
                     manager_office_name = new String[jsonArray_jp.length()];
                     jp_job_tot_people = new String[jsonArray_jp.length()];
+                    jp_is_urgency = new String[jsonArray_jp.length()];
                     for(int i =0; i<jsonArray_jp.length();i++)
                     {
 
@@ -180,9 +181,10 @@ public class MainActivity extends AppCompatActivity {
                         field_address[i] = jsonArray_field.getJSONObject(i).getString("field_address");
                         manager_office_name[i] = jsonArray_manager.getJSONObject(i).getString("manager_office_name");
                         jp_job_tot_people[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_tot_people");
+                        jp_is_urgency[i] = jsonArray_jp.getJSONObject(i).getString("jp_is_urgency");
                         Log.d("mmmmmm1111111",jp_title[i]);
                         Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
-                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],"1",jp_job_tot_people[i],true));
+                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],"1",jp_job_tot_people[i],jp_is_urgency[i]));
                         urgencyAdapter.notifyDataSetChanged() ;
 
                     }
