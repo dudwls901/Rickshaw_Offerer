@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.capstone2.R;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -102,8 +103,9 @@ public class AccountAddActivity extends AppCompatActivity {
                             Log.d("mytesstt", response);
                             Log.d("mytestlocal_sido", jsonResponse.getString("local_sido"));
                             Log.d("mytestlocal_sigugun", jsonResponse.getString("local_sigugun"));
-
-                           Log.d("mytestlocal_code", jsonResponse.getString("local_code"));
+                            JSONArray jsonArray = new JSONArray(response.substring(response.indexOf("{"),response.lastIndexOf("}")+1));
+                         //  String a= jsonArray[0].getString("local_code");
+                            Log.d("mytestlocal_code", jsonResponse.getString("local_code"));
 
                         } catch (Exception e) {
                             e.printStackTrace();
