@@ -3,6 +3,7 @@ package kr.co.ilg.activity.findwork;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ import java.util.HashMap;
 
 import kr.co.ilg.activity.findwork.WritePostingRequest;
 import kr.co.ilg.activity.login.FindPasswordInfoActivity;
+import kr.co.ilg.activity.login.Sharedpreference;
 
 public class WritePostingActivity extends AppCompatActivity {
 
@@ -58,11 +60,12 @@ public class WritePostingActivity extends AppCompatActivity {
     EditText title, field_name_et, field_address_et, pay, people_num, detail_info, dateET;
     Button postingBtn, startTimeBtn, finishTimeBtn;
     ImageButton dateBtn;
+    private Context mContext;
 
     int y, m, d, timeFlag;
     String jp_is_urgency = "0";
     String job_code = "-1";
-    String jp_job_start_time, jp_job_finish_time;
+    String business_reg_num, jp_job_start_time, jp_job_finish_time;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -79,6 +82,7 @@ public class WritePostingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.write_posting);
 
+        mContext = this;
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -214,6 +218,7 @@ public class WritePostingActivity extends AppCompatActivity {
         postingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num");
                 String jp_title = title.getText().toString();
                 String jp_job_cost = pay.getText().toString();
                 String jp_job_tot_people = people_num.getText().toString();
@@ -247,7 +252,7 @@ public class WritePostingActivity extends AppCompatActivity {
                         }
                     }
                 };
-                WritePostingRequest wpRequest = new WritePostingRequest(jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
+                WritePostingRequest wpRequest = new WritePostingRequest(business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
                         field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
 
                 RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
