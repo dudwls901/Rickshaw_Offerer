@@ -242,10 +242,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //TODO 111111111111111111111111111111111직종 전체일때 리스트뷰 조지기
-                //   spinner2.setSelection(0); 스피너 초기값 주기(position)
-                //   workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3",true));
-                //php연동해서 리스트뷰에 add
 
             }
         });
@@ -285,4 +281,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
-//TODO 액션바 커스텀 (돋보기(만들고 연결), 지도(연결)) 시간되면 바텀네비 아이콘 색상도
+

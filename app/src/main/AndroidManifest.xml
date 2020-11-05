@@ -51,7 +51,7 @@
         <activity android:name="kr.co.ilg.activity.findwork.FieldInfoActivity" android:label="현장 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.OfficeInfoActivity" android:label="인력사무소 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.WorkMapActivity" android:label="일자리 지도"/>
-        <activity android:name="kr.co.ilg.activity.findwork.WritePostingActivity" android:label="일자리 게시"/>
+        <activity android:name="kr.co.ilg.activity.findwork.WritePostingActivity" android:label=""/>
         <activity android:name="kr.co.ilg.activity.workermanage.FieldListActivity" android:label="인력 관리"/>
         <activity android:name="kr.co.ilg.activity.workermanage.FieldWorkerListActivity" android:label="인력 관리"/>
         <activity android:name="kr.co.ilg.activity.mypage.MypageMainActivity" android:label="내 정보"/>

@@ -1,15 +1,21 @@
 package kr.co.ilg.activity.findwork;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,6 +54,7 @@ import java.util.HashMap;
 import kr.co.ilg.activity.findwork.WritePostingRequest;
 import kr.co.ilg.activity.login.FindPasswordInfoActivity;
 import kr.co.ilg.activity.login.Sharedpreference;
+import kr.co.ilg.activity.mypage.WriteOfficeInfoActivity;
 
 public class WritePostingActivity extends AppCompatActivity {
 
@@ -61,6 +68,9 @@ public class WritePostingActivity extends AppCompatActivity {
     Button postingBtn, startTimeBtn, finishTimeBtn;
     ImageButton dateBtn;
     private Context mContext;
+    public WebView webView;
+    private Handler handler;
+
 
     int y, m, d, timeFlag;
     String jp_is_urgency = "0";
@@ -103,6 +113,11 @@ public class WritePostingActivity extends AppCompatActivity {
         startTimeBtn = findViewById(R.id.startTimeBtn);
         finishTimeBtn = findViewById(R.id.finishTimeBtn);
         spinner_job=findViewById(R.id.job);
+        // WebView 초기화
+        init_webView();
+//
+//        // 핸들러를 통한 JavaScript 이벤트 반응
+        handler = new Handler();
 
         // 직종 가져오기
         Response.Listener rListener1 = new Response.Listener<String>() {  // Generics를 String타입으로 한정
@@ -141,6 +156,29 @@ public class WritePostingActivity extends AppCompatActivity {
         LoadJobRequest ljRequest = new LoadJobRequest(rListener1);
         RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
         queue.add(ljRequest);
+
+
+
+        field_address_et.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              final  AlertDialog.Builder dlg = new AlertDialog.Builder(WritePostingActivity.this);
+
+                webView.setVisibility(View.VISIBLE);
+//                dlg.setView(juso_diaolg);
+//         //       Log.e("wwwwwwwwwwwwww",juso_diaolg.toString());
+//                dlg.setTitle("현장 주소 입력");
+//
+//                dlg.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+
+
+            }
+        });
 
         // 직종 스피너 제어어
        spinner_job.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -261,6 +299,8 @@ public class WritePostingActivity extends AppCompatActivity {
         });
     }
 
+
+
     // 출퇴근 시간 TimePicker 리스너
     private TimePickerDialog.OnTimeSetListener tpListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
@@ -275,6 +315,47 @@ public class WritePostingActivity extends AppCompatActivity {
             }
         }
     };
+
+    public void init_webView() {
+        // WebView 설정
+        webView = (WebView)findViewById(R.id.webView);
+
+        // JavaScript 허용
+        webView.getSettings().setJavaScriptEnabled(true);
+        // JavaScript의 window.open 허용
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
+        // 두 번째 파라미터는 사용될 php에도 동일하게 사용해야함
+        webView.addJavascriptInterface(new WritePostingActivity.AndroidBridge(), "TestApp");
+        // web client 를 chrome 으로 설정
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onCloseWindow(WebView window)
+            {
+
+            }
+        });
+        // webview url load
+        webView.loadUrl("http://rickshaw.dothome.co.kr/getAddress.php");
+    }
+
+
+    private class AndroidBridge {
+        @JavascriptInterface
+        public void setAddress(final String arg1, final String arg2, final String arg3) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    field_address_et.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
+                    webView.setVisibility(View.GONE);
+                    // WebView를 초기화 하지않으면 재사용할 수 없음
+                    init_webView();
+                }
+            });
+        }
+    }
+
+
 }
 /*
     // 직종 불러오기
