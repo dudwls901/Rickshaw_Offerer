@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);
         mContext = this;
-        Log.d("1234567",Sharedpreference.get_business_reg_num(mContext,"business_reg_num"));
+
 
 
         spinner_who_array = new ArrayList();
@@ -278,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.tab2: {
 
                         intent = new Intent(MainActivity.this, FieldListActivity.class);
+                        intent.putExtra("business_reg_num",Sharedpreference.get_business_reg_num(mContext,"business_reg_num"));
                         startActivity(intent);
                         return false;
                     }
