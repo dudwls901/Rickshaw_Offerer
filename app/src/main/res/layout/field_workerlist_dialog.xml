@@ -13,19 +13,21 @@
             android:layout_height="70dp"
             android:layout_marginLeft="70dp"
             android:gravity="center"
-            android:text="출근 완료"
+            android:text="출근 X"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:id="@+id/in_tv"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_marginLeft="80dp"
             android:gravity="center"
-            android:text="퇴근 완료"
+            android:text="퇴근 X"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
-
+            android:id="@+id/out_tv"
             />
     </LinearLayout>
 

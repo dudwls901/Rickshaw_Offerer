@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import kr.co.ilg.activity.login.Sharedpreference;
 import kr.co.ilg.activity.mypage.MypageMainActivity;
 import kr.co.ilg.activity.workermanage.FieldListActivity;
 
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner_who, spinner1, spinner2;
     ArrayList spinner_who_array, spinner1_array, spinner2_array;
     ArrayAdapter spinner_who_Adapter, spinner1_Adapter, spinner2_Adapter;
-    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people,jp_is_urgency,apply_count;
+    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people,jp_is_urgency,apply_count,jp_job_start_time,jp_job_finish_time,jp_contents;
     RecyclerView urgency_RecyclerView;
     RecyclerView.LayoutManager layoutManager;
     FloatingActionButton fab_btn;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     String selectjob_name;
     ListAdapter urgencyAdapter;
     ArrayList<ListViewItem> workInfoArrayList;
+    Context mContext;
     @Override
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
         spinner_who = findViewById(R.id.spinner_who);
         spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);
+        mContext = this;
+        Log.d("1234567",Sharedpreference.get_business_reg_num(mContext,"business_reg_num"));
+
 
         spinner_who_array = new ArrayList();
         spinner1_array = new ArrayList();
@@ -173,6 +179,10 @@ public class MainActivity extends AppCompatActivity {
                     jp_job_tot_people = new String[jsonArray_jp.length()];
                     jp_is_urgency = new String[jsonArray_jp.length()];
                     apply_count = new String[jsonArray_jp.length()];
+                    jp_job_start_time = new String[jsonArray_jp.length()];
+                    jp_job_finish_time = new String[jsonArray_jp.length()];
+                    jp_contents = new String[jsonArray_jp.length()];
+
                     for(int i =0; i<jsonArray_jp.length();i++)
                     {
                         Log.d("mmmmmmmmmmmmmmmmmmmmm",String.valueOf(jsonArray_jp.length()));
@@ -185,9 +195,12 @@ public class MainActivity extends AppCompatActivity {
                         jp_job_tot_people[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_tot_people");
                         jp_is_urgency[i] = jsonArray_jp.getJSONObject(i).getString("jp_is_urgency");
                         apply_count[i] = jsonArray_apply.getJSONObject(i).getString("COUNT(*)");
+                        jp_job_start_time[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_start_time");
+                        jp_job_finish_time[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_finish_time");
+                        jp_contents[i] = jsonArray_jp.getJSONObject(i).getString("jp_contents");
  //                       Log.d("mmmmmm1111111",jp_title[i]);
  //                       Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
-                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i]));
+                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i],jp_job_start_time[i],jp_job_finish_time[i],jp_contents[i]));
                         urgencyAdapter.notifyDataSetChanged() ;
   //                      Log.d("aaaaaaaaaaaaaaaaaaaa",apply_count[i]);
  //                       Log.d("aaaaaaaaaaaaaaaaaaaa",jsonArray_apply.getJSONObject(i).toString());

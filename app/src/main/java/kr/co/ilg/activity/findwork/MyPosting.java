@@ -1,8 +1,11 @@
 package kr.co.ilg.activity.findwork;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import kr.co.ilg.activity.login.Sharedpreference;
 import kr.co.ilg.activity.workermanage.FieldListActivity;
 
 public class MyPosting extends AppCompatActivity {
@@ -41,7 +45,7 @@ public class MyPosting extends AppCompatActivity {
     Intent intent;
     FloatingActionButton fab_btn;
     Toolbar toolbar;
-
+    private Context mContext;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,6 +73,9 @@ public class MyPosting extends AppCompatActivity {
         setContentView(R.layout.myposting);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mContext=this;
+
+
 
         spinner_who=findViewById(R.id.spinner_who);
         spinner_who_array=new ArrayList();
@@ -83,9 +90,8 @@ public class MyPosting extends AppCompatActivity {
         urgency_RecyclerView.setLayoutManager(layoutManager);
 
         final ArrayList<ListViewItem> workInfoArrayList=new ArrayList<>();
-        workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3","1"));
-        workInfoArrayList.add(new ListViewItem("해모로 아파트 건축","2020-06-17","130,000","건축","광흥창 해모로 아파트","베짱이인력소","2","4","0"));
-
+        workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3","1","1","1","1"));
+        workInfoArrayList.add(new ListViewItem("해모로 아파트 건축","2020-06-17","130,000","건축","광흥창 해모로 아파트","베짱이인력소","2","4","0","1","1","1"));
 
         mypostAdapter urgencyAdapter=new mypostAdapter(getApplicationContext(),workInfoArrayList);
         urgency_RecyclerView.setAdapter(urgencyAdapter);

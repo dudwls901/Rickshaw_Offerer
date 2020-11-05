@@ -87,6 +87,10 @@ Context context;
                 dlg.setView(dialogView);
                 btnPay = dialogView.findViewById(R.id.btnPay);
                 btnReview = dialogView.findViewById(R.id.btnReview);
+               //TODO 디비읽어서 TEXT 출근 완료,퇴근 완료로 바꾸기
+                TextView in_tv = dialogView.findViewById(R.id.in_tv);
+                TextView out_tv = dialogView.findViewById(R.id.out_tv);
+
 
                 dlg.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
                     @Override
