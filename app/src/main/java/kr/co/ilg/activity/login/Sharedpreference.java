@@ -125,6 +125,28 @@ public class Sharedpreference {
         String value = prefs.getString(key, "managerinfo");
         return value;
     } // 은행이름 저장
+    public static void set_local_sido(Context context, String key, String value) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+
+    }public static String get_local_sido(Context context, String key) {
+        SharedPreferences prefs = getPreferences(context);
+        String value = prefs.getString(key, "managerinfo");
+        return value;
+    } // 한줄소개 저장
+    public static void set_local_sigugun(Context context, String key, String value) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+
+    }public static String get_local_sigugun(Context context, String key) {
+        SharedPreferences prefs = getPreferences(context);
+        String value = prefs.getString(key, "managerinfo");
+        return value;
+    } // 한줄소개 저장
 
 
     public static void set_manager_bankname(Context context, String key, String value) {

@@ -2,12 +2,12 @@ package kr.co.ilg.activity.findwork;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,13 +17,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
@@ -40,7 +44,7 @@ import kr.co.ilg.activity.login.Sharedpreference;
 import kr.co.ilg.activity.mypage.MypageMainActivity;
 import kr.co.ilg.activity.workermanage.FieldListActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Spinner spinner_who, spinner1, spinner2;
     ArrayList spinner_who_array, spinner1_array, spinner2_array;
@@ -56,6 +60,37 @@ public class MainActivity extends AppCompatActivity {
     ListAdapter urgencyAdapter;
     ArrayList<ListViewItem> workInfoArrayList;
     Context mContext;
+    String local_sido="", local_sigugun="";
+    final String[][] arrayList1 = {{},{"종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구"}
+            , {"중구", "서구", "동구", "영도구", "부산진구", "동래구", "남구", "북구", "해운대구", "사하구", "금정구", "강서구", "연제구", "수영구", "사상구", "기장군"}
+            , {"중구", "서구", "동구", "남구", "북구", "수성구", "달서구", "달성군"}
+            , {"중구", "동구", "남구", "연수구", "남동구", "부평구", "계양구", "서구", "미추홀구", "강화군", "옹진군"}
+            , {"중구", "서구", "동구", "유성구", "대덕구"}
+            , {"동구", "서구", "남구", "북구", "광산구"}
+            , {"중구", "남구", "동구", "북구", "울주군"}
+            , {"세종시"}
+            , {"수원시", "성남시", "의정부시", "안양시", "부천시", "광명시", "평택시", "동두천시", "안산시", "고양시", "과천시", "구리시", "남양주시", "오산시", "시흥시", "군포시", "의왕시", "하남시", "용인시", "파주시", "이천시", "안성시", "김포시", "화성시", "광주시", "양주시", "포천시", "여주시", "경기 여주군", "연천군", "가평군", "양평군"}
+            , {"춘천시", "원주시", "강릉시", "동해시", "태백시", "속초시", "삼척시", "홍천군", "횡성군", "영월군", "평창군", "정선군", "철원군", "화천군", "양구군", "인제군", "고성군", "양양군"}
+            , {"청주시", "충주시", "제천시", "청주시", "청원군", "보은군", "옥천군", "영동군", "진천군", "괴산군", "음성군", "단양군", "증평군"}
+            , {"천안시", "공주시", "보령시", "아산시", "서산시", "논산시", "계룡시", "당진시", "금산군", "연기군", "부여군", "서천군", "청양군", "홍성군", "예산군", "태안군", "당진군"}
+            , {"전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군"}
+            , {"목포시", "여수시", "순천시", "나주시", "광양시", "담양군", "곡성군", "구례군", "고흥군", "보성군", "화순군", "장흥군", "강진군", "해남군", "영암군", "무안군", "함평군", "영광군", "장성군", "완도군", "진도군", "신안군"}
+            , {"포항시", "경주시", "김천시", "안동시", "구미시", "영주시", "영천시", "상주시", "문경시", "경산시", "군위군", "의성군", "청송군", "영양군", "영덕군", "청도군", "고령군", "성주군", "칠곡군", "예천군", "봉화군", "울진군", "울릉군"}
+            , {"창원시", "마산시", "진해시", "통영시", "사천시", "김해시", "밀양시", "거제시", "양산시", "의령군", "함안군", "창녕군", "고성군", "남해군", "하동군", "산청군", "함양군", "거창군", "합천군"}
+            , {"제주시", "서귀포시"}
+    };
+    Button resetjobpost;
+    View dialogview, dialogview1;
+    TextView sltTV1;
+    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16;
+    Button[] job = {null,btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16};
+    int[] jobid = {0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9, R.id.btn10, R.id.btn11,
+            R.id.btn12, R.id.btn13, R.id.btn14, R.id.btn15, R.id.btn16};
+    int check[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0};
+    int[] job_code= new int[]{0, 0, 0};;
+    String jobs = "";
+    int q=0, w=0,i,k,a, j=0;
+    String business_reg_num;
     @Override
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,19 +125,151 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         spinner_who = findViewById(R.id.spinner_who);
-        spinner1 = findViewById(R.id.spinner1);
-        spinner2 = findViewById(R.id.spinner2);
+        /*spinner1 = findViewById(R.id.spinner1);
+        spinner2 = findViewById(R.id.spinner2);*/
         mContext = this;
+
+        local_sido = Sharedpreference.get_local_sido(mContext,"local_sido");
+        local_sigugun = Sharedpreference.get_local_sigugun(mContext,"local_sigugun");
+        business_reg_num = Sharedpreference.get_business_reg_num(mContext,"business_reg_num");
+
+        resetjobpost = findViewById(R.id.resetjobpost); // 선택버튼
+
+        dialogview = (View) View.inflate(MainActivity.this, R.layout.localdialog, null); // 로컬다이얼로그 띄우기용 뷰 인플레이션
+
+        dialogview1 = (View) View.inflate(MainActivity.this, R.layout.jobdialog, null); // 잡 다이얼로그 띄우기용 뷰 인플레이션
+        for (i = 1; i < 17; i++) {
+            job[i] =  dialogview1.findViewById(jobid[i]);
+            job[i].setOnClickListener(this);
+        } // 잡 다이얼로그 속 버튼들 인플레이션
+
+        sltTV1 = dialogview1.findViewById(R.id.sltTV); // 잡다이얼로그 속 상단 텍스트뷰 인플레이션
+        TextView sltTV = dialogview.findViewById(R.id.sltTV); // ***
+
+        ListView listview = dialogview.findViewById(R.id.listview);
+        ListView listview1 = dialogview.findViewById(R.id.listview1); // 로컬 다이얼로그 속 로컬 리스트 뷰 인플레이션
+
+        TextView localsetting = findViewById(R.id.localsetting); // 메인액티비티 로컬선택 다이얼로그 - 버튼으로 하면 크기가 너무 커서 텍스트로했음
+        TextView jobsetting = findViewById(R.id.jobsetting); // ***
+
+        localsetting.setText(Sharedpreference.get_local_code(mContext,"local_sido")+" "+Sharedpreference.get_local_code(mContext,"local_sigugun"));
+        // 첫 액티비티 들어갔을 때 초기값 설정
+
+        jobsetting.setText("선택안함");
+        // ***
+
+
+        ///////////////잡다이얼로그 값 넣기 부분 및 클릭 시 값띄우기 부분
+        final String[] arrayList = {"전체","서울", "부산", "대구", "인천", "대전", "광주", "울산", "세종", "경기",
+                "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"}; // 첫번째 지역선택에 들어갈 배열
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayList); // Adapter 생성
+        listview.setAdapter(adapter); //Adapter 연결
+        listview.setSelection(0); // 첫 인덱스 설정
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                local_sido = arrayList[position];
+                sltTV.setText(arrayList[position]); // 선택한 지역 상단에 띄우기
+                k = position;
+                q=1; w=0; // local_sido만 선택했을시 제어할 변수
+
+                ArrayAdapter adapter2 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, arrayList1[position]); // Adapter 생성
+                listview1.setAdapter(adapter2); //Adapter 연결
+                listview1.setSelection(0); // 첫 인덱스 설정
+
+                listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        w=1;
+                        if(local_sido != "전체") {
+                            local_sigugun = arrayList1[k][position];
+                            sltTV.setText(local_sido + " " + local_sigugun);
+                        }
+                        else local_sigugun="";
+                    }
+                });
+            }
+        });
+
+        localsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                android.app.AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+                dlg.setTitle("지역 설정");
+                if(dialogview.getParent() != null) {
+                    ((ViewGroup)dialogview.getParent()).removeView(dialogview);
+                }
+                dlg.setView(dialogview); ////////////////다이얼로그 몇 번 더 띄울시 충돌 방지용
+
+                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(q==1 && w==1) {
+                            localsetting.setText(local_sido + " " + local_sigugun);
+                        }
+                        else if(q==1 && w==0){
+                            localsetting.setText(local_sido);
+                        }
+                    }
+                });
+                dlg.setNegativeButton("취소", null);
+                dlg.show();
+            }
+        });
+
+
+
+        ////////////////////////////////잡다이얼로그 들어가서 선택 후 값 띄우기
+        jobsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+                dlg.setTitle("직종 설정");
+                if(dialogview1.getParent() != null) {
+                    ((ViewGroup)dialogview1.getParent()).removeView(dialogview1); // <- fix
+                }
+                dlg.setView(dialogview1);
+
+                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int j=0;
+                        String text2="";
+                        String text3="";
+                        for(int i=1; i<17; i++){
+                            if(check[i]==1)
+                                j++;
+                        }
+                        if(j>0) {
+                            String jobs1[] = jobs.split(" ");
+                            for (int i = 0; i < jobs1.length; i++) {
+                                text2 = jobs1[i] + " " + text2;
+                            }
+                        }
+                        if(a==0){
+                            jobsetting.setText("선택안함");
+                        }
+                        else jobsetting.setText(text2);
+                    }
+                });
+                dlg.setNegativeButton("취소", null);
+
+                dlg.show();
+
+            }
+        });
 
 
 
         spinner_who_array = new ArrayList();
-        spinner1_array = new ArrayList();
-        spinner2_array = new ArrayList();
+        /*spinner1_array = new ArrayList();
+        spinner2_array = new ArrayList();*/
 
         spinner_who_array.add("                                         전체");
         spinner_who_array.add("                                       내 구인글");
-        spinner1_array.add("서울 마포구");
+        /*spinner1_array.add("서울 마포구");
         spinner2_array.add("전체");
         spinner2_array.add("보통인부");
         spinner2_array.add("목공");
@@ -118,16 +285,16 @@ public class MainActivity extends AppCompatActivity {
         spinner2_array.add("타일공");
         spinner2_array.add("경계석공");
         spinner2_array.add("청소");
-        spinner2_array.add("칸막이");
+        spinner2_array.add("칸막이");*/
 
 
         spinner_who_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_who_array);
-        spinner1_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner1_array);
-        spinner2_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner2_array);
+        /*spinner1_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner1_array);
+        spinner2_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner2_array);*/
 
         spinner_who.setAdapter(spinner_who_Adapter);
-        spinner1.setAdapter(spinner1_Adapter);
-        spinner2.setAdapter(spinner2_Adapter);
+        /*spinner1.setAdapter(spinner1_Adapter);
+        spinner2.setAdapter(spinner2_Adapter);*/
 
         urgency_RecyclerView = findViewById(R.id.list_urgency);
         urgency_RecyclerView.setHasFixedSize(true);
@@ -138,6 +305,8 @@ public class MainActivity extends AppCompatActivity {
          workInfoArrayList = new ArrayList<>();
         urgencyAdapter = new ListAdapter(getApplicationContext(), workInfoArrayList);
         urgency_RecyclerView.setAdapter(urgencyAdapter);
+
+
 
         Response.Listener responseListener = new Response.Listener<String>() {
             @Override
@@ -212,10 +381,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        SelectJopPosting selectJopPosting = new SelectJopPosting("2", responseListener);
+
+        /////////////////////////메인 액티비티 들어가자마자 띄울 구인글들 REQUEST
+        SelectJopPosting selectJopPosting = new SelectJopPosting(local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         queue.add(selectJopPosting);
-//                Log.d("aaaaaaaaa",jp_title[0]);
+
+        ////////////////////////////선택누를 시 띄울 구인글들
+        resetjobpost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectJopPosting mainRequest = new SelectJopPosting(local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);  // Request 처리 클래스
+                Log.d("asdfasdfasdfasdf",local_sido+" "+local_sigugun+" "+job_code[0]+" "+job_code[1]+" "+job_code[2]);
+                mainRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                        0,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)); ////////값띄울때 충돌방지용
+
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
+                queue.add(mainRequest);
+            }
+        });
 
 
         fab_btn = findViewById(R.id.fab_btn);
@@ -243,7 +429,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectjob_name = (String) spinner2_array.get(position);
@@ -257,11 +443,7 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
-
-
-
-
+        });*/
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
 
@@ -293,6 +475,51 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        jobs = "";
+        a=0;
+
+        for (int k = 1; k < 17; k++) {
+
+            if (jobid[k] == v.getId()) {
+                if (check[k] == 0) {
+                    j += 1;
+                    job[k].setBackground(getDrawable(R.drawable.custom_btn_mainclr));
+                    check[k] = 1;
+
+                } else {
+                    j -= 1;
+                    job[k].setBackground(getDrawable(R.drawable.custom_btn_lightclr)); // wrap 텍스트뷰 3개 만들어서 상단바 제어
+                    check[k] = 0;
+                }
+            }
+
+            if (check[k] == 1) {
+                jobs = job[k].getText().toString() + "  " + jobs;
+
+                job_code[a] = k;
+                a++;
+
+                Log.d("kkkkkkk=", String.valueOf(job_code[0])+job_code[1]+job_code[2]);
+                //경력코드는 반대로 되어있음
+            }
+
+        }
+        sltTV1.setText(jobs);
+        if (j == 3) {
+            for (int i = 1; i < 17; i++) {
+                if (check[i] == 0) job[i].setEnabled(false);
+                //토스트메세지까지
+            }
+        } else {
+            for (int i = 1; i < 17; i++) {
+                if (check[i] == 0) job[i].setEnabled(true);
+            }
+        }
+
     }
 }
 

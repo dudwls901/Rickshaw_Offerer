@@ -309,7 +309,9 @@ class MainActivity : Activity() {
                     try {
                         val jResponse = JSONObject(response!!.substring(response!!.indexOf("{"), response!!.lastIndexOf("}") + 1))
                         val isExistWorker = jResponse.getBoolean("tryLogin")
+                        Log.d("=============", isExistWorker.toString());
                         if (isExistWorker) {  // 회원이 존재하면 로그인된 화면으로 넘어감
+
                             var business_reg_num = jResponse.getString("business_reg_num")
                             var manager_pw = jResponse.getString("manager_pw")
                             var manager_represent_name = jResponse.getString("manager_represent_name")
@@ -318,12 +320,16 @@ class MainActivity : Activity() {
                             var manager_office_address = jResponse.getString("manager_office_address")
                             var manager_name = jResponse.getString("manager_name")
                             var local_code = jResponse.getString("local_code")
+                            var local_sido = jResponse.getString("local_sido")
+                            var local_sigugun = jResponse.getString("local_sigugun")
                             var manager_phonenum = jResponse.getString("manager_phonenum")
                             var manager_bankname = jResponse.getString("manager_bankname")
                             var manager_office_info = jResponse.getString("manager_office_info")
 
 
                             Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num)
+                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido)
+                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun)
                             Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw)
                             Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name)
                             Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name)
@@ -339,7 +345,7 @@ class MainActivity : Activity() {
                             //Sharedpreference.set_Hope_local_sigugun(applicationContext(), "hope_local_sigugun", hope_local_sigugun)// 파일에 맵핑형식으로 저장
 
                             intent() //
-                            //Toast.makeText(FindPasswordInfoActivity.this, "등록된 "+worker_pw, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this@MainActivity, "로그인성공", Toast.LENGTH_SHORT).show();
                         } else {  // 회원이 존재하지 않는다면
                             Toast.makeText(this@MainActivity, "로그인실패", Toast.LENGTH_SHORT).show();
                         }
