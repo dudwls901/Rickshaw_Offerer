@@ -90,8 +90,8 @@ public class MyPosting extends AppCompatActivity {
         urgency_RecyclerView.setLayoutManager(layoutManager);
 
         final ArrayList<ListViewItem> workInfoArrayList=new ArrayList<>();
-        workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3","1","1","1","1"));
-        workInfoArrayList.add(new ListViewItem("해모로 아파트 건축","2020-06-17","130,000","건축","광흥창 해모로 아파트","베짱이인력소","2","4","0","1","1","1"));
+        workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","건축","상수 레미안 아파트","개미인력소","1","3","1","1","1","1","1"));
+        workInfoArrayList.add(new ListViewItem("해모로 아파트 건축","2020-06-17","130,000","건축","광흥창 해모로 아파트","베짱이인력소","2","4","0","1","1","1","1"));
 
         mypostAdapter urgencyAdapter=new mypostAdapter(getApplicationContext(),workInfoArrayList);
         urgency_RecyclerView.setAdapter(urgencyAdapter);
