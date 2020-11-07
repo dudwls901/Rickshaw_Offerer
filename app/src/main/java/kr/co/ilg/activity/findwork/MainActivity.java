@@ -416,7 +416,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
-//TODO 1111111111111111111111111111111111111111111111111111111111111111111111111111111111
+
         spinner_who.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override   // position 으로 몇번째 것이 선택됬는지 값을 넘겨준다
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
