@@ -70,11 +70,14 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
         people_tv.setText(jp_job_tot_people+"명");
         contents_tv.setText(jp_contents);
 
-        if(!business_reg_num.equals(Sharedpreference.get_business_reg_num(mContext,"business_reg_num")))
+        if(business_reg_num.equals(Sharedpreference.get_business_reg_num(mContext,"business_reg_num")))
+        {
+
+        }else
         {
             rectify_btn.setVisibility(View.INVISIBLE);
-
         }
+
 
 
         map_btn.setOnClickListener(new View.OnClickListener() {

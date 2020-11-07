@@ -13,18 +13,32 @@ public class SelectJopPosting extends StringRequest {
     private Map<String, String> parameters;
 
     //요청                클라이언트로 전송할 데이터(userID)
-    public SelectJopPosting(String local_sido, String local_sigugun, int phptext,int phptext1,int phptext2, Response.Listener<String> listener){ //생성자 부분이라 콜백메소드는 생략
+    public SelectJopPosting(String key, String business_reg_num_MY,String local_sido, String local_sigugun, int phptext,int phptext1,int phptext2, Response.Listener<String> listener){ //생성자 부분이라 콜백메소드는 생략
         // data            응답 처리 리스너
         super(Method.POST, URL, listener, null); //super로 가독성을 업!
 
 
         //데이터들
         parameters = new HashMap<>();
+        parameters.put("key",key);
+        parameters.put("business_reg_num_MY", business_reg_num_MY);
         parameters.put("local_sido", local_sido);
         parameters.put("local_sigugun", local_sigugun);
         parameters.put("jobname0", String.valueOf(phptext));
         parameters.put("jobname1", String.valueOf(phptext1));
         parameters.put("jobname2", String.valueOf(phptext2));
+        //   parameters.put("jp_num", jp_num); //데이터 넣기  ≒ putextra
+    }
+
+    public SelectJopPosting(String key, String search_text, Response.Listener<String> listener){ //생성자 부분이라 콜백메소드는 생략
+        // data            응답 처리 리스너
+        super(Method.POST, URL, listener, null); //super로 가독성을 업!
+
+
+        //데이터들
+        parameters = new HashMap<>();
+        parameters.put("key",key);
+        parameters.put("search_text",search_text);
         //   parameters.put("jp_num", jp_num); //데이터 넣기  ≒ putextra
     }
 

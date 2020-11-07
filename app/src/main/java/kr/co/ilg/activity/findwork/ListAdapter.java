@@ -1,10 +1,13 @@
 package kr.co.ilg.activity.findwork;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,7 +18,12 @@ import com.example.capstone2.R;
 
 import java.util.ArrayList;
 
+import kr.co.ilg.activity.login.Sharedpreference;
+
 public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    View dialogView;
+    Button btnWorkInfo, btnSupply, btnPick;
+    Intent intent;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView title,date,pay,job,place,office,current_people,total_people;
@@ -75,23 +83,81 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
 
+        // business_reg_num 비교해서 내 구인글이면 다이얼로그 띄우고
+        // 남의 글이면 workinfo액티비티
         myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Context context=view.getContext();
-                Intent intent=new Intent(context,WorkInfoActivity.class);
-                intent.putExtra("jp_title",workInfo.get(position).title);
-                intent.putExtra("field_address",workInfo.get(position).place);
-                intent.putExtra("manager_office_name",workInfo.get(position).office);
-                intent.putExtra("job_name",workInfo.get(position).job);
-                intent.putExtra("jp_job_cost",workInfo.get(position).pay);
-                intent.putExtra("jp_job_date",workInfo.get(position).date);
-                intent.putExtra("jp_job_start_time",workInfo.get(position).jp_job_start_time);
-                intent.putExtra("jp_job_finish_time",workInfo.get(position).jp_job_finish_time);
-                intent.putExtra("jp_job_tot_people",workInfo.get(position).total_people);
-                intent.putExtra("jp_contents",workInfo.get(position).jp_contents);
-                intent.putExtra("business_reg_num",workInfo.get(position).business_reg_num);
-                context.startActivity(intent);
+
+                context = view.getContext();
+                if(workInfo.get(position).business_reg_num.equals(Sharedpreference.get_business_reg_num(context,"business_reg_num")))
+                {
+                    final AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                    dialogView = View.inflate(context, R.layout.myworkwritingdialog, null);
+                    dlg.setView(dialogView);
+                    btnWorkInfo = dialogView.findViewById(R.id.btnWorkInfo);
+                    btnSupply = dialogView.findViewById(R.id.btnSupply);
+                    btnPick = dialogView.findViewById(R.id.btnPick);
+                    dlg.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    btnWorkInfo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Context context = v.getContext();
+                            Intent intent = new Intent(context, WorkInfoActivity.class);
+                            intent.putExtra("jp_title", workInfo.get(position).title);
+                            intent.putExtra("field_address", workInfo.get(position).place);
+                            intent.putExtra("manager_office_name", workInfo.get(position).office);
+                            intent.putExtra("job_name", workInfo.get(position).job);
+                            intent.putExtra("jp_job_cost", workInfo.get(position).pay);
+                            intent.putExtra("jp_job_date", workInfo.get(position).date);
+                            intent.putExtra("jp_job_start_time", workInfo.get(position).jp_job_start_time);
+                            intent.putExtra("jp_job_finish_time", workInfo.get(position).jp_job_finish_time);
+                            intent.putExtra("jp_job_tot_people", workInfo.get(position).total_people);
+                            intent.putExtra("jp_contents", workInfo.get(position).jp_contents);
+                            intent.putExtra("business_reg_num", workInfo.get(position).business_reg_num);
+                            context.startActivity(intent);
+                        }
+                    });
+                    btnSupply.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            context = v.getContext();
+                            intent = new Intent(context, ApplyStateActivity.class);
+                            context.startActivity(intent);
+                        }
+                    });
+                    btnPick.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            context = v.getContext();
+                            intent = new Intent(context, PickStateActivity.class);
+                            context.startActivity(intent);
+                        }
+                    }); dlg.show();
+                }
+                //내 구인글이 아닐 때
+               else {
+
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, WorkInfoActivity.class);
+                    intent.putExtra("jp_title", workInfo.get(position).title);
+                    intent.putExtra("field_address", workInfo.get(position).place);
+                    intent.putExtra("manager_office_name", workInfo.get(position).office);
+                    intent.putExtra("job_name", workInfo.get(position).job);
+                    intent.putExtra("jp_job_cost", workInfo.get(position).pay);
+                    intent.putExtra("jp_job_date", workInfo.get(position).date);
+                    intent.putExtra("jp_job_start_time", workInfo.get(position).jp_job_start_time);
+                    intent.putExtra("jp_job_finish_time", workInfo.get(position).jp_job_finish_time);
+                    intent.putExtra("jp_job_tot_people", workInfo.get(position).total_people);
+                    intent.putExtra("jp_contents", workInfo.get(position).jp_contents);
+                    intent.putExtra("business_reg_num", workInfo.get(position).business_reg_num);
+                    context.startActivity(intent);
+                }
             }
         });
     }

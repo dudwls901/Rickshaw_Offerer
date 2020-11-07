@@ -46,6 +46,7 @@ import kr.co.ilg.activity.workermanage.FieldListActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    Response.Listener responseListener;
     Spinner spinner_who, spinner1, spinner2;
     ArrayList spinner_who_array, spinner1_array, spinner2_array;
     ArrayAdapter spinner_who_Adapter, spinner1_Adapter, spinner2_Adapter;
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toolbar toolbar;
     String selectjob_name;
     ListAdapter urgencyAdapter;
-    ArrayList<ListViewItem> workInfoArrayList;
     Context mContext;
     String local_sido="", local_sigugun="";
     final String[][] arrayList1 = {{},{"종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구"}
@@ -99,7 +99,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         menuInflater.inflate(R.menu.menu_maintop, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("qqqqqqqqqqq",query);
+                SelectJopPosting searchView_req = new SelectJopPosting("0",query, responseListener);  // Request 처리 클래스
+                searchView_req.setRetryPolicy(new DefaultRetryPolicy(
+                        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                        0,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)); ////////값띄울때 충돌방지용
 
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
+                queue.add(searchView_req);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("qqqqqqqqqnewtext", newText);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -131,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         local_sido = Sharedpreference.get_local_sido(mContext,"local_sido");
         local_sigugun = Sharedpreference.get_local_sigugun(mContext,"local_sigugun");
-        business_reg_num_MY = Sharedpreference.get_business_reg_num(mContext,"business_reg_num");
+        business_reg_num_MY = "0";
 
         resetjobpost = findViewById(R.id.resetjobpost); // 선택버튼
 
@@ -186,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             local_sigugun = arrayList1[k][position];
                             sltTV.setText(local_sido + " " + local_sigugun);
                         }
-                        else local_sigugun="";
+                        else local_sigugun="0";
                     }
                 });
             }
@@ -264,56 +284,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         spinner_who_array = new ArrayList();
-        /*spinner1_array = new ArrayList();
-        spinner2_array = new ArrayList();*/
 
         spinner_who_array.add("                                         전체");
         spinner_who_array.add("                                       내 구인글");
-        /*spinner1_array.add("서울 마포구");
-        spinner2_array.add("전체");
-        spinner2_array.add("보통인부");
-        spinner2_array.add("목공");
-        spinner2_array.add("콘크리트공");
-        spinner2_array.add("미장/조적공");
-        spinner2_array.add("용접공");
-        spinner2_array.add("설비공");
-        spinner2_array.add("전기공");
-        spinner2_array.add("작업팀장");
-        spinner2_array.add("철근공");
-        spinner2_array.add("비계공");
-        spinner2_array.add("철거/할석공");
-        spinner2_array.add("타일공");
-        spinner2_array.add("경계석공");
-        spinner2_array.add("청소");
-        spinner2_array.add("칸막이");*/
+
 
 
         spinner_who_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_who_array);
-        /*spinner1_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner1_array);
-        spinner2_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner2_array);*/
+
 
         spinner_who.setAdapter(spinner_who_Adapter);
-        /*spinner1.setAdapter(spinner1_Adapter);
-        spinner2.setAdapter(spinner2_Adapter);*/
+
 
         urgency_RecyclerView = findViewById(R.id.list_urgency);
         urgency_RecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        urgency_RecyclerView.setLayoutManager(layoutManager);
-
-
-         workInfoArrayList = new ArrayList<>();
-        urgencyAdapter = new ListAdapter(getApplicationContext(), workInfoArrayList);
-        urgency_RecyclerView.setAdapter(urgencyAdapter);
 
 
 
-        Response.Listener responseListener = new Response.Listener<String>() {
+
+         responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {
-
+                    Log.d("qwer",response);
                     int index_search_start;
                     int index_search_end;
                     JSONArray jsonArray_jp = new JSONArray(response.substring(response.indexOf("["),response.indexOf("]")+1));
@@ -338,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    Log.d("mmm",jsonArray_field.getJSONObject(2).toString());
 //                    Log.d("mmm",jsonArray_manager.getJSONObject(2).toString());
 //                    Log.d("mmm",jsonArray_job.getJSONObject(2).toString());
-
+                   final  ArrayList<ListViewItem> workInfoArrayList = new ArrayList<>();
                     jp_title = new String[jsonArray_jp.length()];
                     jp_job_date = new String[jsonArray_jp.length()];
                     jp_job_cost = new String[jsonArray_jp.length()];
@@ -371,20 +366,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
  //                       Log.d("mmmmmm1111111",jp_title[i]);
  //                       Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
                         workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i],jp_job_start_time[i],jp_job_finish_time[i],jp_contents[i],business_reg_num[i]));
-                        urgencyAdapter.notifyDataSetChanged() ;
+
   //                      Log.d("aaaaaaaaaaaaaaaaaaaa",apply_count[i]);
  //                       Log.d("aaaaaaaaaaaaaaaaaaaa",jsonArray_apply.getJSONObject(i).toString());
                     }
 //                    Log.d("aaaaaaaaa",jp_title[0]);
+                    urgency_RecyclerView.setLayoutManager(layoutManager);
+                    urgencyAdapter = new ListAdapter(getApplicationContext(), workInfoArrayList);
+                    urgency_RecyclerView.setAdapter(urgencyAdapter);
+                    urgencyAdapter.notifyDataSetChanged() ;
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("mytest35555555", e.toString());
                 }
+
             }
         };
 
         /////////////////////////메인 액티비티 들어가자마자 띄울 구인글들 REQUEST
-        SelectJopPosting selectJopPosting = new SelectJopPosting(local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);
+        Log.d("444444444444",business_reg_num_MY+local_sido+local_sigugun+job_code[0]+job_code[1]+job_code[2]);
+        SelectJopPosting selectJopPosting = new SelectJopPosting("1",business_reg_num_MY,local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         queue.add(selectJopPosting);
 
@@ -392,7 +394,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resetjobpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SelectJopPosting mainRequest = new SelectJopPosting(local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);  // Request 처리 클래스
+                SelectJopPosting mainRequest = new SelectJopPosting("1",business_reg_num_MY,local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);  // Request 처리 클래스
                 Log.d("asdfasdfasdfasdf",local_sido+" "+local_sigugun+" "+job_code[0]+" "+job_code[1]+" "+job_code[2]);
                 mainRequest.setRetryPolicy(new DefaultRetryPolicy(
                         DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
@@ -401,6 +403,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 RequestQueue queue = Volley.newRequestQueue(MainActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
                 queue.add(mainRequest);
+
             }
         });
 
@@ -413,14 +416,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
-
+//TODO 1111111111111111111111111111111111111111111111111111111111111111111111111111111111
         spinner_who.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override   // position 으로 몇번째 것이 선택됬는지 값을 넘겨준다
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 1) {
-                    finish();
-                    Intent intent = new Intent(MainActivity.this, MyPosting.class);
-                    startActivity(intent);
+
+                     business_reg_num_MY =Sharedpreference.get_business_reg_num(mContext,"business_reg_num");
+//                    finish();
+//                    Intent intent = new Intent(MainActivity.this, MyPosting.class);
+//                    startActivity(intent);
+
+                }
+                else if(position ==0)
+                {
+                    business_reg_num_MY ="0";
+
                 }
             }
 
@@ -430,21 +441,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        /*spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectjob_name = (String) spinner2_array.get(position);
-                Log.d("job_name=", selectjob_name);
 
-
-            }
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
 
