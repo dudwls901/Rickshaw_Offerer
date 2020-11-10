@@ -128,6 +128,10 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         public void onClick(View v) {
                             context = v.getContext();
                             intent = new Intent(context, ApplyStateActivity.class);
+                            //내 아이디(스피너에 날짜안 지난것들로 add), 구인글 번호(apply테이블 select 재료), 구인글 제목(스피너에 디폴트값)
+                            intent.putExtra("business_reg_num", workInfo.get(position).business_reg_num);
+                            intent.putExtra("jp_num",workInfo.get(position).jp_num);
+                            intent.putExtra("jp_title",workInfo.get(position).title);
                             context.startActivity(intent);
                         }
                     });
@@ -136,6 +140,10 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         public void onClick(View v) {
                             context = v.getContext();
                             intent = new Intent(context, PickStateActivity.class);
+                            //내 아이디(스피너에 날짜안 지난것들로 add), 구인글 번호(apply테이블 select 재료), 구인글 제목(스피너에 디폴트값)
+                            intent.putExtra("business_reg_num", workInfo.get(position).business_reg_num);
+                            intent.putExtra("jp_num",workInfo.get(position).jp_num);
+                            intent.putExtra("jp_title",workInfo.get(position).title);
                             context.startActivity(intent);
                         }
                     }); dlg.show();

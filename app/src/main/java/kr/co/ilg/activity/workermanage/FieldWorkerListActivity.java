@@ -79,9 +79,9 @@ public class FieldWorkerListActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
         wkList = new ArrayList<>();
-        wkList.add(new PickStateRVItem(R.drawable.man, "휘뚜루", "28", "010-7385-2035"));
-        wkList.add(new PickStateRVItem(R.drawable.man, "마뚜루", "26", "010-8163-4617"));
-        wkList.add(new PickStateRVItem(R.drawable.man, "일개미", "23", "010-5127-9040"));
+        wkList.add(new PickStateRVItem(R.drawable.man, "휘뚜루", "28", "010-7385-2035",true, "abc"));
+        wkList.add(new PickStateRVItem(R.drawable.man, "마뚜루", "26", "010-8163-4617",true, "abc"));
+        wkList.add(new PickStateRVItem(R.drawable.man, "일개미", "23", "010-5127-9040",true, "abc"));
 
         myAdapter = new FieldWorkerListAdapter(getApplication(), wkList);
         mRecyclerView.setAdapter(myAdapter);

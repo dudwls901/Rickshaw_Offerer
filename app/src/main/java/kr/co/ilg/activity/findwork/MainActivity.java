@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Spinner spinner_who, spinner1, spinner2;
     ArrayList spinner_who_array, spinner1_array, spinner2_array;
     ArrayAdapter spinner_who_Adapter, spinner1_Adapter, spinner2_Adapter;
-    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people,jp_is_urgency,apply_count,jp_job_start_time,jp_job_finish_time,jp_contents,business_reg_num;
+    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people,jp_is_urgency,apply_count,jp_job_start_time,jp_job_finish_time,jp_contents,business_reg_num,jp_num;
     RecyclerView urgency_RecyclerView;
     RecyclerView.LayoutManager layoutManager;
     FloatingActionButton fab_btn;
@@ -334,6 +334,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    Log.d("mmm",jsonArray_manager.getJSONObject(2).toString());
 //                    Log.d("mmm",jsonArray_job.getJSONObject(2).toString());
                    final  ArrayList<ListViewItem> workInfoArrayList = new ArrayList<>();
+                   jp_num = new String[jsonArray_jp.length()];
                     jp_title = new String[jsonArray_jp.length()];
                     jp_job_date = new String[jsonArray_jp.length()];
                     jp_job_cost = new String[jsonArray_jp.length()];
@@ -363,9 +364,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         jp_job_finish_time[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_finish_time");
                         jp_contents[i] = jsonArray_jp.getJSONObject(i).getString("jp_contents");
                         business_reg_num[i] = jsonArray_jp.getJSONObject(i).getString("business_reg_num");
+                        jp_num[i] = jsonArray_jp.getJSONObject(i).getString("jp_num");
  //                       Log.d("mmmmmm1111111",jp_title[i]);
  //                       Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
-                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i],jp_job_start_time[i],jp_job_finish_time[i],jp_contents[i],business_reg_num[i]));
+                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i],jp_job_start_time[i],jp_job_finish_time[i],jp_contents[i],business_reg_num[i],jp_num[i]));
 
   //                      Log.d("aaaaaaaaaaaaaaaaaaaa",apply_count[i]);
  //                       Log.d("aaaaaaaaaaaaaaaaaaaa",jsonArray_apply.getJSONObject(i).toString());
