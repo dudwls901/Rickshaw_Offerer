@@ -363,7 +363,7 @@ public class ApplyStateActivity extends AppCompatActivity {
                         worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
                         worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
                         worker_email[i] = jsonArray_worker.getJSONObject(i).getString("worker_email");
-                        wkList.add(new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], false, worker_email[i]));
+                        wkList.add(new ApplyStateRVItem(R.drawable.user, worker_name[i], worker_birth[i], worker_phonenum[i], false, worker_email[i]));
                     }
                     pw_worker_email = new String[wklist_size];
                     pw_picked = new boolean[wklist_size];
@@ -383,7 +383,7 @@ public class ApplyStateActivity extends AppCompatActivity {
                                         worker_name[i] = jsonArray_worker.getJSONObject(i).getString("worker_name");
                                         worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
                                         worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
-                                        wkList.set(i, new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], true, worker_email[i]));
+                                        wkList.set(i, new ApplyStateRVItem(R.drawable.user, worker_name[i], worker_birth[i], worker_phonenum[i], true, worker_email[i]));
                                         //wkList.add(new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], true));
 
                                     }
@@ -392,7 +392,7 @@ public class ApplyStateActivity extends AppCompatActivity {
                                         worker_name[i] = jsonArray_worker.getJSONObject(i).getString("worker_name");
                                         worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
                                         worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
-                                        wkList.set(i, new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], false, worker_email[i]));
+                                        wkList.set(i, new ApplyStateRVItem(R.drawable.user, worker_name[i], worker_birth[i], worker_phonenum[i], false, worker_email[i]));
                                         //wkList.add(new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], true));
 
                                     }

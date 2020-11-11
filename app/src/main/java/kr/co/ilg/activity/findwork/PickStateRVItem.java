@@ -3,7 +3,7 @@ package kr.co.ilg.activity.findwork;
 public class PickStateRVItem {
 
     public int pofileIMGId;
-    public String wkName, wkAge, wkPNum, wk_email;
+    public String wkName, wkAge, wkPNum, wk_email, mf_is_choolgeun, mf_is_toigeun ,worker_bankname,worker_bankaccount,field_code;
     public boolean is_check;
 
     public PickStateRVItem(int pofileIMGId, String wkName, String wkAge, String wkPNum, boolean is_check, String wk_email){
@@ -13,5 +13,17 @@ public class PickStateRVItem {
         this.wkPNum = wkPNum;
         this.is_check = is_check;
         this.wk_email = wk_email;
+    }
+    public PickStateRVItem(int pofileIMGId, String wkName, String wkAge, String wkPNum, String wk_email, String mf_is_choolgeun, String mf_is_toigeun ,String worker_bankname, String worker_bankaccount, String field_code){
+        this.pofileIMGId = pofileIMGId;
+        this.wkName = wkName;
+        this.wkAge = wkAge;
+        this.wkPNum = wkPNum;
+        this.wk_email = wk_email;
+        this.mf_is_choolgeun = mf_is_choolgeun;
+        this.mf_is_toigeun = mf_is_toigeun;
+        this.worker_bankname =worker_bankname;
+        this.worker_bankaccount = worker_bankaccount;
+        this.field_code = field_code;
     }
 }

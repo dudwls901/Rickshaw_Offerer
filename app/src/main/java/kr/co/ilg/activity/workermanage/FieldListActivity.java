@@ -45,7 +45,7 @@ public class FieldListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     String business_reg_num_MY;
-    String[] jp_title, jp_job_date, field_address;
+    String[] jp_title, jp_job_date, field_address,jp_num;
     int y, m, d;
     Date today = null;
     Date jp_job_date_dateform = null;
@@ -104,25 +104,27 @@ public class FieldListActivity extends AppCompatActivity {
                     jp_title = new String[jsonArray_jp.length()];
                     jp_job_date = new String[jsonArray_jp.length()];
                     field_address = new String[jsonArray_jp.length()];
+                    jp_num = new String[jsonArray_jp.length()];
                     Log.d("pppppppppppp", String.valueOf(jsonArray_jp.length()));
 
                     for (int i = 0; i < jsonArray_jp.length(); i++) {
-
-                        jp_title[i] = jsonArray_jp.getJSONObject(i).getString("jp_title");
                         jp_job_date[i] = jsonArray_jp.getJSONObject(i).getString("jp_job_date");
-                        field_address[i] = jsonArray_field.getJSONObject(i).getString("field_address");
 
                         try {
                             today = dateFormat.parse(String.format("%d", y) + "-" + String.format("%02d", (m + 1)) + "-" + String.format("%02d", d));
                             jp_job_date_dateform = dateFormat.parse(jp_job_date[i]);
+                            int compare = today.compareTo(jp_job_date_dateform);
+                            if (compare >= 0) {
+                                jp_title[i] = jsonArray_jp.getJSONObject(i).getString("jp_title");
+                                field_address[i] = jsonArray_field.getJSONObject(i).getString("field_address");
+                                jp_num[i] = jsonArray_jp.getJSONObject(i).getString("jp_num");
+                                workInfoArrayList.add(new ListViewItem(jp_title[i], field_address[i], jp_job_date[i],jp_title,jp_num));
+
+                            }
                         } catch (ParseException e) {
                             Log.d("dddddateee", e.toString());
                         }
-                        int compare = today.compareTo(jp_job_date_dateform);
-                        if (compare >= 0) {
-                            workInfoArrayList.add(new ListViewItem(jp_title[i], field_address[i], jp_job_date[i]));
 
-                        }
 
                         FieldListAdapter fieldadapter = new FieldListAdapter(getApplicationContext(), workInfoArrayList);
                         recyclerView.setAdapter(fieldadapter);

@@ -133,11 +133,11 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginRight="30dp"
         android:src="@drawable/ddongplus"
-        app:fabSize="normal"
+        app:fabSize="auto"
         android:id="@+id/fab_btn"
         app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
         android:layout_marginBottom="80dp"

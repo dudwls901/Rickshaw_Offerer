@@ -65,6 +65,8 @@ Context context;
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         FieldWorkerListAdapter.MyViewHolder myViewHolder = (FieldWorkerListAdapter.MyViewHolder) holder;
 
+
+        //출퇴근, 구직자 이메일, 구직자 이름 가져오기, 지급여부
         myViewHolder.profileIV.setImageResource(wkList.get(position).pofileIMGId);
         myViewHolder.wkName.setText(wkList.get(position).wkName);
         myViewHolder.wkAge.setText(wkList.get(position).wkAge);
@@ -91,6 +93,14 @@ Context context;
                 TextView in_tv = dialogView.findViewById(R.id.in_tv);
                 TextView out_tv = dialogView.findViewById(R.id.out_tv);
 
+                if(wkList.get(position).mf_is_choolgeun.equals("1"))
+                {
+                    in_tv.setText("출근완료");
+                }
+                if(wkList.get(position).mf_is_toigeun.equals("1"))
+                {
+                    out_tv.setText("퇴근완료");
+                }
 
                 dlg.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
                     @Override
@@ -104,6 +114,11 @@ Context context;
                     public void onClick(View v) {
                         context =v.getContext();
                         intent = new Intent(context, PayActivity.class);
+                        intent.putExtra("wkName",wkList.get(position).wkName);
+                        intent.putExtra("worker_bankname",wkList.get(position).worker_bankname);
+                        intent.putExtra("worker_bankaccount",wkList.get(position).worker_bankaccount);
+                        intent.putExtra("wk_email",wkList.get(position).wk_email);
+                        intent.putExtra("field_code",wkList.get(position).field_code);
                         context.startActivity(intent);
                     }
                 });
@@ -113,22 +128,10 @@ Context context;
                     public void onClick(View v) {
 
                         context =v.getContext();
-                        final AlertDialog.Builder dlg1 = new AlertDialog.Builder(context);
-                        dialogView = View.inflate(context, R.layout.writeworkerreview_dialog, null);
-                        dlg1.setView(dialogView);
-
-                        dlg1.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                        dlg1.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });dlg1.show();
+                        intent = new Intent(context, UserReviewWriteActivity.class);
+                        intent.putExtra("worker_name",wkList.get(position).wkName);
+                        intent.putExtra("worker_email",wkList.get(position).wk_email);
+                        context.startActivity(intent);
                     }
                 });
               dlg.show();

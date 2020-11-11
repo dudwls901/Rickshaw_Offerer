@@ -38,7 +38,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import kr.co.ilg.activity.login.Sharedpreference;
 import kr.co.ilg.activity.mypage.MypageMainActivity;
@@ -57,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BottomNavigationView bottomNavigationView;
     Intent intent;
     Toolbar toolbar;
-    String selectjob_name;
     ListAdapter urgencyAdapter;
     Context mContext;
     String local_sido="", local_sigugun="";
@@ -91,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String jobs = "";
     int q=0, w=0,i,k,a, j=0;
     String business_reg_num_MY;
+    int y, m, d;
+    Date today = null;
+    Date jp_job_date_dateform = null;
     @Override
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -301,8 +307,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         layoutManager = new LinearLayoutManager(this);
 
 
-
-
+        Calendar calendar = Calendar.getInstance();
+        y = calendar.get(Calendar.YEAR);
+        m = calendar.get(Calendar.MONTH);  // m+1은 DatePickerDialog에서 해줌
+        d = calendar.get(Calendar.DAY_OF_MONTH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
          responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -324,15 +333,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     index_search_start = response.indexOf("[",index_search_start)+1;
                     index_search_end = response.indexOf("]",index_search_end)+1;
                     JSONArray jsonArray_apply = new JSONArray(response.substring(response.indexOf("[",index_search_start),response.indexOf("]",index_search_end)+1));
-//                    Log.d("mmm12345",jsonArray_job.toString());
-//                    Log.d("mmm1234",jsonArray_manager.toString());
-//                    Log.d("mmm123",jsonArray_field.toString());
-//
-//                    Log.d("mmmm",jsonArray_jp.toString());
-//                    Log.d("mmm",jsonArray_jp.getJSONObject(2).toString());
-//                    Log.d("mmm",jsonArray_field.getJSONObject(2).toString());
-//                    Log.d("mmm",jsonArray_manager.getJSONObject(2).toString());
-//                    Log.d("mmm",jsonArray_job.getJSONObject(2).toString());
+
                    final  ArrayList<ListViewItem> workInfoArrayList = new ArrayList<>();
                    jp_num = new String[jsonArray_jp.length()];
                     jp_title = new String[jsonArray_jp.length()];
@@ -369,7 +370,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         field_name[i] = jsonArray_field.getJSONObject(i).getString("field_name");
  //                       Log.d("mmmmmm1111111",jp_title[i]);
  //                       Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
-                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i],jp_job_start_time[i],jp_job_finish_time[i],jp_contents[i],business_reg_num[i],jp_num[i], field_name[i]));
+
+                        try {
+                            today = dateFormat.parse(String.format("%d", y) + "-" + String.format("%02d", (m + 1)) + "-" + String.format("%02d", d));
+                            jp_job_date_dateform = dateFormat.parse(jp_job_date[i]);
+                        } catch (ParseException e) {
+                            Log.d("dddddateee", e.toString());
+                        }
+                        int compare = today.compareTo(jp_job_date_dateform);
+                        //날짜가 오늘이나 오늘 이후면
+                        if (compare <= 0) {
+                            workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i],jp_job_start_time[i],jp_job_finish_time[i],jp_contents[i],business_reg_num[i],jp_num[i], field_name[i]));
+
+
+                        }
 
   //                      Log.d("aaaaaaaaaaaaaaaaaaaa",apply_count[i]);
  //                       Log.d("aaaaaaaaaaaaaaaaaaaa",jsonArray_apply.getJSONObject(i).toString());

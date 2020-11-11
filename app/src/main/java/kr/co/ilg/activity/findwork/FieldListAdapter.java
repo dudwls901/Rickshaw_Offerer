@@ -55,12 +55,15 @@ public class FieldListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
-
+//title배열넘기고,jpnum 배열 넘기기
         myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Context context=view.getContext();
                 Intent intent=new Intent(context, FieldWorkerListActivity.class);
+                intent.putExtra("title_array",workInfo.get(position).title_array);
+                intent.putExtra("jp_num_array",workInfo.get(position).jp_num_array);
+                intent.putExtra("jp_title",workInfo.get(position).title);
                 context.startActivity(intent);
             }
         });
