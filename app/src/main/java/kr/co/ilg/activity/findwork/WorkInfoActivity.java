@@ -18,9 +18,9 @@ import kr.co.ilg.activity.login.Sharedpreference;
 
 public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화면
 
-    TextView title_tv,place_tv,office_info_tv,title_name_tv,job_tv,pay_tv,date_tv,time_tv,people_tv,contents_tv;
+    TextView title_tv,place_tv,office_info_tv,title_name_tv,job_tv,pay_tv,date_tv,time_tv,people_tv,contents_tv,address_tv;
     Button map_btn,rectify_btn,call_btn,message_btn;
-    String jp_title, field_address, manager_office_name, job_name, jp_job_cost, jp_job_date, jp_job_start_time, jp_job_finish_time, jp_job_tot_people, jp_contents,business_reg_num;
+    String jp_title, field_address, manager_office_name, job_name, jp_job_cost, jp_job_date, jp_job_start_time, jp_job_finish_time, jp_job_tot_people, jp_contents,business_reg_num,jp_num,field_name,jp_is_urgency;
     Context mContext;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
         setContentView(R.layout.work_info);
 
         mContext = this;
+        address_tv = findViewById(R.id.address_tv);
         title_tv = findViewById(R.id.title_tv);
         place_tv = findViewById(R.id.place_tv);
         office_info_tv = findViewById(R.id.office_info_tv);
@@ -58,9 +59,12 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
         jp_job_tot_people = receiver.getExtras().getString("jp_job_tot_people");
         jp_contents = receiver.getExtras().getString("jp_contents");
         business_reg_num = receiver.getExtras().getString("business_reg_num");
+        jp_num = receiver.getExtras().getString("jp_num");
+        field_name = receiver.getExtras().getString("field_name");
+        jp_is_urgency = receiver.getExtras().getString("jp_is_urgency");
 
         title_tv.setText(jp_title);
-        place_tv.setText(field_address);
+        place_tv.setText(field_name);
         office_info_tv.setText(manager_office_name);
         title_name_tv.setText(jp_title);
         job_tv.setText(job_name);
@@ -69,7 +73,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
         time_tv.setText(jp_job_start_time+"~"+jp_job_finish_time);
         people_tv.setText(jp_job_tot_people+"명");
         contents_tv.setText(jp_contents);
-
+        address_tv.setText(field_address);
         if(business_reg_num.equals(Sharedpreference.get_business_reg_num(mContext,"business_reg_num")))
         {
 
@@ -104,6 +108,26 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
             }
         });
 
+        rectify_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WorkInfoActivity.this, WritePostingActivity.class);
+                intent.putExtra("key","1");
+                intent.putExtra("jp_num",jp_num);
+                intent.putExtra("jp_title",jp_title);
+                intent.putExtra("field_name",field_name);
+                intent.putExtra("field_address",field_address);
+                intent.putExtra("job_name",job_name);
+                intent.putExtra("jp_job_cost",jp_job_cost);
+                intent.putExtra("jp_job_tot_people",jp_job_tot_people);
+                intent.putExtra("jp_job_date",jp_job_date);
+                intent.putExtra("jp_job_start_time",jp_job_start_time);
+                intent.putExtra("jp_job_finish_time",jp_job_finish_time);
+                intent.putExtra("jp_contents",jp_contents);
+                intent.putExtra("jp_is_urgency",jp_is_urgency);
+                startActivity(intent);
+            }
+        });
 
     }
 }

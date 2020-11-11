@@ -59,8 +59,8 @@ import kr.co.ilg.activity.mypage.WriteOfficeInfoActivity;
 public class WritePostingActivity extends AppCompatActivity {
 
     Spinner spinner_job;
-    ArrayList spinner_job_array, spinner_date_array,spinner_sttime_array,spinner_fitime_array;
-    ArrayAdapter spinner_job_Adapter,spinner_date_Adapter,spinner_sttime_Adapter,spinner_fitime_Adapter;
+    ArrayList spinner_job_array, spinner_date_array, spinner_sttime_array, spinner_fitime_array;
+    ArrayAdapter spinner_job_Adapter, spinner_date_Adapter, spinner_sttime_Adapter, spinner_fitime_Adapter;
     Toolbar toolbar;
     RadioGroup rg;
     RadioButton radio_usually, radio_urgency;
@@ -75,7 +75,8 @@ public class WritePostingActivity extends AppCompatActivity {
     int y, m, d, timeFlag;
     String jp_is_urgency = "0";
     String job_code = "-1";
-    String business_reg_num, jp_job_start_time, jp_job_finish_time;
+    String business_reg_num, jp_job_start_time, jp_job_finish_time,job_name,job_name_MY,key, jp_num;
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -87,6 +88,7 @@ public class WritePostingActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +114,51 @@ public class WritePostingActivity extends AppCompatActivity {
         postingBtn = findViewById(R.id.postingBtn);
         startTimeBtn = findViewById(R.id.startTimeBtn);
         finishTimeBtn = findViewById(R.id.finishTimeBtn);
-        spinner_job=findViewById(R.id.job);
+        spinner_job = findViewById(R.id.job);
+
+        Intent receiver = getIntent();
+        key = receiver.getExtras().getString("key");
+        //메인에서 팹버튼으로 들어올 때 (구인글 작성)
+        if (key.equals("0")) {
+        }
+        //내 게시글 상세에서 수정버튼으로 들어올 때 (구인글 수정)
+        else if (key.equals("1")) {
+             jp_num = receiver.getExtras().getString("jp_num");
+            String jp_title = receiver.getExtras().getString("jp_title");
+            String field_name = receiver.getExtras().getString("field_name");
+            String field_address = receiver.getExtras().getString("field_address");
+            job_name_MY = receiver.getExtras().getString("job_name");
+            String jp_job_cost = receiver.getExtras().getString("jp_job_cost");
+            String jp_job_tot_people = receiver.getExtras().getString("jp_job_tot_people");
+            String jp_job_date = receiver.getExtras().getString("jp_job_date");
+            jp_job_start_time = receiver.getExtras().getString("jp_job_start_time");
+            jp_job_finish_time = receiver.getExtras().getString("jp_job_finish_time");
+            String jp_contents = receiver.getExtras().getString("jp_contents");
+            jp_is_urgency = receiver.getExtras().getString("jp_is_urgency");
+//            EditText title, field_name_et, field_address_et, pay, people_num, detail_info, dateET;
+            title.setText(jp_title);
+            field_name_et.setText(field_name);
+            field_address_et.setText(field_address);
+            pay.setText(jp_job_cost);
+            people_num.setText(jp_job_tot_people);
+            dateET.setText(jp_job_date);
+            //startTimeBtn.setText();
+            detail_info.setText(jp_contents);
+
+            if(jp_is_urgency.equals("0"))
+            {
+                radio_usually.setChecked(true);
+            }
+            else if(jp_is_urgency.equals("1"))
+            {
+                radio_urgency.setChecked(true);
+            }
+            startTimeBtn.setText(jp_job_start_time);
+            finishTimeBtn.setText(jp_job_finish_time);
+
+            Log.d("strrrrrr", jp_num);
+        }
+
         // WebView 초기화
         init_webView();
 //
@@ -130,23 +176,29 @@ public class WritePostingActivity extends AppCompatActivity {
                     JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                     JSONArray jArray = jResponse.getJSONArray("response");
 
-                    spinner_job_array=new ArrayList();
+                    spinner_job_array = new ArrayList();
 
-                    for(int i = 0; i < jArray.length(); i++) {
+                    for (int i = 0; i < jArray.length(); i++) {
                         JSONObject jArrayItem = jArray.getJSONObject(i);
                         String job_code = jArrayItem.getString("job_code");
-                        String job_name = jArrayItem.getString("job_name");
+                         job_name = jArrayItem.getString("job_name");
 
                         spinner_job_array.add(job_name);
                         Log.d("---------flog--------", job_code + job_name);
                     }
 
-                    spinner_job_Adapter=new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_job_array);
+                    spinner_job_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_job_array);
                     spinner_job.setAdapter(spinner_job_Adapter);
-
-                } catch (JSONException je) {
+                    for(int i =0; i<spinner_job_array.size();i++) {
+                        Log.d("wwwwwwww",job_name_MY+spinner_job_array.get(i));
+                        if (job_name_MY.equals(spinner_job_array.get(i)))
+                        {
+                            spinner_job.setSelection(i);
+                        }
+                    }
+                    } catch (JSONException je) {
                     je.printStackTrace();
-                    Log.d("mytest",je.toString());
+                    Log.d("mytest", je.toString());
                 } catch (Exception e) {
                     Log.d("mytest", e.toString());
                 }
@@ -158,11 +210,10 @@ public class WritePostingActivity extends AppCompatActivity {
         queue.add(ljRequest);
 
 
-
         field_address_et.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              final  AlertDialog.Builder dlg = new AlertDialog.Builder(WritePostingActivity.this);
+                final AlertDialog.Builder dlg = new AlertDialog.Builder(WritePostingActivity.this);
 
                 webView.setVisibility(View.VISIBLE);
 //                dlg.setView(juso_diaolg);
@@ -181,12 +232,14 @@ public class WritePostingActivity extends AppCompatActivity {
         });
 
         // 직종 스피너 제어어
-       spinner_job.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_job.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 job_code = String.valueOf(position + 1);
+                Log.d("wwww짃종스피너",job_code);
                 Toast.makeText(WritePostingActivity.this, position + "코드 : " + job_code, Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 spinner_job.setSelection(0);
@@ -197,9 +250,9 @@ public class WritePostingActivity extends AppCompatActivity {
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.radio_usually)
+                if (checkedId == R.id.radio_usually)
                     jp_is_urgency = "0";
-                if(checkedId == R.id.radio_urgency)
+                if (checkedId == R.id.radio_urgency)
                     jp_is_urgency = "1";
             }
         });
@@ -275,12 +328,12 @@ public class WritePostingActivity extends AppCompatActivity {
                         try {
                             //String을 JSON으로 패킹(변환)하기
                             JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
-
+                            Log.d("mytest1",response);
                             // php에서 DB처리 후 결과(응답) 얻어서 변수에 저장
                             boolean success = jResponse.getBoolean("success");  // String 결과 변수에서 "isExistEmail" 키의 값에 접근해 추출
-                            if(success) {  // ID가 존재 하면
-                                Toast.makeText(WritePostingActivity.this, "성공", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(WritePostingActivity.this, MainActivity.class);
+                            if (success) {  // ID가 존재 하면
+                                Toast.makeText(WritePostingActivity.this, "글이 게시되었습니다", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(WritePostingActivity.this, MainActivity.class);
                                 startActivity(intent);
                             } else {  // ID가 존재 하지 않는다면
                                 Toast.makeText(WritePostingActivity.this, "실패", Toast.LENGTH_SHORT).show();
@@ -290,7 +343,9 @@ public class WritePostingActivity extends AppCompatActivity {
                         }
                     }
                 };
-                WritePostingRequest wpRequest = new WritePostingRequest(business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
+                Log.d("wwwwwww",key +jp_num+ business_reg_num+ jp_title+ jp_job_cost+ jp_job_tot_people+ jp_job_date+ jp_contents+ field_name+
+                        field_address+ jp_is_urgency+ job_code+ jp_job_start_time+ jp_job_finish_time);
+                WritePostingRequest wpRequest = new WritePostingRequest(key ,jp_num, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
                         field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
 
                 RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
@@ -300,16 +355,14 @@ public class WritePostingActivity extends AppCompatActivity {
     }
 
 
-
     // 출퇴근 시간 TimePicker 리스너
     private TimePickerDialog.OnTimeSetListener tpListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            if(timeFlag == 0) {
+            if (timeFlag == 0) {
                 startTimeBtn.setText(String.format(" %02d", hourOfDay) + ":" + String.format("%02d", minute));
                 jp_job_start_time = String.format(" %02d", hourOfDay) + ":" + String.format("%02d", minute);
-            }
-            else {
+            } else {
                 finishTimeBtn.setText(String.format(" %02d", hourOfDay) + ":" + String.format("%02d", minute));
                 jp_job_finish_time = String.format(" %02d", hourOfDay) + ":" + String.format("%02d", minute);
             }
@@ -318,7 +371,7 @@ public class WritePostingActivity extends AppCompatActivity {
 
     public void init_webView() {
         // WebView 설정
-        webView = (WebView)findViewById(R.id.webView);
+        webView = (WebView) findViewById(R.id.webView);
 
         // JavaScript 허용
         webView.getSettings().setJavaScriptEnabled(true);
@@ -330,8 +383,7 @@ public class WritePostingActivity extends AppCompatActivity {
         // web client 를 chrome 으로 설정
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
-            public void onCloseWindow(WebView window)
-            {
+            public void onCloseWindow(WebView window) {
 
             }
         });
@@ -357,85 +409,3 @@ public class WritePostingActivity extends AppCompatActivity {
 
 
 }
-/*
-    // 직종 불러오기
-    public void getJobData() {
-        Response.Listener rListener = new Response.Listener<String>() {  // Generics를 String타입으로 한정
-            @Override
-            public void onResponse(String response) {  // JSONObject보다 더 유연한 String 사용
-
-                // 서버연동 시 try-catch문으로 예외 처리하기
-                try {
-                    //String을 JSON으로 패킹(변환)하기
-                    JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
-                    JSONArray jArray = jResponse.getJSONArray("response");
-
-                    for(int i = 0; i < jArray.length(); i++) {
-                        JSONObject jArrayItem = jArray.getJSONObject(i);
-                        String job_code = jArrayItem.getString("job_code");
-                        String job_name = jArrayItem.getString("job_name");
-
-                        spinner_job_array.add(job_name);
-                        Log.d("---------flog--------", job_code + job_name);
-                    }
-                } catch (JSONException je) {
-                    je.printStackTrace();
-                } catch (Exception e) {
-                    Log.d("mytest", e.toString());
-                }
-            }
-
-        };
-        LoadJobRequest ljRequest = new LoadJobRequest(rListener);
-        RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
-        queue.add(ljRequest);
-*/
-
-/*
-        class GetDataJSON extends AsyncTask<String, Void, String> {
-            @Override
-            protected String doInBackground(String... params) {
-                String uri = params[0];
-                BufferedReader bufferedReader = null;
-                try {
-                    URL url = new URL(uri);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    StringBuilder sb = new StringBuilder();
-
-                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
-                    String json;
-                    while ((json = bufferedReader.readLine()) != null) {
-                        sb.append(json + "\n");
-                        Log.d("---------flog2--------", json);
-                    }
-                    return sb.toString().trim();
-                } catch (Exception e) {
-                    return null;
-                }
-            }
-            @Override
-            protected void onPostExecute(String result) {
-                jobJSON = result;
-                try {
-                    JSONObject jsonObj = new JSONObject(jobJSON.substring(jobJSON.indexOf("{"), jobJSON.lastIndexOf("}") + 1));
-                    jobs = jsonObj.getJSONArray(TAG_RESPONSE);
-
-                    for (int i = 0; i < jobs.length(); i++) {
-                        JSONObject j = jobs.getJSONObject(i);
-                        String job_code = j.getString(TAG_JOB_CODE);
-                        String job_name = j.getString(TAG_JOB_NAME);
-
-                        spinner_job_array.add(job_name);
-                        Log.d("---------flog--------", job_code + job_name);
-                    }
-                } catch (JSONException e) {
-                e.printStackTrace();
-                }
-            }
-        }
-        GetDataJSON g = new GetDataJSON();
-        g.execute(url);
-*/
-    //}
-

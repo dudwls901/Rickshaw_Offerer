@@ -120,6 +120,9 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             intent.putExtra("jp_job_tot_people", workInfo.get(position).total_people);
                             intent.putExtra("jp_contents", workInfo.get(position).jp_contents);
                             intent.putExtra("business_reg_num", workInfo.get(position).business_reg_num);
+                            intent.putExtra("jp_num",workInfo.get(position).jp_num);
+                            intent.putExtra("field_name",workInfo.get(position).field_name);
+                            intent.putExtra("jp_is_urgency",workInfo.get(position).urgency);
                             context.startActivity(intent);
                         }
                     });
@@ -164,6 +167,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     intent.putExtra("jp_job_tot_people", workInfo.get(position).total_people);
                     intent.putExtra("jp_contents", workInfo.get(position).jp_contents);
                     intent.putExtra("business_reg_num", workInfo.get(position).business_reg_num);
+
                     context.startActivity(intent);
                 }
             }

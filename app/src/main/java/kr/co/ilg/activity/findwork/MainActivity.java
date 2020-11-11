@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Spinner spinner_who, spinner1, spinner2;
     ArrayList spinner_who_array, spinner1_array, spinner2_array;
     ArrayAdapter spinner_who_Adapter, spinner1_Adapter, spinner2_Adapter;
-    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people,jp_is_urgency,apply_count,jp_job_start_time,jp_job_finish_time,jp_contents,business_reg_num,jp_num;
+    String[] jp_title, jp_job_date, jp_job_cost, job_name, field_address, manager_office_name,jp_job_tot_people,jp_is_urgency,apply_count,jp_job_start_time,jp_job_finish_time,jp_contents,business_reg_num,jp_num,field_name;
     RecyclerView urgency_RecyclerView;
     RecyclerView.LayoutManager layoutManager;
     FloatingActionButton fab_btn;
@@ -348,6 +348,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     jp_job_finish_time = new String[jsonArray_jp.length()];
                     jp_contents = new String[jsonArray_jp.length()];
                     business_reg_num = new String[jsonArray_jp.length()];
+                    field_name = new String[jsonArray_jp.length()];
                     for(int i =0; i<jsonArray_jp.length();i++)
                     {
                         Log.d("mmmmmmmmmmmmmmmmmmmmm",String.valueOf(jsonArray_jp.length()));
@@ -365,9 +366,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         jp_contents[i] = jsonArray_jp.getJSONObject(i).getString("jp_contents");
                         business_reg_num[i] = jsonArray_jp.getJSONObject(i).getString("business_reg_num");
                         jp_num[i] = jsonArray_jp.getJSONObject(i).getString("jp_num");
+                        field_name[i] = jsonArray_field.getJSONObject(i).getString("field_name");
  //                       Log.d("mmmmmm1111111",jp_title[i]);
  //                       Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
-                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i],jp_job_start_time[i],jp_job_finish_time[i],jp_contents[i],business_reg_num[i],jp_num[i]));
+                        workInfoArrayList.add(new ListViewItem(jp_title[i],jp_job_date[i],jp_job_cost[i],job_name[i],field_address[i],manager_office_name[i],apply_count[i],jp_job_tot_people[i],jp_is_urgency[i],jp_job_start_time[i],jp_job_finish_time[i],jp_contents[i],business_reg_num[i],jp_num[i], field_name[i]));
 
   //                      Log.d("aaaaaaaaaaaaaaaaaaaa",apply_count[i]);
  //                       Log.d("aaaaaaaaaaaaaaaaaaaa",jsonArray_apply.getJSONObject(i).toString());
@@ -415,6 +417,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, WritePostingActivity.class);
+                intent.putExtra("key","0");
                 startActivity(intent);
             }
         });

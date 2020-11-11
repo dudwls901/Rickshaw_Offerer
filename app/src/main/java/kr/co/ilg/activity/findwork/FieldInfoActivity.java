@@ -27,7 +27,7 @@ public class FieldInfoActivity extends AppCompatActivity {
         work_info_RecyclerView.setLayoutManager(layoutManager);
 
         ArrayList<ListViewItem> workInfoArrayList=new ArrayList<>();
-        workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","상수 레미안 아파트","건축","개미인력소","1","3","0","09:00:00","17:00:00","레미안건축이여유","1","13"));
+        workInfoArrayList.add(new ListViewItem("레미안 건축","2020-06-14","150,000","상수 레미안 아파트","건축","개미인력소","1","3","0","09:00:00","17:00:00","레미안건축이여유","1","13","1"));
 
         ListAdapter workAdapter=new ListAdapter(getApplicationContext(),workInfoArrayList);
         work_info_RecyclerView.setAdapter(workAdapter);

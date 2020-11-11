@@ -12,13 +12,15 @@ public class WritePostingRequest extends StringRequest {
 
     private Map<String, String> parameters;  // 전송 데이터 넣을 Map 객체 선언
 
-    public WritePostingRequest(String business_reg_num, String jp_title, String jp_job_cost, String jp_job_tot_people, String jp_job_date, String jp_contents, String field_name,
+    public WritePostingRequest(String key, String jp_num, String business_reg_num, String jp_title, String jp_job_cost, String jp_job_tot_people, String jp_job_date, String jp_contents, String field_name,
                                String field_address, String jp_is_urgency, String job_code, String jp_job_start_time, String jp_job_finish_time,
                                Response.Listener<String> listener) {  // 서버에 전송될 data, 응답(결과) 처리하는 리스너
         super(Method.POST, URL, listener, null);  // 가독성 향상을 위해 super에 선언
 
         // HashMap으로 데이터 정의하고 추가
         parameters = new HashMap<>();
+        parameters.put("key",key);
+        parameters.put("jp_num",jp_num);
         parameters.put("business_reg_num", business_reg_num);
         parameters.put("jp_title", jp_title);
         parameters.put("jp_job_cost", jp_job_cost);
