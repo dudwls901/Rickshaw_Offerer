@@ -20,7 +20,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
 
     TextView title_tv,place_tv,office_info_tv,title_name_tv,job_tv,pay_tv,date_tv,time_tv,people_tv,contents_tv,address_tv;
     Button map_btn,rectify_btn,call_btn,message_btn;
-    String jp_title, field_address, manager_office_name, job_name, jp_job_cost, jp_job_date, jp_job_start_time, jp_job_finish_time, jp_job_tot_people, jp_contents,business_reg_num,jp_num,field_name,jp_is_urgency;
+    String jp_title, field_address, manager_office_name, job_name, jp_job_cost, jp_job_date, jp_job_start_time, jp_job_finish_time, jp_job_tot_people, jp_contents,business_reg_num,jp_num,field_name,jp_is_urgency, field_code;
     Context mContext;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
         jp_num = receiver.getExtras().getString("jp_num");
         field_name = receiver.getExtras().getString("field_name");
         jp_is_urgency = receiver.getExtras().getString("jp_is_urgency");
+        field_code = receiver.getExtras().getString("field_code");
 
         title_tv.setText(jp_title);
         place_tv.setText(field_name);
@@ -96,6 +97,9 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WorkInfoActivity.this, FieldInfoActivity.class);
+                intent.putExtra("field_code",field_code);
+                intent.putExtra("field_name",field_name);
+                intent.putExtra("field_address",field_address);
                 startActivity(intent);
             }
         });
