@@ -3,6 +3,7 @@ package kr.co.ilg.activity.workermanage;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class FieldWorkerListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 Context context;
     Context psContext;
     View dialogView;
-    Button btnPay, btnReview;
+    Button btnPay, btnReview, btnCall;
     Intent intent;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -89,6 +90,7 @@ Context context;
                 dlg.setView(dialogView);
                 btnPay = dialogView.findViewById(R.id.btnPay);
                 btnReview = dialogView.findViewById(R.id.btnReview);
+                btnCall = dialogView.findViewById(R.id.btnCall);
                //TODO 디비읽어서 TEXT 출근 완료,퇴근 완료로 바꾸기
                 TextView in_tv = dialogView.findViewById(R.id.in_tv);
                 TextView out_tv = dialogView.findViewById(R.id.out_tv);
@@ -134,6 +136,16 @@ Context context;
                         context.startActivity(intent);
                     }
                 });
+
+                btnCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse("tel:" + wkList.get(position).wkPNum);
+                        intent = new Intent(Intent.ACTION_DIAL, uri);
+                        context.startActivity(intent);
+                    }
+                });
+
               dlg.show();
             }
         });

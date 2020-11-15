@@ -1,4 +1,4 @@
-package kr.co.ilg.activity.workermanage;
+package kr.co.ilg.activity.findwork;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -7,22 +7,18 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FieldWorkerRequest extends StringRequest {
+public class SelectTelNumRequest extends StringRequest {
+    final static private String URL = "http://14.63.162.160/SelectTelNum.php";
 
-    final static private String URL = "http://14.63.162.160/FieldWorkerRequest.php";
     private Map<String, String> parameters;
 
-
-    public FieldWorkerRequest(String jp_num, Response.Listener<String> listener) { //생성자 부분이라 콜백메소드는 생략
-
+    // 출퇴근 인증 여부 확인
+    public SelectTelNumRequest(String business_reg_num, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
-
-        //데이터들
         parameters = new HashMap<>();
-        parameters.put("jp_num", jp_num);
+        parameters.put("business_reg_num", business_reg_num);
     }
-    @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         return parameters;
     }
