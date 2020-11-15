@@ -318,6 +318,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 try {
                     Log.d("qwer",response);
+                    Log.d("qwer",String.valueOf(response.length()));
                     int index_search_start;
                     int index_search_end;
                     JSONArray jsonArray_jp = new JSONArray(response.substring(response.indexOf("["),response.indexOf("]")+1));
