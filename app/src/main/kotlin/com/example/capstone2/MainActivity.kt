@@ -325,6 +325,7 @@ class MainActivity : Activity() {
                             var manager_phonenum = jResponse.getString("manager_phonenum")
                             var manager_bankname = jResponse.getString("manager_bankname")
                             var manager_office_info = jResponse.getString("manager_office_info")
+                            var manager_bankaccount = jResponse.getString("manager_bankaccount")
 
 
                             Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num)
@@ -340,6 +341,7 @@ class MainActivity : Activity() {
                             Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum)
                             Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname)
                             Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info)
+                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount)
 
                             //Sharedpreference.set_Hope_local_sido(applicationContext(), "hope_local_sido", hope_local_sido)
                             //Sharedpreference.set_Hope_local_sigugun(applicationContext(), "hope_local_sigugun", hope_local_sigugun)// 파일에 맵핑형식으로 저장

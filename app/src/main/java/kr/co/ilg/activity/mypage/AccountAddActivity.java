@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import kr.co.ilg.activity.login.LoginActivity;
+import kr.co.ilg.activity.login.Sharedpreference;
 
 public class AccountAddActivity extends AppCompatActivity {
 
@@ -38,6 +40,8 @@ public class AccountAddActivity extends AppCompatActivity {
     TextView nextTimeTV;
     String business_reg_num, manager_represent_name, manager_pw, manager_office_name, manager_office_telnum, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, local_sido, local_sigugun;
     EditText accountNumET;
+    int isUpdate;  // 1 > 수정  0 > 회원가입
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,17 @@ public class AccountAddActivity extends AppCompatActivity {
         Log.d("mytest",business_reg_num+""+manager_pw+manager_represent_name+manager_office_name+manager_office_telnum+manager_office_address+manager_name+manager_phonenum+local_sido+local_sigugun);
         //manager_bankaccount
         //manager_bankname
+
+        Intent modifyIntent = getIntent();
+        isUpdate = modifyIntent.getIntExtra("isUpdate", 0);  // modify
+
+        Toast.makeText(getApplicationContext(), "어디서 왔나~ " + isUpdate, Toast.LENGTH_SHORT).show();
+        if (isUpdate == 1) {
+            addBtn.setText("수 정");
+            nextTimeTV.setVisibility(View.INVISIBLE);
+        }
+        else
+            addBtn.setText("등 록");
 
         bSList = new ArrayList<>();
         bSList.add("은행");
@@ -90,37 +105,66 @@ public class AccountAddActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 manager_bankaccount = accountNumET.getText().toString();
-                Response.Listener responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                if (isUpdate == 0) {  // 회원가입
 
-                        try {
-                            Log.d("mytesstt", response);
-                            //           JSONObject jsonResponse = new JSONObject(response);
-                            JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"),response.lastIndexOf("}")+1));
-                            Log.d("mytesstt", response);
-                            Log.d("mytestlocal_sido", jsonResponse.getString("local_sido"));
-                            Log.d("mytestlocal_sigugun", jsonResponse.getString("local_sigugun"));
-                            JSONArray jsonArray = new JSONArray(response.substring(response.indexOf("{"),response.lastIndexOf("}")+1));
-                         //  String a= jsonArray[0].getString("local_code");
-                            Log.d("mytestlocal_code", jsonResponse.getString("local_code"));
+                    Response.Listener responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.d("mytest3",e.toString());
+                            try {
+                                Log.d("mytesstt", response);
+                                //           JSONObject jsonResponse = new JSONObject(response);
+                                JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                                Log.d("mytesstt", response);
+                                Log.d("mytestlocal_sido", jsonResponse.getString("local_sido"));
+                                Log.d("mytestlocal_sigugun", jsonResponse.getString("local_sigugun"));
+                                JSONArray jsonArray = new JSONArray(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                                //  String a= jsonArray[0].getString("local_code");
+                                Log.d("mytestlocal_code", jsonResponse.getString("local_code"));
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.d("mytest3", e.toString());
+                            }
                         }
-                    }
-                };
-                ManagerDBRequest managerInsert = new ManagerDBRequest(business_reg_num, manager_pw, manager_represent_name, manager_office_name, manager_office_telnum,local_sido,local_sigugun, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(AccountAddActivity.this);
-                queue.add(managerInsert);
-                Log.d("mytesttttt",business_reg_num+ manager_represent_name+ manager_pw+ manager_office_name+ manager_office_telnum+local_sido + local_sigugun+ manager_office_address+ manager_name+ manager_phonenum+ manager_bankaccount+ manager_bankname);
+                    };
+                    ManagerDBRequest managerInsert = new ManagerDBRequest(business_reg_num, manager_pw, manager_represent_name, manager_office_name, manager_office_telnum, local_sido, local_sigugun, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(AccountAddActivity.this);
+                    queue.add(managerInsert);
+                    Log.d("mytesttttt", business_reg_num + manager_represent_name + manager_pw + manager_office_name + manager_office_telnum + local_sido + local_sigugun + manager_office_address + manager_name + manager_phonenum + manager_bankaccount + manager_bankname);
 
-                Intent intent = new Intent(AccountAddActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(AccountAddActivity.this, LoginActivity.class);
 
-                startActivity(intent);
+                    startActivity(intent);
+                } else {  // 계좌 수정
+                    String bnum = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num");
+                    Response.Listener rListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            try {
+                                JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                                boolean updateSuccess3 = jResponse.getBoolean("updateSuccess3");
+                                Intent updateIntent = new Intent(AccountAddActivity.this, AccountManageActivity.class);
+                                if (updateSuccess3) {
+                                    Sharedpreference.set_manager_bankaccount(getApplicationContext(), "manager_bankaccount", manager_bankaccount);
+                                    Sharedpreference.set_manager_bankname(getApplicationContext(), "manager_bankname", manager_bankname);
+
+                                    Toast.makeText(AccountAddActivity.this, "수정 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                } else
+                                    Toast.makeText(AccountAddActivity.this, "수정 실패", Toast.LENGTH_SHORT).show();
+                                startActivity(updateIntent);
+                            } catch (Exception e) {
+                                Log.d("mytest", e.toString());
+                            }
+                        }
+                    };
+                    UpdateOfficeInfoRequest updateOfficeInfoRequest = new UpdateOfficeInfoRequest("accountUpdate", bnum, manager_bankname, manager_bankaccount, rListener);  // Request 처리 클래스
+
+                    RequestQueue queue = Volley.newRequestQueue(AccountAddActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
+                    queue.add(updateOfficeInfoRequest);  // Volley로 구현된 큐에 ValidateRequest 객체를 넣어둠으로써 실제로 서버 연동 발생
+                }
             }
         });
 
