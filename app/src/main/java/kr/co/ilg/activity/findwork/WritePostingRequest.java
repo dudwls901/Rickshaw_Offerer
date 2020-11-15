@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WritePostingRequest extends StringRequest {
-    final static private String URL = "http://rickshaw.dothome.co.kr/InsertJobPosting.php";
+    final static private String URL = "http://14.63.162.160/InsertJobPosting.php";
 
     private Map<String, String> parameters;  // 전송 데이터 넣을 Map 객체 선언
 

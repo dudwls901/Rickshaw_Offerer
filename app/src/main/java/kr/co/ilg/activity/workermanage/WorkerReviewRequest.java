@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class WorkerReviewRequest extends StringRequest {
 
-    final static private String URL = "http://rickshaw.dothome.co.kr/WorkerReviewInsert.php";
+    final static private String URL = "http://14.63.162.160/WorkerReviewInsert.php";
     private Map<String, String> parameters;
 
 
