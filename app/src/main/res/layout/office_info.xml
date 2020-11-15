@@ -1,28 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="사무소 상세"
+            android:textColor="@color/WhiteColor"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="7dp"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="개미인력"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            />
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/office_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="인력소이름"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/mainColor"
+                />
+
+            <ImageButton
+                android:id="@+id/map_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_gravity="center"
+                android:src="@drawable/mapbtn32"
+                android:backgroundTint="@color/WhiteColor"
+                android:padding="0px"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp">
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,19 +70,19 @@
                 android:textSize="17dp"
                 />
             <TextView
+                android:id="@+id/office_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="서울시 마포구 토정로 113-1"
                 android:textSize="17dp"
-                android:id="@+id/office_address"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp">
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="7dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,27 +94,48 @@
                 android:layout_height="wrap_content"
                 android:text="김개미"
                 android:textSize="17dp"
-                android:id="@+id/office_name"
+                android:id="@+id/office_manager_name"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp">
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="7dp">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="담당자 연락처 : "
                 android:textSize="17dp"
                 />
             <TextView
+                android:id="@+id/office_manager_tel"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="01099999999"
+                android:textSize="17dp"
+                />
+            <ImageButton
+                android:id="@+id/mng_callBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="010-xxxx-xxxx"
-                android:textSize="17dp"
-                android:id="@+id/office_manager_tel"
+                android:layout_gravity="center"
+                android:layout_marginRight="25dp"
+                android:src="@drawable/callbtn"
+                android:backgroundTint="@color/WhiteColor"
+                android:padding="0px"
+                />
+            <ImageButton
+                android:id="@+id/mng_messageBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/messagebtn"
+                android:backgroundTint="@color/WhiteColor"
+                android:padding="0px"
                 />
 
         </LinearLayout>
@@ -82,23 +143,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp">
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="10dp">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="사무소 연락처 : "
                 android:textSize="17dp"
                 />
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/office_tel"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="02-xxxx-xxxx"
                 android:textSize="17dp"
-                android:id="@+id/office_tel"
+                />
+            <ImageButton
+                android:id="@+id/office_callBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="25dp"
+                android:src="@drawable/callbtn"
+                android:backgroundTint="@color/WhiteColor"
+                android:padding="0px"
+                />
+            <ImageButton
+                android:id="@+id/office_messageBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/messagebtn"
+                android:backgroundTint="@color/WhiteColor"
+                android:padding="0px"
                 />
         </LinearLayout>
+        <!--
         <LinearLayout
             android:id="@+id/btn_layout"
             android:layout_width="match_parent"
@@ -131,43 +214,44 @@
                 android:text="문자"></Button>
 
         </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="상세정보"
-        android:textStyle="bold"
-        android:background="@color/LightColor"
-        android:gravity="center_horizontal"
-        android:layout_margin="3dp"
-        android:textSize="17dp"
-        />
+        -->
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="상세정보"
+            android:textStyle="bold"
+            android:background="@color/LightColor"
+            android:gravity="center_horizontal"
+            android:layout_margin="3dp"
+            android:textSize="17dp"
+            />
+        <TextView
+            android:id="@+id/office_introduce"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="인력사무소 소개"
             android:textSize="17dp"
-            android:id="@+id/office_introduce"
             android:layout_margin="3dp"
-            android:padding="5dp"></TextView>
+            android:padding="5dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="후기"
-        android:textStyle="bold"
-        android:background="@color/LightColor"
-        android:gravity="center_horizontal"
-        android:layout_margin="3dp"
-        android:textSize="17dp"
-        />
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_margin="3dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="ifContentScrolls"
-        android:scrollbars="vertical"
-        android:id="@+id/review_list"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="후기"
+            android:textStyle="bold"
+            android:background="@color/LightColor"
+            android:gravity="center_horizontal"
+            android:layout_margin="3dp"
+            android:textSize="17dp"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/review_list"
+            android:layout_margin="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="ifContentScrolls"
+            android:scrollbars="vertical"/>
 
 
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>
