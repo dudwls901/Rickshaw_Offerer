@@ -15,13 +15,14 @@ public class ManagerDBRequest extends StringRequest {
     private Map<String, String> parameters;
 
     //요청                클라이언트로 전송할 데이터(userID)
-    public ManagerDBRequest(String business_reg_num, String manager_pw, String manager_represent_name, String manager_office_name, String manager_office_telnum, String local_sido, String local_sigugun, String manager_office_address, String manager_name, String manager_phonenum, String manager_bankaccount, String manager_bankname, Response.Listener<String> listener) { //생성자 부분이라 콜백메소드는 생략
+    public ManagerDBRequest(String kakaoemail,String business_reg_num, String manager_pw, String manager_represent_name, String manager_office_name, String manager_office_telnum, String local_sido, String local_sigugun, String manager_office_address, String manager_name, String manager_phonenum, String manager_bankaccount, String manager_bankname, Response.Listener<String> listener) { //생성자 부분이라 콜백메소드는 생략
         // data            응답 처리 리스너
         super(Method.POST, URL, listener, null); //super로 가독성을 업!
         Log.d("mytest","여기되니?");
 
         //데이터들
         parameters = new HashMap<>();
+        parameters.put("kakaoemail", kakaoemail);
         parameters.put("business_reg_num", business_reg_num); //데이터 넣기  ≒ putextra
         parameters.put("manager_pw", manager_pw);
         parameters.put("manager_represent_name", manager_represent_name);
