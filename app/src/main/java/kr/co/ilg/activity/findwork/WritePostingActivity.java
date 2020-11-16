@@ -120,6 +120,7 @@ public class WritePostingActivity extends AppCompatActivity {
         key = receiver.getExtras().getString("key");
         //메인에서 팹버튼으로 들어올 때 (구인글 작성)
         if (key.equals("0")) {
+            job_name_MY="-1";
         }
         //내 게시글 상세에서 수정버튼으로 들어올 때 (구인글 수정)
         else if (key.equals("1")) {
@@ -191,6 +192,7 @@ public class WritePostingActivity extends AppCompatActivity {
                     spinner_job.setAdapter(spinner_job_Adapter);
                     for(int i =0; i<spinner_job_array.size();i++) {
                         Log.d("wwwwwwww",job_name_MY+spinner_job_array.get(i));
+
                         if (job_name_MY.equals(spinner_job_array.get(i)))
                         {
                             spinner_job.setSelection(i);
@@ -198,9 +200,9 @@ public class WritePostingActivity extends AppCompatActivity {
                     }
                     } catch (JSONException je) {
                     je.printStackTrace();
-                    Log.d("mytest", je.toString());
+                    Log.d("mytest", je.toString()+"aaaaaaaaaa"+response);
                 } catch (Exception e) {
-                    Log.d("mytest", e.toString());
+                    Log.d("mytest", e.toString()+"bbbbbbbbb"+response);
                 }
             }
 
@@ -339,18 +341,26 @@ public class WritePostingActivity extends AppCompatActivity {
                                 Toast.makeText(WritePostingActivity.this, "실패", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
-                            Log.d("mytest", e.toString());
+                            Log.d("mytest", e.toString()+response);
                         }
                     }
                 };
-                Log.d("wwwwwww",key +jp_num+ business_reg_num+ jp_title+ jp_job_cost+ jp_job_tot_people+ jp_job_date+ jp_contents+ field_name+
-                        field_address+ jp_is_urgency+ job_code+ jp_job_start_time+ jp_job_finish_time);
-                WritePostingRequest wpRequest = new WritePostingRequest(key ,jp_num, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
-                        field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
-
-                RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
-                queue.add(wpRequest);
-            }
+//                Log.d("wwwwwww",key +jp_num+ business_reg_num+ jp_title+ jp_job_cost+ jp_job_tot_people+ jp_job_date+ jp_contents+ field_name+
+//                        field_address+ jp_is_urgency+ job_code+ jp_job_start_time+ jp_job_finish_time);
+              if(jp_num!=null) {
+                  WritePostingRequest wpRequest = new WritePostingRequest(key, jp_num, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
+                          field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
+                  RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
+                  queue.add(wpRequest);
+              }
+              else
+              {
+                  WritePostingRequest wpRequest = new WritePostingRequest(key, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
+                          field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
+                  RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
+                  queue.add(wpRequest);
+              }
+              }
         });
     }
 
