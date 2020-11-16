@@ -168,7 +168,7 @@ public class Sharedpreference {
 
     }public static String get_kakaoemail(Context context, String key) {
         SharedPreferences prefs = getPreferences(context);
-        String value = prefs.getString(key,"");
+        String value = prefs.getString(key, null);
         return value;
     } // 한줄소개 저장
     public static void set_manager_bankaccount(Context context, String key, String value) {

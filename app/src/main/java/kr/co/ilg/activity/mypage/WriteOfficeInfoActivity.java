@@ -81,7 +81,6 @@ public class WriteOfficeInfoActivity extends Activity {
             writeBtn.setText("입 력");
         }
 
-        String business_reg_num = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num");
 
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +89,8 @@ public class WriteOfficeInfoActivity extends Activity {
 //                    Toast.makeText(WriteOfficeInfoActivity.this, "모든 값을 입력해주세요.", Toast.LENGTH_SHORT).show();
 //                else {
                     if (isUpdate == 1) {  // 수정
+                        String business_reg_num2 = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num");
+
                         Response.Listener rListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -114,7 +115,7 @@ public class WriteOfficeInfoActivity extends Activity {
                                 }
                             }
                         };
-                        UpdateOfficeInfoRequest updateOfficeInfoRequest = new UpdateOfficeInfoRequest("UpdateOfficeInfo", business_reg_num, (officeNameET.getText().toString()),
+                        UpdateOfficeInfoRequest updateOfficeInfoRequest = new UpdateOfficeInfoRequest("UpdateOfficeInfo", business_reg_num2, (officeNameET.getText().toString()),
                                 (officeNumET.getText().toString()), (officeAddressET.getText().toString()), (managerNameET.getText().toString()), (managerNumET.getText().toString()), rListener);  // Request 처리 클래스
 
                         RequestQueue queue = Volley.newRequestQueue(WriteOfficeInfoActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
