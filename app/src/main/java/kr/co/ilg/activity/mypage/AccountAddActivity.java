@@ -1,6 +1,7 @@
 package kr.co.ilg.activity.mypage;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Paint;
@@ -40,13 +41,14 @@ public class AccountAddActivity extends AppCompatActivity {
     TextView nextTimeTV;
     String business_reg_num, manager_represent_name, manager_pw, manager_office_name, manager_office_telnum, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, local_sido, local_sigugun;
     EditText accountNumET;
+    Context mContext;
     int isUpdate;  // 1 > 수정  0 > 회원가입
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_add);
-
+        mContext = this;
         addBtn = findViewById(R.id.addBtn);
         nextTimeTV = findViewById(R.id.nextTimeTV);
         bankSelectSpn = findViewById(R.id.bankSelectSpn);
@@ -129,9 +131,17 @@ public class AccountAddActivity extends AppCompatActivity {
                             }
                         }
                     };
-                    ManagerDBRequest managerInsert = new ManagerDBRequest(business_reg_num, manager_pw, manager_represent_name, manager_office_name, manager_office_telnum, local_sido, local_sigugun, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, responseListener);
-                    RequestQueue queue = Volley.newRequestQueue(AccountAddActivity.this);
-                    queue.add(managerInsert);
+                    if(Sharedpreference.get_kakaoemail(mContext,"kakaoemail") != null){
+                        ManagerDBRequest managerInsert = new ManagerDBRequest(Sharedpreference.get_kakaoemail(mContext,"kakaoemail"),business_reg_num, manager_pw, manager_represent_name, manager_office_name, manager_office_telnum, local_sido, local_sigugun, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(AccountAddActivity.this);
+                        queue.add(managerInsert);
+                    }
+                    else {
+                        ManagerDBRequest managerInsert = new ManagerDBRequest("0",business_reg_num, manager_pw, manager_represent_name, manager_office_name, manager_office_telnum, local_sido, local_sigugun, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(AccountAddActivity.this);
+                        queue.add(managerInsert);
+                    }
+
                     Log.d("mytesttttt", business_reg_num + manager_represent_name + manager_pw + manager_office_name + manager_office_telnum + local_sido + local_sigugun + manager_office_address + manager_name + manager_phonenum + manager_bankaccount + manager_bankname);
 
                     Intent intent = new Intent(AccountAddActivity.this, LoginActivity.class);

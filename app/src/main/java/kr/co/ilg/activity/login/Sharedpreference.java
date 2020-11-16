@@ -160,6 +160,17 @@ public class Sharedpreference {
         String value = prefs.getString(key, "managerinfo");
         return value;
     } // 한줄소개 저장
+    public static void set_kakaoemail(Context context, String key, String value) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+
+    }public static String get_kakaoemail(Context context, String key) {
+        SharedPreferences prefs = getPreferences(context);
+        String value = prefs.getString(key, null);
+        return value;
+    } // 한줄소개 저장
     public static void set_manager_bankaccount(Context context, String key, String value) {
         SharedPreferences prefs = getPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();

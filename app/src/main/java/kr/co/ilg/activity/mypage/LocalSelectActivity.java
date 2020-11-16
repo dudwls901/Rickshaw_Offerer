@@ -15,7 +15,14 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.capstone2.R;
+
+import org.json.JSONObject;
+
+import kr.co.ilg.activity.login.Sharedpreference;
 
 public class LocalSelectActivity extends AppCompatActivity {
 
@@ -24,7 +31,7 @@ public class LocalSelectActivity extends AppCompatActivity {
     ListView listview, listview1;
     String local_sido = "", local_sigugun = "";
     String business_reg_num, manager_represent_name, manager_pw, manager_office_name, manager_office_telnum, manager_office_address, manager_name, manager_phonenum;
-
+    int isUpdate;  // 1 > 수정  0 > 회원가입
     int btnFlag = 0;
     int k;
 
@@ -43,12 +50,21 @@ public class LocalSelectActivity extends AppCompatActivity {
         manager_name = receiver.getExtras().getString("manager_name");
         manager_phonenum = receiver.getExtras().getString("manager_phonenum");
 
+        Intent modifyIntent = getIntent();
+        isUpdate = modifyIntent.getIntExtra("isUpdate", 0);  // modify
+
+        Toast.makeText(getApplicationContext(), "어디서 왔나~ " + isUpdate, Toast.LENGTH_SHORT).show();
+
         listview = findViewById(R.id.listview);
         listview1 = findViewById(R.id.listview1); // 지역 선택 리스트뷰
 
         sltTV = findViewById(R.id.sltTV); // 상단 텍스트
 
         okBtn = findViewById(R.id.okBtn); // 확인버튼
+        if (isUpdate == 1)
+            okBtn.setText("수 정");
+        else
+            okBtn.setText("확 인");
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,19 +72,51 @@ public class LocalSelectActivity extends AppCompatActivity {
                 if(local_sido.equals("")||local_sigugun.equals(""))
                     Toast.makeText(LocalSelectActivity.this, "활동 지역을 선택해주세요.",Toast.LENGTH_SHORT).show();
                 else {
-                    intent.putExtra("business_reg_num", business_reg_num);
-                    intent.putExtra("manager_pw", manager_pw);
-                    intent.putExtra("manager_represent_name", manager_represent_name);
-                    intent.putExtra("manager_office_name", manager_office_name);
-                    intent.putExtra("manager_office_telnum", manager_office_telnum);
-                    intent.putExtra("manager_office_address", manager_office_address);
-                    intent.putExtra("manager_name", manager_name);
-                    intent.putExtra("manager_phonenum", manager_phonenum);
-                    intent.putExtra("local_sido", local_sido);
-                    intent.putExtra("local_sigugun", local_sigugun);
+                    if (isUpdate == 1) {  // 수정
+                        String business_reg_num = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num");
+                        Response.Listener rListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                                    boolean updateSuccess = jResponse.getBoolean("updateSuccess");
+                                    Intent updateIntent = new Intent(LocalSelectActivity.this, MyOfficeInfoManageActivity.class);
+                                    if (updateSuccess) {
+                                        String local_sido = jResponse.getString("local_sido");
+                                        String local_sigugun = jResponse.getString("local_sigugun");
+                                        String local_code = jResponse.getString("local_code");
 
+                                        Sharedpreference.set_local_sido(getApplicationContext(), "local_sido", local_sido);
+                                        Sharedpreference.set_local_sigugun(getApplicationContext(), "local_sigugun", local_sigugun);
+                                        Sharedpreference.set_local_code(getApplicationContext(), "local_code", local_code);
 
-                    startActivity(intent);
+                                        Toast.makeText(LocalSelectActivity.this, "수정 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                    } else
+                                        Toast.makeText(LocalSelectActivity.this, "수정 실패", Toast.LENGTH_SHORT).show();
+                                    startActivity(updateIntent);
+                                } catch (Exception e) {
+                                    Log.d("mytest", e.toString());
+                                }
+                            }
+                        };
+                        UpdateOfficeInfoRequest updateOfficeInfoRequest = new UpdateOfficeInfoRequest("UpdateLocal", business_reg_num, local_sido, local_sigugun, rListener);  // Request 처리 클래스
+
+                        RequestQueue queue = Volley.newRequestQueue(LocalSelectActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
+                        queue.add(updateOfficeInfoRequest);  // Volley로 구현된 큐에 ValidateRequest 객체를 넣어둠으로써 실제로 서버 연동 발생
+                    } else {  // 회원가입
+                        intent.putExtra("business_reg_num", business_reg_num);
+                        intent.putExtra("manager_pw", manager_pw);
+                        intent.putExtra("manager_represent_name", manager_represent_name);
+                        intent.putExtra("manager_office_name", manager_office_name);
+                        intent.putExtra("manager_office_telnum", manager_office_telnum);
+                        intent.putExtra("manager_office_address", manager_office_address);
+                        intent.putExtra("manager_name", manager_name);
+                        intent.putExtra("manager_phonenum", manager_phonenum);
+                        intent.putExtra("local_sido", local_sido);
+                        intent.putExtra("local_sigugun", local_sigugun);
+
+                        startActivity(intent);
+                    }
                 }
 
             }
