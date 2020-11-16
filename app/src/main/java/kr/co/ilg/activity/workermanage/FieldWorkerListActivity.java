@@ -181,7 +181,7 @@ public class FieldWorkerListActivity extends AppCompatActivity {
                                 worker_bankaccount[i] = jsonArray_worker.getJSONObject(i).getString("worker_bankaccount");
                                 worker_bankname[i] = jsonArray_worker.getJSONObject(i).getString("worker_bankname");
                                 field_code[i] = jsonArray_myfield.getJSONObject(i).getString("field_code");
-                                wkList.add(new PickStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], worker_email[i],mf_is_choolgeun[i],mf_is_toigeun[i], worker_bankname[i], worker_bankaccount[i],field_code[i]));
+                                wkList.add(new PickStateRVItem(R.drawable.man,jp_num_MY, worker_name[i], worker_birth[i], worker_phonenum[i], worker_email[i],mf_is_choolgeun[i],mf_is_toigeun[i], worker_bankname[i], worker_bankaccount[i],field_code[i]));
                             }
 
 

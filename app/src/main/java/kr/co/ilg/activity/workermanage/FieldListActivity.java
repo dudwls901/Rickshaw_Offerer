@@ -60,8 +60,7 @@ public class FieldListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fieldlist);
         mContext =this;
-        Intent receiver = getIntent();
-        business_reg_num_MY = receiver.getExtras().getString("business_reg_num");
+        business_reg_num_MY = Sharedpreference.get_business_reg_num(mContext,"business_reg_num");
 
         // 현재 날짜 가져오기 위한 Calendar 클래스
         Calendar calendar = Calendar.getInstance();

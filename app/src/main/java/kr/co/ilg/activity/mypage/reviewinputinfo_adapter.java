@@ -26,7 +26,6 @@ public class reviewinputinfo_adapter extends RecyclerView.Adapter<RecyclerView.V
             name = view.findViewById(R.id.reviewname);
             date = view.findViewById(R.id.reviewdate);
             field = view.findViewById(R.id.reviewfield);
-            imageView = view.findViewById(R.id.reviewprofile);
             contents = view.findViewById(R.id.contents);
         }
     }
@@ -49,7 +48,6 @@ public class reviewinputinfo_adapter extends RecyclerView.Adapter<RecyclerView.V
         myViewHolder.name.setText(List.get(position).name);
         myViewHolder.date.setText(List.get(position).date);
         myViewHolder.field.setText(List.get(position).field);
-        myViewHolder.imageView.setImageResource(List.get(position).imageView);
         myViewHolder.contents.setText(List.get(position).contents);
     }
 

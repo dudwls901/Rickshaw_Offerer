@@ -1,5 +1,6 @@
 package kr.co.ilg.activity.mypage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.ilg.activity.findwork.MainActivity;
+import kr.co.ilg.activity.login.Sharedpreference;
 import kr.co.ilg.activity.workermanage.FieldListActivity;
 
 public class MypageMainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,16 +32,21 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
     int[] buttonsid = {R.id.myinform, R.id.accountmanage, R.id.reviewmanage};
     BottomNavigationView bottomNavigationView;
     Intent intent;
+    Context mContext;
+    TextView username;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage_main);
+        mContext = this;
 
         for(int i=0; i<3; i++){
             buttons[i] = (Button) findViewById(buttonsid[i]);
             buttons[i].setOnClickListener(this);
         }
+        username = findViewById(R.id.username);
+        username.setText(Sharedpreference.get_manager_name(mContext,"manager_name"));
 
 
         final ListView listview = (ListView) findViewById(R.id.listview);
