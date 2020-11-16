@@ -18,6 +18,7 @@ public class BusinessLicenseConfirmActivity extends AppCompatActivity {
 
     Button confirmBtn;
     EditText ceoNameET, blnumET;
+    String kakaoemail, key;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
