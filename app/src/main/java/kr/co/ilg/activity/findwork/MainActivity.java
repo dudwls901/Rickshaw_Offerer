@@ -479,7 +479,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.tab2: {
 
                         intent = new Intent(MainActivity.this, FieldListActivity.class);
-                        intent.putExtra("business_reg_num",Sharedpreference.get_business_reg_num(mContext,"business_reg_num"));
                         startActivity(intent);
                         return false;
                     }
