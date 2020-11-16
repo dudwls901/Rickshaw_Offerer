@@ -133,6 +133,7 @@ Context context;
                         intent = new Intent(context, UserReviewWriteActivity.class);
                         intent.putExtra("worker_name",wkList.get(position).wkName);
                         intent.putExtra("worker_email",wkList.get(position).wk_email);
+                        intent.putExtra("jp_num",wkList.get(position).jp_num);
                         context.startActivity(intent);
                     }
                 });

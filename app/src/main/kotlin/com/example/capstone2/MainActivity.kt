@@ -236,35 +236,36 @@ class MainActivity : Activity() {
                                                         val jResponse = JSONObject(response!!.substring(response!!.indexOf("{"), response!!.lastIndexOf("}") + 1))
                                                         val isExistWorker = jResponse.getBoolean("tryLogin")
                                                         if (isExistWorker) {  // 회원이 존재하면 로그인된 화면으로 넘어감
-                                                            var worker_email1 = jResponse.getString("worker_email")
-                                                            var worker_name = jResponse.getString("worker_name")
-                                                            var password = jResponse.getString("worker_pw")
-                                                            var worker_gender = jResponse.getString("worker_gender")
-                                                            var worker_birth = jResponse.getString("worker_birth")
-                                                            var worker_phonenum = jResponse.getString("worker_phonenum")
-                                                            var worker_bankaccount = jResponse.getString("worker_bankaccount")
-                                                            var worker_bankname = jResponse.getString("worker_bankname")
-                                                            var worker_introduce = jResponse.getString("worker_introduce")
-                                                            var jobcode = jResponse.getString("jobcode")
-                                                            var hope_local_sido = jResponse.getString("hope_local_sido")
-                                                            var hope_local_sigugun = jResponse.getString("hope_local_sigugun")
-                                                            var jobcareer = jResponse.getString("jobcareer")
+                                                            var business_reg_num = jResponse.getString("business_reg_num")
+                                                            var manager_pw = jResponse.getString("manager_pw")
+                                                            var manager_represent_name = jResponse.getString("manager_represent_name")
+                                                            var manager_office_name = jResponse.getString("manager_office_name")
+                                                            var manager_office_telnum = jResponse.getString("manager_office_telnum")
+                                                            var manager_office_address = jResponse.getString("manager_office_address")
+                                                            var manager_name = jResponse.getString("manager_name")
+                                                            var local_code = jResponse.getString("local_code")
+                                                            var local_sido = jResponse.getString("local_sido")
+                                                            var local_sigugun = jResponse.getString("local_sigugun")
+                                                            var manager_phonenum = jResponse.getString("manager_phonenum")
+                                                            var manager_bankname = jResponse.getString("manager_bankname")
+                                                            var manager_office_info = jResponse.getString("manager_office_info")
+                                                            var manager_bankaccount = jResponse.getString("manager_bankaccount")
 
 
-                                                            Sharedpreference.set_Jobcareer(applicationContext(), "jobcareer", jobcareer)
-
-                                                            Sharedpreference.set_email(applicationContext(), "worker_email", worker_email1)
-                                                            Sharedpreference.set_Nickname(applicationContext(), "worker_name", worker_name)
-                                                            Sharedpreference.set_Password(applicationContext(), "worker_pw", password)
-                                                            Sharedpreference.set_Gender(applicationContext(), "worker_gender", worker_gender)
-                                                            Sharedpreference.set_Birth(applicationContext(), "worker_birth", worker_birth)
-                                                            Sharedpreference.set_Phonenum(applicationContext(), "worker_phonenum", worker_phonenum)
-                                                            Sharedpreference.set_Bankaccount(applicationContext(), "worker_bankaccount", worker_bankaccount)
-                                                            Sharedpreference.set_Bankname(applicationContext(), "worker_bankname", worker_bankname)
-                                                            Sharedpreference.set_introduce(applicationContext(), "worker_introduce", worker_introduce)
-                                                            Sharedpreference.set_Jobname(applicationContext(), "jobcode", jobcode)
-                                                            Sharedpreference.set_Hope_local_sido(applicationContext(), "hope_local_sido", hope_local_sido)
-                                                            Sharedpreference.set_Hope_local_sigugun(applicationContext(), "hope_local_sigugun", hope_local_sigugun)// 파일에 맵핑형식으로 저장
+                                                            Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num)
+                                                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido)
+                                                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun)
+                                                            Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw)
+                                                            Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name)
+                                                            Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name)
+                                                            Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum)
+                                                            Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address)
+                                                            Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name)
+                                                            Sharedpreference.set_local_code(applicationContext(), "local_code", local_code)
+                                                            Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum)
+                                                            Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname)
+                                                            Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info)
+                                                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount)// 파일에 맵핑형식으로 저장
 
                                                             intent() //
                                                             //Toast.makeText(FindPasswordInfoActivity.this, "등록된 "+worker_pw, Toast.LENGTH_SHORT).show();
@@ -277,7 +278,7 @@ class MainActivity : Activity() {
                                                         Log.d("mytest", e.toString())
                                                     }
 
-                                                }
+                                                }m
                                             }
                                             val lRequest = kr.co.ilg.activity.login.LoginRequest(user.kakaoAccount?.email, "1", rListener) // Request 처리 클래스
                                             val queue = Volley.newRequestQueue(this) // 데이터 전송에 사용할 Volley의 큐 객체 생성
