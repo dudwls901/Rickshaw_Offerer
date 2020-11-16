@@ -148,7 +148,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@drawable/custom_btn_mainclr"
-            android:text="입력"
+            android:text="입 력"
             android:textColor="@color/WhiteColor"
             android:textSize="18sp"
             android:textStyle="bold"
