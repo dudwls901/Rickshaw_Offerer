@@ -13,13 +13,14 @@ public class WorkerReviewRequest extends StringRequest {
     private Map<String, String> parameters;
 
 
-    public WorkerReviewRequest(String business_reg_num,String worker_email,String wr_contents, Response.Listener<String> listener) { //생성자 부분이라 콜백메소드는 생략
+    public WorkerReviewRequest(String jp_num,String business_reg_num,String worker_email,String wr_contents, Response.Listener<String> listener) { //생성자 부분이라 콜백메소드는 생략
 
         super(Method.POST, URL, listener, null);
 
 
         //데이터들
         parameters = new HashMap<>();
+        parameters.put("jp_num", jp_num);
         parameters.put("business_reg_num", business_reg_num);
         parameters.put("worker_email", worker_email);
         parameters.put("wr_contents", wr_contents);

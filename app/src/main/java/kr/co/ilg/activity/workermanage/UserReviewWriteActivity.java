@@ -30,7 +30,7 @@ public class UserReviewWriteActivity extends AppCompatActivity {
     TextView review_object;
     EditText review_text;
     ImageButton back;
-    String worker_name, worker_email;
+    String worker_name, worker_email,jp_num;
     Button okBtn;
 Context mContext;
     @Override
@@ -42,6 +42,7 @@ Context mContext;
         Intent receiver = getIntent();
         worker_name = receiver.getExtras().getString("worker_name");
         worker_email = receiver.getExtras().getString("worker_email");
+        jp_num = receiver.getExtras().getString("jp_num");
 
 
         review_object = findViewById(R.id.review_object);
@@ -76,7 +77,7 @@ Context mContext;
                         }
                     }
                 };
-                WorkerReviewRequest reviewInsert = new WorkerReviewRequest(Sharedpreference.get_business_reg_num(mContext,"business_reg_num"),worker_email,review_text.getText().toString() , responseListener);
+                WorkerReviewRequest reviewInsert = new WorkerReviewRequest(jp_num,Sharedpreference.get_business_reg_num(mContext,"business_reg_num"),worker_email,review_text.getText().toString() , responseListener);
                 RequestQueue queue = Volley.newRequestQueue(UserReviewWriteActivity.this);
                 queue.add(reviewInsert);
             }

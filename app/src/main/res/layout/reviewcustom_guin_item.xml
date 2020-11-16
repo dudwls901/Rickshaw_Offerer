@@ -2,17 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
-
-    <ImageView
-        android:id="@+id/reviewprofile"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_margin="5dp"
-        android:src="@drawable/man"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/reviewname"
@@ -20,26 +12,28 @@
         android:layout_height="wrap_content"
         android:text="이름 "
         android:textColor="@android:color/black"
-        android:textSize="35dp"
-        app:layout_constraintLeft_toRightOf="@id/reviewprofile"
+        android:textSize="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/line"
-        android:padding="2dp"
+        android:layout_marginTop="6dp"
         android:text="출근일자"
+        android:id="@+id/datetext"
         android:textColor="@android:color/black"
-        app:layout_constraintLeft_toRightOf="@id/reviewprofile"
-        app:layout_constraintTop_toBottomOf="@id/reviewname" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline8" />
 
     <TextView
         android:id="@+id/reviewfield"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="2dp"
         android:textSize="18dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="3dp"
         android:text="현장이름"
         app:layout_constraintLeft_toRightOf="@id/reviewname"
         app:layout_constraintBottom_toTopOf="@id/guideline8" />
@@ -47,18 +41,20 @@
         android:id="@+id/reviewdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="2dp"
+        android:layout_marginTop="3dp"
         android:textSize="18dp"
         android:text="출근날짜"
-        app:layout_constraintLeft_toRightOf="@id/reviewname"
+        android:layout_marginLeft="10sp"
+        app:layout_constraintLeft_toRightOf="@id/datetext"
         app:layout_constraintTop_toTopOf="@id/guideline8" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="5dp"
         android:textSize="18dp"
-        app:layout_constraintTop_toBottomOf="@id/reviewprofile"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/datetext"
         app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/contents"
         />

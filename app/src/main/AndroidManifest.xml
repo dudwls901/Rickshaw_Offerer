@@ -70,6 +70,7 @@
         <activity android:name="kr.co.ilg.activity.mypage.PasswordChangeActivity" android:label="비밀번호 변경"/>
         <activity android:name="kr.co.ilg.activity.mypage.MemeberRemoveActivity" android:label="회원탈퇴"/>
         <activity android:name="kr.co.ilg.activity.workermanage.UserReviewWriteActivity" android:label="후기 작성"/>
+        <activity android:name="kr.co.ilg.activity.mypage.ReviewmanageActivity" android:label="후기 관리"/>
     </application>
 
 </manifest>
