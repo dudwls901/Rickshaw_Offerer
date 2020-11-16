@@ -39,6 +39,7 @@ public class OfficeInfoActivity extends AppCompatActivity {
     String officename, officetel, officemanagertel;
     int k;
     String name[], contents[], datetime[], key[];
+    String mapAddress;
     RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -80,6 +81,7 @@ public class OfficeInfoActivity extends AppCompatActivity {
                         office_name.setText(jResponse.getString("manager_office_name"));
                         office_tel.setText(officetel);
                         office_address.setText(jResponse.getString("manager_office_address"));
+                        mapAddress =jResponse.getString("manager_office_address");
                         office_manager_name.setText(jResponse.getString("manager_name"));
                         office_manager_tel.setText(officemanagertel);
                         office_introduce.setText(jResponse.getString("manager_office_info"));
@@ -180,7 +182,10 @@ public class OfficeInfoActivity extends AppCompatActivity {
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d("mappppp",mapAddress);
+                Intent intent = new Intent(OfficeInfoActivity.this, WorkMapActivity.class);
+                intent.putExtra("mapAddress",mapAddress);
+                startActivity(intent);
             }
         });
     }

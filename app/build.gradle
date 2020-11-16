@@ -54,5 +54,5 @@ dependencies {
     compile group: project.KAKAO_SDK_GROUP, name: 'usermgmt',
 
             version: project.KAKAO_SDK_VERSION
-
+    implementation files('libs/libDaumMapAndroid.jar')
 }
