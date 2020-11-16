@@ -24,6 +24,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".GlobalApplication"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -34,6 +35,17 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name= "com.kakao.sdk.auth.AuthCodeHandlerActivity">
+           <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
+            <data android:host="oauth"
+                android:scheme="kakao8e5b23f94289b616cbaf1e3fbe58d41c" />
             </intent-filter>
         </activity>
 
