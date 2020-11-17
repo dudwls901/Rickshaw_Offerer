@@ -1,6 +1,5 @@
 package kr.co.ilg.activity.findwork;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,7 +24,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
@@ -36,7 +34,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +42,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import kr.co.ilg.activity.login.Sharedpreference;
-import kr.co.ilg.activity.mypage.MypageMainActivity;
 import kr.co.ilg.activity.workermanage.FieldListActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -109,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d("qqqqqqqqqqq",query);
-                SelectJopPosting searchView_req = new SelectJopPosting("0",query, responseListener);  // Request 처리 클래스
+                SelectJobPosting searchView_req = new SelectJobPosting("0",query, responseListener);  // Request 처리 클래스
                 searchView_req.setRetryPolicy(new DefaultRetryPolicy(
                         DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
                         0,
@@ -408,15 +404,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /////////////////////////메인 액티비티 들어가자마자 띄울 구인글들 REQUEST
         Log.d("444444444444",business_reg_num_MY+local_sido+local_sigugun+job_code[0]+job_code[1]+job_code[2]);
-        SelectJopPosting selectJopPosting = new SelectJopPosting("1",business_reg_num_MY,local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);
+        SelectJobPosting selectJobPosting = new SelectJobPosting("1",business_reg_num_MY,local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        queue.add(selectJopPosting);
+        queue.add(selectJobPosting);
 
         ////////////////////////////선택누를 시 띄울 구인글들
         resetjobpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SelectJopPosting mainRequest = new SelectJopPosting("1",business_reg_num_MY,local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);  // Request 처리 클래스
+                SelectJobPosting mainRequest = new SelectJobPosting("1",business_reg_num_MY,local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);  // Request 처리 클래스
                 Log.d("asdfasdfasdfasdf",local_sido+" "+local_sigugun+" "+job_code[0]+" "+job_code[1]+" "+job_code[2]);
                 mainRequest.setRetryPolicy(new DefaultRetryPolicy(
                         DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
