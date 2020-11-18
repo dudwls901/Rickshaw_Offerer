@@ -1,12 +1,10 @@
 package kr.co.ilg.activity.workermanage;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,13 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.capstone2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,10 +27,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import kr.co.ilg.activity.findwork.FieldListAdapter;
-import kr.co.ilg.activity.findwork.ListAdapter;
 import kr.co.ilg.activity.findwork.ListViewItem;
 import kr.co.ilg.activity.findwork.MainActivity;
-import kr.co.ilg.activity.findwork.SelectJopPosting;
 import kr.co.ilg.activity.findwork.SelectMyField;
 import kr.co.ilg.activity.login.Sharedpreference;
 import kr.co.ilg.activity.mypage.MypageMainActivity;

@@ -90,7 +90,7 @@
             android:focusable="false"
             />
         <WebView
-            android:id="@+id/webView"
+            android:id="@+id/webView2"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             app:layout_constraintTop_toBottomOf="@id/officeAddressET"
@@ -115,7 +115,7 @@
             android:id="@+id/managerNameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/webView"
+            app:layout_constraintTop_toBottomOf="@id/webView2"
             app:layout_constraintLeft_toLeftOf="parent"
             android:paddingLeft="115dp" />
 
