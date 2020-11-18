@@ -452,13 +452,6 @@ public class WritePostingActivity extends AppCompatActivity {
 
             return true;
         }
-//        @Override
-//        public void onCloseWindow(WebView window) {
-//            super.onCloseWindow(window);
-//
-//            mWebViewContainer.removeView(window);    // 화면에서 제거
-//
-//
-//    }
+
     }
 }
