@@ -13,8 +13,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           android:layout_marginLeft="120dp"
-            android:text="현장 목록"
+            android:gravity="center"
+            android:text="현장별 구직자 목록"
             android:textColor="@color/WhiteColor"
             android:textSize="20sp" />
 

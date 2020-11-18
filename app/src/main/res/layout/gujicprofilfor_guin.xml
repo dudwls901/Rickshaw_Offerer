@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="구직자 프로필"
+            android:textColor="@color/WhiteColor"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,30 +34,10 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/man"
-            app:layout_constraintLeft_toRightOf="@id/guideline"
+            android:src="@drawable/user"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <ImageButton
-            android:id="@+id/changeprofil"
-            android:layout_width="30dp"
-            android:layout_height="20dp"
-            android:layout_gravity="bottom"
-            android:src="@drawable/abc_vector_test"
-            app:layout_constraintBottom_toTopOf="@id/guideline4"
-            app:layout_constraintLeft_toRightOf="@id/profil" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="수정"
-            app:layout_constraintLeft_toRightOf="@id/changeprofil"
-            app:layout_constraintBottom_toTopOf="@id/guideline4"/>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.44" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline4"
@@ -57,7 +53,7 @@
         android:layout_height="wrap_content"
         android:text="이름"
         android:textSize="25dp"
-        android:id="@+id/myname"
+        android:id="@+id/name"
         android:textAlignment="center"/>
     <ImageView
         android:layout_width="match_parent"
@@ -71,7 +67,8 @@
         android:layout_marginLeft="10dp"
         android:text="기본 프로필 "
         android:textColor="@android:color/black"
-        android:textSize="25dp"
+        android:textSize="20dp"
+        android:layout_marginTop="5dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,17 +79,37 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나이 : "
+            android:text="생년월일 : "
             android:textSize="17dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나이"
+            android:text="19991111"
             android:textSize="17dp"
             android:id="@+id/age"
             />
     </LinearLayout>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="7dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="성별 : "
+        android:textSize="17dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="남"
+        android:textSize="17dp"
+        android:id="@+id/gender"
+        />
+</LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,7 +125,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="휴대폰번호"
+            android:text="01015623546"
             android:textSize="17dp"
             android:id="@+id/phonenum"
             />
@@ -117,27 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="7dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="거주지 : "
-            android:textSize="17dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="거주지"
-            android:textSize="17dp"
-            android:id="@+id/address"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="7dp">
         <TextView
             android:layout_width="wrap_content"
@@ -153,21 +150,6 @@
             android:id="@+id/introduce"
             />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="right">
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="20dp"
-            android:layout_gravity="bottom"
-            android:src="@drawable/abc_vector_test" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="수정"/>
     </LinearLayout>
 
     <ImageView
@@ -185,23 +167,13 @@
         android:textSize="20dp"
         android:textColor="@android:color/black"
         />
-    <LinearLayout
+    <ListView
+        android:id="@+id/listview_job_career"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:textSize="17dp"
-            android:layout_height="wrap_content"
-            android:text="경력 : "
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:text="경력 "/>
-
-    </LinearLayout>
+        android:dividerHeight="4dp"
+        android:layout_marginHorizontal="10dp"
+        android:divider="#ffffff"/>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -212,10 +184,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="근무이력[NUM]"
+        android:text="근무이력 [0]"
         android:textSize="20dp"
         android:textColor="@android:color/black"
+        android:id="@+id/workedNum"
         />
+    <ListView
+        android:id="@+id/listview_worked"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="4dp"
+        android:layout_marginHorizontal="10dp"
+        android:divider="#ffffff"/>
+
+<!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -228,16 +210,26 @@
         android:layout_height="35dp"
         android:text="더보기"
         android:background="@drawable/line"
+        android:layout_marginRight="10dp"
         android:layout_gravity="right"/>
-    <ImageView
+-->
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="wrap_content"
+        android:text="후기"
+        android:textStyle="bold"
+        android:background="@color/LightColor"
+        android:gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:textSize="17dp"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/review_list"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="3dp"
-        android:src="@drawable/line"/>
-
-
-
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="vertical"/>
 
 </LinearLayout>

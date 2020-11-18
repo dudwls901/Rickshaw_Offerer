@@ -72,12 +72,14 @@ Context context;
         myViewHolder.wkName.setText(wkList.get(position).wkName);
         myViewHolder.wkAge.setText(wkList.get(position).wkAge);
         myViewHolder.wkPNum.setText(wkList.get(position).wkPNum);
+        String wk_email = wkList.get(position).wk_email;
 
         myViewHolder.arrowRBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, GujicProfileForGuin.class);
+                intent.putExtra("wk_email", wk_email);
                 context.startActivity(intent);
             }
         });
