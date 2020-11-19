@@ -26,20 +26,19 @@ import kr.co.ilg.activity.workermanage.GujicProfileForGuin;
 
 public class ApplyStateRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-   public static MyViewHolder myViewHolder;
+    public static MyViewHolder myViewHolder;
     Context asContext;
-
 
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position, String wk_email, String wk_name, boolean checked);
     }
-    private OnItemClickListener mListener =null;
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
     } //리스너객체를 전달하는 메서드와 전달된 객체를 저장할 변수를 추가
-
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -48,7 +47,7 @@ public class ApplyStateRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageButton arrowRBtn;
         CheckBox checkWorker;
 
-        MyViewHolder(View view){
+        MyViewHolder(View view) {
             super(view);
             profileIV = view.findViewById(R.id.profileIV);
             wkName = view.findViewById(R.id.wkName);
@@ -60,7 +59,8 @@ public class ApplyStateRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private ArrayList<ApplyStateRVItem> wkList;
-    ApplyStateRVAdapter(Context c, ArrayList<ApplyStateRVItem> wkList){
+
+    ApplyStateRVAdapter(Context c, ArrayList<ApplyStateRVItem> wkList) {
         this.asContext = c;
         this.wkList = wkList;
     }
@@ -75,27 +75,26 @@ public class ApplyStateRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-         myViewHolder = (MyViewHolder) holder;
+        myViewHolder = (MyViewHolder) holder;
 
         myViewHolder.profileIV.setImageResource(wkList.get(position).pofileIMGId);
         myViewHolder.wkName.setText(wkList.get(position).wkName);
         myViewHolder.wkAge.setText(wkList.get(position).wkAge);
         myViewHolder.wkPNum.setText(wkList.get(position).wkPNum);
-if(wkList.get(position).is_check) {
-    myViewHolder.checkWorker.setChecked(true);
+        String wk_email = wkList.get(position).wk_email;
+        if (wkList.get(position).is_check) {
+            myViewHolder.checkWorker.setChecked(true);
 
-}
-else
-{
-    myViewHolder.checkWorker.setChecked(false);
+        } else {
+            myViewHolder.checkWorker.setChecked(false);
 
-}
+        }
         myViewHolder.checkWorker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mListener.onItemClick(buttonView,position,wkList.get(position).wk_email, wkList.get(position).wkName,isChecked);
-             //   if(isChecked)
-                Log.d("zdzd","되냐고마냐고ㅡ");
+                mListener.onItemClick(buttonView, position, wkList.get(position).wk_email, wkList.get(position).wkName, isChecked);
+                //   if(isChecked)
+                Log.d("zdzd", "되냐고마냐고ㅡ");
 
             }
         });
@@ -106,14 +105,13 @@ else
             public void onClick(View v) {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, GujicProfileForGuin.class);
+                intent.putExtra("wk_email", wk_email);
                 context.startActivity(intent);
             }
         });
 
 
-
     }
-
 
 
     @Override

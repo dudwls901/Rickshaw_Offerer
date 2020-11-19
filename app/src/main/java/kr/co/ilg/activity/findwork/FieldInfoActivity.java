@@ -1,6 +1,5 @@
 package kr.co.ilg.activity.findwork;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -153,9 +152,9 @@ public class FieldInfoActivity extends AppCompatActivity {
 
             }
         };
-        SelectJopPosting selectJopPosting = new SelectJopPosting("2", field_code_MY, responseListener);
+        SelectJobPosting selectJobPosting = new SelectJobPosting("2", field_code_MY, responseListener);
         RequestQueue queue = Volley.newRequestQueue(FieldInfoActivity.this);
-        queue.add(selectJopPosting);
+        queue.add(selectJobPosting);
 
 
 

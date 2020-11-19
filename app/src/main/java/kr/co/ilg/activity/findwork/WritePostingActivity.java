@@ -3,6 +3,7 @@ package kr.co.ilg.activity.findwork;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,11 +11,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -381,24 +385,22 @@ public class WritePostingActivity extends AppCompatActivity {
 
     public void init_webView() {
         // WebView 설정
-        webView = (WebView) findViewById(R.id.webView);
+        webView = (WebView) findViewById(R.id.webView1);
 
+        WebSettings settings = webView.getSettings();
+        settings.setSupportMultipleWindows(true);
         // JavaScript 허용
         webView.getSettings().setJavaScriptEnabled(true);
         // JavaScript의 window.open 허용
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
         // 두 번째 파라미터는 사용될 php에도 동일하게 사용해야함
-        webView.addJavascriptInterface(new WritePostingActivity.AndroidBridge(), "TestApp");
+        webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
         // web client 를 chrome 으로 설정
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onCloseWindow(WebView window) {
-
-            }
-        });
+        // webView.setWebChromeClient(new MyWebChromeClient());
         // webview url load
-        webView.loadUrl("http://rickshaw.dothome.co.kr/getAddress.php");
+        webView.setWebChromeClient(new MyWebChromeClient());
+        webView.loadUrl("http://14.63.162.160/getAddress.php");
     }
 
 
@@ -417,5 +419,39 @@ public class WritePostingActivity extends AppCompatActivity {
         }
     }
 
+    private class MyWebChromeClient extends WebChromeClient {
 
+        @Override
+
+        public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+
+            WebView newWebView = new WebView(view.getContext());
+
+            WebSettings webSettings = newWebView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            Dialog dialog1 = new Dialog(WritePostingActivity.this);
+            dialog1.setContentView(newWebView);
+
+            ViewGroup.LayoutParams params = dialog1.getWindow().getAttributes();
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog1.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            newWebView.setWebChromeClient(new WebChromeClient() {
+                @Override
+                public void onCloseWindow(WebView window) {
+                    webView.setVisibility(View.GONE);
+                }
+            });
+
+            //  newWebView.setWebChromeClient(this);
+
+            // webView.addView(newWebView);
+            WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+            transport.setWebView(newWebView);
+            resultMsg.sendToTarget();
+
+            return true;
+        }
+
+    }
 }

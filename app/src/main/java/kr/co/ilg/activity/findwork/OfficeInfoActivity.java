@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import kr.co.ilg.activity.mypage.getReviewRequest;
 
 public class OfficeInfoActivity extends AppCompatActivity {
-    Toolbar toolbar;
     TextView office_name, office_address, office_manager_name, office_manager_tel, office_tel, office_introduce;
     ImageButton office_messageBtn, office_callBtn, mng_messageBtn, mng_callBtn, map_btn;
     RecyclerView review_RecyclerView;
@@ -46,10 +45,6 @@ public class OfficeInfoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.office_info);
-
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent receiver = getIntent();
         String business_reg_num = receiver.getExtras().getString("business_reg_num");

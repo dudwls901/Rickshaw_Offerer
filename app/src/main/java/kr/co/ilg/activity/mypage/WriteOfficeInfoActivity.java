@@ -6,11 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +38,7 @@ public class WriteOfficeInfoActivity extends Activity {
     Button writeBtn;
     int isUpdate;  // 1 > 수정  0 > 회원가입
     String business_reg_num, manager_represent_name, manager_pw;
-    EditText officeNameET,officeNumET, officeAddressET,managerNameET,managerNumET;
+    EditText officeNameET, officeNumET, officeAddressET, managerNameET, managerNumET;
     private WebView webView;
     private Handler handler;
 
@@ -91,9 +94,9 @@ public class WriteOfficeInfoActivity extends Activity {
                     if (isUpdate == 1) {  // 수정
                         String business_reg_num2 = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num","managerinfo");
 
-                        Response.Listener rListener = new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
+                    Response.Listener rListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
                                 try {
                                     JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
@@ -142,10 +145,13 @@ public class WriteOfficeInfoActivity extends Activity {
 
 
     }
+
     public void init_webView() {
         // WebView 설정
-        webView = (WebView) findViewById(R.id.webView);
+        webView = (WebView) findViewById(R.id.webView2);
 
+        WebSettings settings = webView.getSettings();
+        settings.setSupportMultipleWindows(true);
         // JavaScript 허용
         webView.getSettings().setJavaScriptEnabled(true);
         // JavaScript의 window.open 허용
@@ -154,17 +160,11 @@ public class WriteOfficeInfoActivity extends Activity {
         // 두 번째 파라미터는 사용될 php에도 동일하게 사용해야함
         webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
         // web client 를 chrome 으로 설정
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onCloseWindow(WebView window)
-            {
-
-            }
-        });
+       // webView.setWebChromeClient(new MyWebChromeClient());
         // webview url load
-        webView.loadUrl("http://rickshaw.dothome.co.kr/getAddress.php");
+        webView.setWebChromeClient(new MyWebChromeClient());
+        webView.loadUrl("http://14.63.162.160/getAddress.php");
     }
-
 
     private class AndroidBridge {
         @JavascriptInterface
@@ -180,4 +180,49 @@ public class WriteOfficeInfoActivity extends Activity {
             });
         }
     }
+
+    private class MyWebChromeClient extends WebChromeClient {
+
+        @Override
+
+        public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+
+            WebView newWebView = new WebView(view.getContext());
+
+            WebSettings webSettings = newWebView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            Dialog dialog1 = new Dialog(WriteOfficeInfoActivity.this);
+            dialog1.setContentView(newWebView);
+
+            ViewGroup.LayoutParams params = dialog1.getWindow().getAttributes();
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog1.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            newWebView.setWebChromeClient(new WebChromeClient() {
+                @Override
+                public void onCloseWindow(WebView window) {
+                    webView.setVisibility(View.GONE);
+                }
+            });
+
+          //  newWebView.setWebChromeClient(this);
+
+           // webView.addView(newWebView);
+            WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+            transport.setWebView(newWebView);
+            resultMsg.sendToTarget();
+
+            return true;
+        }
+//        @Override
+//        public void onCloseWindow(WebView window) {
+//            super.onCloseWindow(window);
+//
+//            mWebViewContainer.removeView(window);    // 화면에서 제거
+//
+//
+//    }
+    }
+
 }
+
