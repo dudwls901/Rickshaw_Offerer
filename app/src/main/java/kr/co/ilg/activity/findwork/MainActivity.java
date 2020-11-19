@@ -120,6 +120,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.d("qqqqqqqqqnewtext", newText);
+                SelectJobPosting searchView_req = new SelectJobPosting("0",newText, responseListener);  // Request 처리 클래스
+                searchView_req.setRetryPolicy(new DefaultRetryPolicy(
+                        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                        0,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)); ////////값띄울때 충돌방지용
+
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
+                queue.add(searchView_req);
                 return false;
             }
         });
