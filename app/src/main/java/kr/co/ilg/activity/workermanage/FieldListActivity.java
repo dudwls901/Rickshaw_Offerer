@@ -34,6 +34,7 @@ import kr.co.ilg.activity.findwork.FieldListAdapter;
 import kr.co.ilg.activity.findwork.ListAdapter;
 import kr.co.ilg.activity.findwork.ListViewItem;
 import kr.co.ilg.activity.findwork.MainActivity;
+import kr.co.ilg.activity.findwork.MainBackPressCloseHandler;
 import kr.co.ilg.activity.findwork.SelectJopPosting;
 import kr.co.ilg.activity.findwork.SelectMyField;
 import kr.co.ilg.activity.login.Sharedpreference;
@@ -50,7 +51,7 @@ public class FieldListActivity extends AppCompatActivity {
     Date today = null;
     Date jp_job_date_dateform = null;
     Context mContext;
-
+    MainBackPressCloseHandler mainBackPressCloseHandler;
 
     //오늘,지난 날의 내 구인글들만 현장목록으로 뜸
     //바텀네비에 나의 현장 누르는 곳마다 다 intent값 넘기는 거 바꿔줘야함
@@ -60,7 +61,10 @@ public class FieldListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fieldlist);
         mContext =this;
-        business_reg_num_MY = Sharedpreference.get_business_reg_num(mContext,"business_reg_num");
+        business_reg_num_MY = Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo");
+
+        mainBackPressCloseHandler =  new MainBackPressCloseHandler(this);
+
 
         // 현재 날짜 가져오기 위한 Calendar 클래스
         Calendar calendar = Calendar.getInstance();
@@ -166,7 +170,7 @@ public class FieldListActivity extends AppCompatActivity {
 
 
                         intent = new Intent(FieldListActivity.this, FieldListActivity.class);
-                        intent.putExtra("business_reg_num", Sharedpreference.get_business_reg_num(mContext,"business_reg_num"));
+                        intent.putExtra("business_reg_num", Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo"));
                         startActivity(intent);
 
                         return false;
@@ -182,5 +186,9 @@ public class FieldListActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        mainBackPressCloseHandler.onBackPressed();
     }
 }

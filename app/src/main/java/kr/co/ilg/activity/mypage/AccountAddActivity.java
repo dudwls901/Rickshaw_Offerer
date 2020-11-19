@@ -131,8 +131,8 @@ public class AccountAddActivity extends AppCompatActivity {
                             }
                         }
                     };
-                    if(Sharedpreference.get_kakaoemail(mContext,"kakaoemail") != null){
-                        ManagerDBRequest managerInsert = new ManagerDBRequest(Sharedpreference.get_kakaoemail(mContext,"kakaoemail"),business_reg_num, manager_pw, manager_represent_name, manager_office_name, manager_office_telnum, local_sido, local_sigugun, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, responseListener);
+                    if(Sharedpreference.get_kakaoemail(mContext,"kakaoemail","managerinfo") != null){
+                        ManagerDBRequest managerInsert = new ManagerDBRequest(Sharedpreference.get_kakaoemail(mContext,"kakaoemail","managerinfo"),business_reg_num, manager_pw, manager_represent_name, manager_office_name, manager_office_telnum, local_sido, local_sigugun, manager_office_address, manager_name, manager_phonenum, manager_bankaccount, manager_bankname, responseListener);
                         RequestQueue queue = Volley.newRequestQueue(AccountAddActivity.this);
                         queue.add(managerInsert);
                     }
@@ -145,10 +145,11 @@ public class AccountAddActivity extends AppCompatActivity {
                     Log.d("mytesttttt", business_reg_num + manager_represent_name + manager_pw + manager_office_name + manager_office_telnum + local_sido + local_sigugun + manager_office_address + manager_name + manager_phonenum + manager_bankaccount + manager_bankname);
 
                     Intent intent = new Intent(AccountAddActivity.this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                     startActivity(intent);
                 } else {  // 계좌 수정
-                    String bnum = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num");
+                    String bnum = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num","managerinfo");
                     Response.Listener rListener = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -157,9 +158,10 @@ public class AccountAddActivity extends AppCompatActivity {
                                 JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                                 boolean updateSuccess3 = jResponse.getBoolean("updateSuccess3");
                                 Intent updateIntent = new Intent(AccountAddActivity.this, AccountManageActivity.class);
+                                updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 if (updateSuccess3) {
-                                    Sharedpreference.set_manager_bankaccount(getApplicationContext(), "manager_bankaccount", manager_bankaccount);
-                                    Sharedpreference.set_manager_bankname(getApplicationContext(), "manager_bankname", manager_bankname);
+                                    Sharedpreference.set_manager_bankaccount(getApplicationContext(), "manager_bankaccount", manager_bankaccount,"managerinfo");
+                                    Sharedpreference.set_manager_bankname(getApplicationContext(), "manager_bankname", manager_bankname,"managerinfo");
 
                                     Toast.makeText(AccountAddActivity.this, "수정 완료되었습니다", Toast.LENGTH_SHORT).show();
                                 } else

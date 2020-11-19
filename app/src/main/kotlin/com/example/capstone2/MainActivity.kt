@@ -13,8 +13,11 @@ import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.UserApiClient
+import kr.co.ilg.activity.findwork.MainActivity
+import kr.co.ilg.activity.findwork.MainBackPressCloseHandler
 import kr.co.ilg.activity.login.BusinessLicenseConfirmActivity
 import kr.co.ilg.activity.login.FindPasswordInfoActivity
+import kr.co.ilg.activity.login.LoginRequest
 import kr.co.ilg.activity.login.Sharedpreference
 import org.json.JSONObject
 
@@ -24,6 +27,7 @@ class MainActivity : Activity() {
     init{
         instance = this
     }
+    lateinit var mainBackPressCloseHandler: MainBackPressCloseHandler
 
     companion object {
         private var instance: com.example.capstone2.MainActivity? = null
@@ -32,6 +36,7 @@ class MainActivity : Activity() {
         }
     }
     lateinit var myJSON : String;
+    var auto:Boolean = false;
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -39,14 +44,75 @@ class MainActivity : Activity() {
         setContentView(R.layout.login);
 
 
-        Sharedpreference.clear(applicationContext)
-        val idET = findViewById<EditText>(R.id.idET);
-        val pwET = findViewById<EditText>(R.id.pwET);
+        Sharedpreference.clear(applicationContext, "managerinfo")
+        mainBackPressCloseHandler =  MainBackPressCloseHandler(this)
+        val idET = findViewById<EditText>(R.id.idET)
+        val pwET = findViewById<EditText>(R.id.pwET)
         val kakaoLoginBtn = findViewById<ImageButton>(R.id.kakaoLoginBtn)
 
         val loginBtn = findViewById<Button>(R.id.loginBtn)
         val findPwBtn = findViewById<TextView>(R.id.findPwBtn)
         val signUpBtn = findViewById<TextView>(R.id.signUpBtn)
+        val checkbox = findViewById<CheckBox>(R.id.cb)
+
+        val autoid = Sharedpreference.get_id(applicationContext(), "business_reg_num", "autologin1")
+        val autopw = Sharedpreference.get_pw(applicationContext(), "manager_pw", "autologin1")
+
+
+
+        if (autoid != null && autopw != null) {
+            val aListener: Response.Listener<String> = Response.Listener<String> { response ->
+                try {
+                    val jResponse = JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1))
+                    val a = jResponse.getJSONObject("response")
+                    val isExistWorker = a.getBoolean("tryLogin")
+                    if (isExistWorker) {  // 회원이 존재하면 로그인된 화면으로 넘어감
+                        val business_reg_num = jResponse.getString("business_reg_num")
+                        val manager_pw = jResponse.getString("manager_pw")
+                        val manager_represent_name = jResponse.getString("manager_represent_name")
+                        val manager_office_name = jResponse.getString("manager_office_name")
+                        val manager_office_telnum = jResponse.getString("manager_office_telnum")
+                        val manager_office_address = jResponse.getString("manager_office_address")
+                        val manager_name = jResponse.getString("manager_name")
+                        val local_code = jResponse.getString("local_code")
+                        val local_sido = jResponse.getString("local_sido")
+                        val local_sigugun = jResponse.getString("local_sigugun")
+                        val manager_phonenum = jResponse.getString("manager_phonenum")
+                        val manager_bankname = jResponse.getString("manager_bankname")
+                        val manager_office_info = jResponse.getString("manager_office_info")
+                        val manager_bankaccount = jResponse.getString("manager_bankaccount")
+                        Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num, "managerinfo")
+                        Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido, "managerinfo")
+                        Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun, "managerinfo")
+                        Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw, "managerinfo")
+                        Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name, "managerinfo")
+                        Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name, "managerinfo")
+                        Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum, "managerinfo")
+                        Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address, "managerinfo")
+                        Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name, "managerinfo")
+                        Sharedpreference.set_local_code(applicationContext(), "local_code", local_code, "managerinfo")
+                        Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum, "managerinfo")
+                        Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname, "managerinfo")
+                        Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info, "managerinfo")
+                        Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount, "managerinfo")
+
+                        //Sharedpreference.set_Hope_local_sido(applicationContext(), "hope_local_sido", hope_local_sido)
+                        //Sharedpreference.set_Hope_local_sigugun(applicationContext(), "hope_local_sigugun", hope_local_sigugun)// 파일에 맵핑형식으로 저장
+                        Toast.makeText(this@MainActivity, "로그인성공", Toast.LENGTH_SHORT).show()
+                    } else {  // 회원이 존재하지 않는다면
+                        Toast.makeText(this@MainActivity, "로그인실패", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: java.lang.Exception) {
+                    Log.d("mytest1111111", e.toString()) // 오류 출력
+                }
+            }
+            val lRequest = LoginRequest(autoid, autopw, aListener) // Request 처리 클래스
+            val queue = Volley.newRequestQueue(this@MainActivity) // 데이터 전송에 사용할 Volley의 큐 객체 생
+            queue.add(lRequest)
+            val intent1 = Intent(this@MainActivity, kr.co.ilg.activity.findwork.MainActivity::class.java)
+            startActivity(intent1)
+            finish()
+        }
 
 
         fun intent(){
@@ -55,7 +121,7 @@ class MainActivity : Activity() {
         }
         fun signup(email: String){
             var intent1 = Intent(application, BusinessLicenseConfirmActivity::class.java)
-            Sharedpreference.set_kakaoemail(applicationContext,"kakaoemail",email);
+            Sharedpreference.set_kakaoemail(applicationContext, "kakaoemail", email, "managerinfo")
             startActivity(intent1)
         }
 
@@ -124,20 +190,20 @@ class MainActivity : Activity() {
                                             var manager_bankaccount = jResponse.getString("manager_bankaccount")
 
 
-                                            Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num)
-                                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido)
-                                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun)
-                                            Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw)
-                                            Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name)
-                                            Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name)
-                                            Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum)
-                                            Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address)
-                                            Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name)
-                                            Sharedpreference.set_local_code(applicationContext(), "local_code", local_code)
-                                            Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum)
-                                            Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname)
-                                            Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info)
-                                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount)// 파일에 맵핑형식으로 저장
+                                            Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num, "managerinfo")
+                                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido, "managerinfo")
+                                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun, "managerinfo")
+                                            Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw, "managerinfo")
+                                            Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name, "managerinfo")
+                                            Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name, "managerinfo")
+                                            Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum, "managerinfo")
+                                            Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address, "managerinfo")
+                                            Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name, "managerinfo")
+                                            Sharedpreference.set_local_code(applicationContext(), "local_code", local_code, "managerinfo")
+                                            Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum, "managerinfo")
+                                            Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname, "managerinfo")
+                                            Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info, "managerinfo")
+                                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount, "managerinfo")// 파일에 맵핑형식으로 저장
 
                                             Toast.makeText(this@MainActivity, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                                             intent() //
@@ -183,20 +249,20 @@ class MainActivity : Activity() {
                                             var manager_bankaccount = jResponse.getString("manager_bankaccount")
 
 
-                                            Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num)
-                                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido)
-                                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun)
-                                            Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw)
-                                            Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name)
-                                            Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name)
-                                            Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum)
-                                            Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address)
-                                            Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name)
-                                            Sharedpreference.set_local_code(applicationContext(), "local_code", local_code)
-                                            Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum)
-                                            Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname)
-                                            Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info)
-                                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount)// 파일에 맵핑형식으로 저장
+                                            Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num, "managerinfo")
+                                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido, "managerinfo")
+                                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun, "managerinfo")
+                                            Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw, "managerinfo")
+                                            Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name, "managerinfo")
+                                            Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name, "managerinfo")
+                                            Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum, "managerinfo")
+                                            Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address, "managerinfo")
+                                            Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name, "managerinfo")
+                                            Sharedpreference.set_local_code(applicationContext(), "local_code", local_code, "managerinfo")
+                                            Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum, "managerinfo")
+                                            Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname, "managerinfo")
+                                            Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info, "managerinfo")
+                                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount, "managerinfo")// 파일에 맵핑형식으로 저장
 
                                             intent() //
                                             //Toast.makeText(FindPasswordInfoActivity.this, "등록된 "+worker_pw, Toast.LENGTH_SHORT).show();
@@ -258,20 +324,20 @@ class MainActivity : Activity() {
                                                             var manager_bankaccount = jResponse.getString("manager_bankaccount")
 
 
-                                                            Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num)
-                                                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido)
-                                                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun)
-                                                            Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw)
-                                                            Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name)
-                                                            Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name)
-                                                            Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum)
-                                                            Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address)
-                                                            Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name)
-                                                            Sharedpreference.set_local_code(applicationContext(), "local_code", local_code)
-                                                            Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum)
-                                                            Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname)
-                                                            Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info)
-                                                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount)// 파일에 맵핑형식으로 저장
+                                                            Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num, "managerinfo")
+                                                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido, "managerinfo")
+                                                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun, "managerinfo")
+                                                            Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw, "managerinfo")
+                                                            Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name, "managerinfo")
+                                                            Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name, "managerinfo")
+                                                            Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum, "managerinfo")
+                                                            Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address, "managerinfo")
+                                                            Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name, "managerinfo")
+                                                            Sharedpreference.set_local_code(applicationContext(), "local_code", local_code, "managerinfo")
+                                                            Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum, "managerinfo")
+                                                            Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname, "managerinfo")
+                                                            Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info, "managerinfo")
+                                                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount, "managerinfo")// 파일에 맵핑형식으로 저장
 
                                                             intent() //
                                                             //Toast.makeText(FindPasswordInfoActivity.this, "등록된 "+worker_pw, Toast.LENGTH_SHORT).show();
@@ -306,10 +372,13 @@ class MainActivity : Activity() {
                 LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
 
         }
-
+        checkbox.setOnCheckedChangeListener{ buttonView: CompoundButton?, isChecked: Boolean ->
+            auto = isChecked
+        }
         loginBtn.setOnClickListener {
             val reg_num: String = idET.getText().toString()
             val manager_pw: String = pwET.getText().toString()
+
             val rListener: Response.Listener<String?> = object : Response.Listener<String?> {
 
                 override fun onResponse(response: String?) {
@@ -334,21 +403,25 @@ class MainActivity : Activity() {
                             var manager_office_info = jResponse.getString("manager_office_info")
                             var manager_bankaccount = jResponse.getString("manager_bankaccount")
 
+                            if(auto) {
+                                Sharedpreference.set_id(applicationContext(), "business_reg_num", business_reg_num, "autologin1")
+                                Sharedpreference.set_pw(applicationContext(), "manager_pw", manager_pw, "autologin1")
+                            }
 
-                            Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num)
-                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido)
-                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun)
-                            Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw)
-                            Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name)
-                            Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name)
-                            Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum)
-                            Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address)
-                            Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name)
-                            Sharedpreference.set_local_code(applicationContext(), "local_code", local_code)
-                            Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum)
-                            Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname)
-                            Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info)
-                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount)
+                            Sharedpreference.set_business_reg_num(applicationContext(), "business_reg_num", business_reg_num, "managerinfo")
+                            Sharedpreference.set_local_sido(applicationContext(), "local_sido", local_sido, "managerinfo")
+                            Sharedpreference.set_local_sigugun(applicationContext(), "local_sigugun", local_sigugun, "managerinfo")
+                            Sharedpreference.set_manager_pw(applicationContext(), "manager_pw", manager_pw, "managerinfo")
+                            Sharedpreference.set_manager_represent_name(applicationContext(), "manager_represent_name", manager_represent_name, "managerinfo")
+                            Sharedpreference.set_manager_office_name(applicationContext(), "manager_office_name", manager_office_name, "managerinfo")
+                            Sharedpreference.set_manager_office_telnum(applicationContext(), "manager_office_telnum", manager_office_telnum, "managerinfo")
+                            Sharedpreference.set_manager_office_address(applicationContext(), "manager_office_address", manager_office_address, "managerinfo")
+                            Sharedpreference.set_manager_name(applicationContext(), "manager_name", manager_name, "managerinfo")
+                            Sharedpreference.set_local_code(applicationContext(), "local_code", local_code, "managerinfo")
+                            Sharedpreference.set_manager_phonenum(applicationContext(), "manager_phonenum", manager_phonenum, "managerinfo")
+                            Sharedpreference.set_manager_bankname(applicationContext(), "manager_bankname", manager_bankname, "managerinfo")
+                            Sharedpreference.set_manager_office_info(applicationContext(), "manager_office_info", manager_office_info, "managerinfo")
+                            Sharedpreference.set_manager_bankaccount(applicationContext(), "manager_bankaccount", manager_bankaccount, "managerinfo")
 
                             //Sharedpreference.set_Hope_local_sido(applicationContext(), "hope_local_sido", hope_local_sido)
                             //Sharedpreference.set_Hope_local_sigugun(applicationContext(), "hope_local_sigugun", hope_local_sigugun)// 파일에 맵핑형식으로 저장
@@ -379,6 +452,10 @@ class MainActivity : Activity() {
             val intent = Intent(this, BusinessLicenseConfirmActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onBackPressed() {
+        mainBackPressCloseHandler.onBackPressed()
     }
 
 

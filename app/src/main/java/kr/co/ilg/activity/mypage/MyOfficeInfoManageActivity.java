@@ -55,8 +55,8 @@ public class MyOfficeInfoManageActivity extends AppCompatActivity {
         modify_local = findViewById(R.id.modify_local) ;
         activity_local = findViewById(R.id.activity_local);
 
-        activity_local.setText((Sharedpreference.get_local_sido(getApplicationContext(), "local_sido")) + " " + (Sharedpreference.get_local_sigugun(getApplicationContext(), "local_sigugun")));
-        String business_reg_num = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num");
+        activity_local.setText((Sharedpreference.get_local_sido(getApplicationContext(), "local_sido","managerinfo")) + " " + (Sharedpreference.get_local_sigugun(getApplicationContext(), "local_sigugun","managerinfo")));
+        String business_reg_num = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num","managerinfo");
         Response.Listener rListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -87,6 +87,7 @@ public class MyOfficeInfoManageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), WriteOfficeInfoActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("isUpdate", 1);
                 startActivity(intent);
             }
@@ -111,7 +112,7 @@ public class MyOfficeInfoManageActivity extends AppCompatActivity {
                                     JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                                     boolean updateSuccess = jResponse.getBoolean("updateSuccess");
                                     if (updateSuccess) {
-                                        Sharedpreference.set_manager_office_info(getApplicationContext(), "manager_office_info", edit_office_detail_info.getText().toString());
+                                        Sharedpreference.set_manager_office_info(getApplicationContext(), "manager_office_info", edit_office_detail_info.getText().toString(),"managerinfo");
                                         office_introduce.setText(edit_office_detail_info.getText().toString());
                                         Toast.makeText(MyOfficeInfoManageActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
                                     }
@@ -137,6 +138,7 @@ public class MyOfficeInfoManageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LocalSelectActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("isUpdate", 1);
                 startActivity(intent);
             }

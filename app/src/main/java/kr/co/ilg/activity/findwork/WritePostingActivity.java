@@ -311,7 +311,7 @@ public class WritePostingActivity extends AppCompatActivity {
         postingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num");
+                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num","managerinfo");
                 String jp_title = title.getText().toString();
                 String jp_job_cost = pay.getText().toString();
                 String jp_job_tot_people = people_num.getText().toString();

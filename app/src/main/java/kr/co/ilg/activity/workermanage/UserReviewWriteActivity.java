@@ -77,7 +77,7 @@ Context mContext;
                         }
                     }
                 };
-                WorkerReviewRequest reviewInsert = new WorkerReviewRequest(jp_num,Sharedpreference.get_business_reg_num(mContext,"business_reg_num"),worker_email,review_text.getText().toString() , responseListener);
+                WorkerReviewRequest reviewInsert = new WorkerReviewRequest(jp_num,Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo"),worker_email,review_text.getText().toString() , responseListener);
                 RequestQueue queue = Volley.newRequestQueue(UserReviewWriteActivity.this);
                 queue.add(reviewInsert);
             }

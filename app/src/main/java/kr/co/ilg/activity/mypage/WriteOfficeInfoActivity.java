@@ -89,7 +89,7 @@ public class WriteOfficeInfoActivity extends Activity {
 //                    Toast.makeText(WriteOfficeInfoActivity.this, "모든 값을 입력해주세요.", Toast.LENGTH_SHORT).show();
 //                else {
                     if (isUpdate == 1) {  // 수정
-                        String business_reg_num2 = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num");
+                        String business_reg_num2 = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num","managerinfo");
 
                         Response.Listener rListener = new Response.Listener<String>() {
                             @Override
@@ -99,12 +99,13 @@ public class WriteOfficeInfoActivity extends Activity {
                                     JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                                     boolean updateSuccess2 = jResponse.getBoolean("updateSuccess2");
                                     Intent updateIntent = new Intent(WriteOfficeInfoActivity.this, MyOfficeInfoManageActivity.class);
+                                    updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     if (updateSuccess2) {
-                                        Sharedpreference.set_manager_office_name(getApplicationContext(), "manager_office_name", officeNameET.getText().toString());
-                                        Sharedpreference.set_manager_office_telnum(getApplicationContext(), "manager_office_telnum", officeNumET.getText().toString());
-                                        Sharedpreference.set_manager_office_address(getApplicationContext(), "manager_office_address", officeAddressET.getText().toString());
-                                        Sharedpreference.set_manager_name(getApplicationContext(), "manager_name", managerNameET.getText().toString());
-                                        Sharedpreference.set_manager_phonenum(getApplicationContext(), "manager_phonenum", managerNumET.getText().toString());
+                                        Sharedpreference.set_manager_office_name(getApplicationContext(), "manager_office_name", officeNameET.getText().toString(),"managerinfo");
+                                        Sharedpreference.set_manager_office_telnum(getApplicationContext(), "manager_office_telnum", officeNumET.getText().toString(),"managerinfo");
+                                        Sharedpreference.set_manager_office_address(getApplicationContext(), "manager_office_address", officeAddressET.getText().toString(),"managerinfo");
+                                        Sharedpreference.set_manager_name(getApplicationContext(), "manager_name", managerNameET.getText().toString(),"managerinfo");
+                                        Sharedpreference.set_manager_phonenum(getApplicationContext(), "manager_phonenum", managerNumET.getText().toString(),"managerinfo");
 
                                         Toast.makeText(WriteOfficeInfoActivity.this, "수정 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     } else
@@ -123,6 +124,7 @@ public class WriteOfficeInfoActivity extends Activity {
                     }
                     else {  // 회원 가입
                         Intent intent = new Intent(WriteOfficeInfoActivity.this, LocalSelectActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("business_reg_num", business_reg_num);
                         intent.putExtra("manager_pw", manager_pw);
                         intent.putExtra("manager_represent_name", manager_represent_name);

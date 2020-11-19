@@ -90,7 +90,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public void onClick(View view) {
 
                 context = view.getContext();
-                if(workInfo.get(position).business_reg_num.equals(Sharedpreference.get_business_reg_num(context,"business_reg_num")))
+                if(workInfo.get(position).business_reg_num.equals(Sharedpreference.get_business_reg_num(context,"business_reg_num","managerinfo")))
                 {
                     final AlertDialog.Builder dlg = new AlertDialog.Builder(context);
                     dialogView = View.inflate(context, R.layout.myworkwritingdialog, null);

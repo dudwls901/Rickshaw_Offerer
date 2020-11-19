@@ -51,14 +51,15 @@ public class AccountManageActivity extends AppCompatActivity { // implements Vie
         TextView bankname = findViewById(R.id.bankname);
         TextView managerName = findViewById(R.id.managerName);
         ImageButton accountDelete = findViewById(R.id.accountDelete);
-        managerName.setText(Sharedpreference.get_manager_name(mContext, "manager_name"));
-        bankaccount.setText(Sharedpreference.get_manager_bankaccount(mContext,"manager_bankaccount"));
-        bankname.setText(Sharedpreference.get_manager_bankname(mContext,"manager_bankname"));
+        managerName.setText(Sharedpreference.get_manager_name(mContext, "manager_name","managerinfo"));
+        bankaccount.setText(Sharedpreference.get_manager_bankaccount(mContext,"manager_bankaccount","managerinfo"));
+        bankname.setText(Sharedpreference.get_manager_bankname(mContext,"manager_bankname","managerinfo"));
 
         accountmodify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AccountAddActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("isUpdate", 1);
                 startActivity(intent);
             }
@@ -67,7 +68,7 @@ public class AccountManageActivity extends AppCompatActivity { // implements Vie
         accountDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String bnum = Sharedpreference.get_business_reg_num(mContext, "business_reg_num");
+                String bnum = Sharedpreference.get_business_reg_num(mContext, "business_reg_num","managerinfo");
                 Response.Listener rListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -76,8 +77,8 @@ public class AccountManageActivity extends AppCompatActivity { // implements Vie
                             JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                             boolean deleteSuccess = jResponse.getBoolean("deleteSuccess");
                             if (deleteSuccess) {
-                                Sharedpreference.set_manager_bankaccount(getApplicationContext(), "manager_bankaccount", "");
-                                Sharedpreference.set_manager_bankname(getApplicationContext(), "manager_bankname", "");
+                                Sharedpreference.set_manager_bankaccount(getApplicationContext(), "manager_bankaccount", "","managerinfo");
+                                Sharedpreference.set_manager_bankname(getApplicationContext(), "manager_bankname", "","managerinfo");
                                 bankaccount.setText("");
                                 bankname.setText("");
                                 Toast.makeText(AccountManageActivity.this, "삭제되었습니다", Toast.LENGTH_SHORT).show();

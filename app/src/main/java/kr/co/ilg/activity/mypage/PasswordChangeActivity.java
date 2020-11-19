@@ -43,7 +43,7 @@ public class PasswordChangeActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num");
+                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num,\"managerinfo\"","managerinfo");
                 manager_pw = passwdET.getText().toString();
                 manager_new_pw = newPasswdET.getText().toString();
                 manager_check_new_pw = checkNewPwET.getText().toString();
