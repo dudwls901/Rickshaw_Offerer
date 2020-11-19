@@ -30,7 +30,6 @@ import kr.co.ilg.activity.findwork.FieldListAdapter;
 import kr.co.ilg.activity.findwork.ListViewItem;
 import kr.co.ilg.activity.findwork.MainActivity;
 import kr.co.ilg.activity.findwork.MainBackPressCloseHandler;
-import kr.co.ilg.activity.findwork.SelectJopPosting;
 import kr.co.ilg.activity.findwork.SelectMyField;
 import kr.co.ilg.activity.login.Sharedpreference;
 import kr.co.ilg.activity.mypage.MypageMainActivity;

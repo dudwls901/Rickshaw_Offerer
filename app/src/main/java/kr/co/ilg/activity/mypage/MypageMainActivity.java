@@ -76,6 +76,7 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
                         startActivity(intent); break;
                     case 3 : intent = new Intent(MypageMainActivity.this, com.example.capstone2.MainActivity.class);
                         Sharedpreference.clear(mContext,"autologin");
+                        Sharedpreference.set_state(mContext,"switch1",false,"state1");
                         startActivity(intent); break;
                 }
             }

@@ -11,6 +11,18 @@ public class Sharedpreference {
         return context.getSharedPreferences(name, Context.MODE_PRIVATE);
 
     }
+    public static void set_state(Context context, String key, Boolean value, String name) {
+        SharedPreferences prefs = getPreferences(name,context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+
+    }
+    public static Boolean get_state(Context context, String key, String name) {
+        SharedPreferences prefs = getPreferences(name,context);
+        Boolean value = prefs.getBoolean(key, false);
+        return value;
+    }
     public static void clear(Context context,String name) {
         SharedPreferences prefs = getPreferences(name,context);
         SharedPreferences.Editor editor = prefs.edit();

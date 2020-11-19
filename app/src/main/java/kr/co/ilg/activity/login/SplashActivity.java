@@ -28,9 +28,10 @@ public class SplashActivity extends Activity {
 
         String autoid = Sharedpreference.get_id(mContext, "business_reg_num", "autologin1");
         String autopw = Sharedpreference.get_pw(mContext, "manager_pw", "autologin1");
+        boolean k = Sharedpreference.get_state(mContext,"switch1","state1");
 
 
-        if (autoid != null && autopw != null) {
+        if (autoid != null && autopw != null && k) {
             Response.Listener aListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -88,12 +89,12 @@ public class SplashActivity extends Activity {
             queue.add(lRequest);
             Intent intent1 = new Intent(SplashActivity.this, kr.co.ilg.activity.findwork.MainActivity.class);
             startActivity(intent1);
-            finish();
         }
         else {
             Intent intent = new Intent(SplashActivity.this, com.example.capstone2.MainActivity.class);
             startActivity(intent);
-            finish();
+
         }
+        finish();
     }
 }

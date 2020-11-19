@@ -113,6 +113,7 @@ public class WriteOfficeInfoActivity extends Activity {
                                         Toast.makeText(WriteOfficeInfoActivity.this, "수정 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     } else
                                         Toast.makeText(WriteOfficeInfoActivity.this, "수정 실패", Toast.LENGTH_SHORT).show();
+                                    updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(updateIntent);
                                 } catch (Exception e) {
                                     Log.d("mytest", e.toString());
@@ -127,6 +128,7 @@ public class WriteOfficeInfoActivity extends Activity {
                     }
                     else {  // 회원 가입
                         Intent intent = new Intent(WriteOfficeInfoActivity.this, LocalSelectActivity.class);
+
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("business_reg_num", business_reg_num);
                         intent.putExtra("manager_pw", manager_pw);

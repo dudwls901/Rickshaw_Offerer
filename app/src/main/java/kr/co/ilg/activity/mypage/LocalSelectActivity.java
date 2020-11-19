@@ -69,6 +69,7 @@ public class LocalSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LocalSelectActivity.this, AccountAddActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 if(local_sido.equals("")||local_sigugun.equals(""))
                     Toast.makeText(LocalSelectActivity.this, "활동 지역을 선택해주세요.",Toast.LENGTH_SHORT).show();
                 else {
