@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ListAdapter urgencyAdapter;
     Context mContext;
     String local_sido="", local_sigugun="";
+    MainBackPressCloseHandler mainBackPressCloseHandler;
     final String[][] arrayList1 = {{},{"종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구"}
             , {"중구", "서구", "동구", "영도구", "부산진구", "동래구", "남구", "북구", "해운대구", "사하구", "금정구", "강서구", "연제구", "수영구", "사상구", "기장군"}
             , {"중구", "서구", "동구", "남구", "북구", "수성구", "달서구", "달성군"}
@@ -151,9 +152,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /*spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);*/
         mContext = this;
+        mainBackPressCloseHandler =  new MainBackPressCloseHandler(this);
 
-        local_sido = Sharedpreference.get_local_sido(mContext,"local_sido");
-        local_sigugun = Sharedpreference.get_local_sigugun(mContext,"local_sigugun");
+        local_sido = Sharedpreference.get_local_sido(mContext,"local_sido","managerinfo");
+        local_sigugun = Sharedpreference.get_local_sigugun(mContext,"local_sigugun","managerinfo");
         business_reg_num_MY = "0";
 
         resetjobpost = findViewById(R.id.resetjobpost); // 선택버튼
@@ -175,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView localsetting = findViewById(R.id.localsetting); // 메인액티비티 로컬선택 다이얼로그 - 버튼으로 하면 크기가 너무 커서 텍스트로했음
         TextView jobsetting = findViewById(R.id.jobsetting); // ***
 
-        localsetting.setText(Sharedpreference.get_local_code(mContext,"local_sido")+" "+Sharedpreference.get_local_code(mContext,"local_sigugun"));
+        localsetting.setText(Sharedpreference.get_local_code(mContext,"local_sido","managerinfo")+" "+Sharedpreference.get_local_code(mContext,"local_sigugun","managerinfo"));
         // 첫 액티비티 들어갔을 때 초기값 설정
 
         jobsetting.setText("전체");
@@ -441,7 +443,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 1) {
 
-                     business_reg_num_MY =Sharedpreference.get_business_reg_num(mContext,"business_reg_num");
+                     business_reg_num_MY =Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo");
 //                    finish();
 //                    Intent intent = new Intent(MainActivity.this, MyPosting.class);
 //                    startActivity(intent);
@@ -490,6 +492,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        mainBackPressCloseHandler.onBackPressed();
     }
 
     @Override

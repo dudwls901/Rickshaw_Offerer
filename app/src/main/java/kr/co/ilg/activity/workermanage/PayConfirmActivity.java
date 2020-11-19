@@ -16,11 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.capstone2.R;
 
-import org.json.JSONObject;
-
-import kr.co.ilg.activity.mypage.AccountAddActivity;
-import kr.co.ilg.activity.mypage.ManagerDBRequest;
-
 public class PayConfirmActivity extends Activity {
 Button cancelbtn, btnpay;
 String worker_name, worker_bankname, worker_bankaccount, worker_email, money, field_code;
@@ -78,7 +73,9 @@ TextView wkNametv, wkBanknametv, wkBankaccounttv, moneytv;
                 UpdatePaidRequest updatePaid = new UpdatePaidRequest(worker_email, field_code, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(PayConfirmActivity.this);
                 queue.add(updatePaid);
+                finish();
             }
+
         });
 
     }

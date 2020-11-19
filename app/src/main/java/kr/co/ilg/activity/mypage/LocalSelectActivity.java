@@ -69,11 +69,12 @@ public class LocalSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LocalSelectActivity.this, AccountAddActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 if(local_sido.equals("")||local_sigugun.equals(""))
                     Toast.makeText(LocalSelectActivity.this, "활동 지역을 선택해주세요.",Toast.LENGTH_SHORT).show();
                 else {
                     if (isUpdate == 1) {  // 수정
-                        String business_reg_num = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num");
+                        String business_reg_num = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num","managerinfo");
                         Response.Listener rListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -81,14 +82,15 @@ public class LocalSelectActivity extends AppCompatActivity {
                                     JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                                     boolean updateSuccess = jResponse.getBoolean("updateSuccess");
                                     Intent updateIntent = new Intent(LocalSelectActivity.this, MyOfficeInfoManageActivity.class);
+                                    updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     if (updateSuccess) {
                                         String local_sido = jResponse.getString("local_sido");
                                         String local_sigugun = jResponse.getString("local_sigugun");
                                         String local_code = jResponse.getString("local_code");
 
-                                        Sharedpreference.set_local_sido(getApplicationContext(), "local_sido", local_sido);
-                                        Sharedpreference.set_local_sigugun(getApplicationContext(), "local_sigugun", local_sigugun);
-                                        Sharedpreference.set_local_code(getApplicationContext(), "local_code", local_code);
+                                        Sharedpreference.set_local_sido(getApplicationContext(), "local_sido", local_sido,"managerinfo");
+                                        Sharedpreference.set_local_sigugun(getApplicationContext(), "local_sigugun", local_sigugun,"managerinfo");
+                                        Sharedpreference.set_local_code(getApplicationContext(), "local_code", local_code,"managerinfo");
 
                                         Toast.makeText(LocalSelectActivity.this, "수정 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     } else

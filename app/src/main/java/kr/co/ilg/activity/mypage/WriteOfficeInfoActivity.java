@@ -91,50 +91,55 @@ public class WriteOfficeInfoActivity extends Activity {
 //                if ((officeNameET.getText().toString()).equals("") || (officeNumET.getText().toString()).equals("") || (officeAddressET.getText().toString()).equals("") || (managerNameET.getText().toString()).equals("") || (managerNumET.getText().toString()).equals(""))
 //                    Toast.makeText(WriteOfficeInfoActivity.this, "모든 값을 입력해주세요.", Toast.LENGTH_SHORT).show();
 //                else {
-                if (isUpdate == 1) {  // 수정
-                    String business_reg_num2 = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num");
+                    if (isUpdate == 1) {  // 수정
+                        String business_reg_num2 = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num","managerinfo");
 
                     Response.Listener rListener = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
 
-                            try {
-                                JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
-                                boolean updateSuccess2 = jResponse.getBoolean("updateSuccess2");
-                                Intent updateIntent = new Intent(WriteOfficeInfoActivity.this, MyOfficeInfoManageActivity.class);
-                                if (updateSuccess2) {
-                                    Sharedpreference.set_manager_office_name(getApplicationContext(), "manager_office_name", officeNameET.getText().toString());
-                                    Sharedpreference.set_manager_office_telnum(getApplicationContext(), "manager_office_telnum", officeNumET.getText().toString());
-                                    Sharedpreference.set_manager_office_address(getApplicationContext(), "manager_office_address", officeAddressET.getText().toString());
-                                    Sharedpreference.set_manager_name(getApplicationContext(), "manager_name", managerNameET.getText().toString());
-                                    Sharedpreference.set_manager_phonenum(getApplicationContext(), "manager_phonenum", managerNumET.getText().toString());
+                                try {
+                                    JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                                    boolean updateSuccess2 = jResponse.getBoolean("updateSuccess2");
+                                    Intent updateIntent = new Intent(WriteOfficeInfoActivity.this, MyOfficeInfoManageActivity.class);
+                                    updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    if (updateSuccess2) {
+                                        Sharedpreference.set_manager_office_name(getApplicationContext(), "manager_office_name", officeNameET.getText().toString(),"managerinfo");
+                                        Sharedpreference.set_manager_office_telnum(getApplicationContext(), "manager_office_telnum", officeNumET.getText().toString(),"managerinfo");
+                                        Sharedpreference.set_manager_office_address(getApplicationContext(), "manager_office_address", officeAddressET.getText().toString(),"managerinfo");
+                                        Sharedpreference.set_manager_name(getApplicationContext(), "manager_name", managerNameET.getText().toString(),"managerinfo");
+                                        Sharedpreference.set_manager_phonenum(getApplicationContext(), "manager_phonenum", managerNumET.getText().toString(),"managerinfo");
 
-                                    Toast.makeText(WriteOfficeInfoActivity.this, "수정 완료되었습니다", Toast.LENGTH_SHORT).show();
-                                } else
-                                    Toast.makeText(WriteOfficeInfoActivity.this, "수정 실패", Toast.LENGTH_SHORT).show();
-                                startActivity(updateIntent);
-                            } catch (Exception e) {
-                                Log.d("mytest", e.toString());
+                                        Toast.makeText(WriteOfficeInfoActivity.this, "수정 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                    } else
+                                        Toast.makeText(WriteOfficeInfoActivity.this, "수정 실패", Toast.LENGTH_SHORT).show();
+                                    updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(updateIntent);
+                                } catch (Exception e) {
+                                    Log.d("mytest", e.toString());
+                                }
                             }
-                        }
-                    };
-                    UpdateOfficeInfoRequest updateOfficeInfoRequest = new UpdateOfficeInfoRequest("UpdateOfficeInfo", business_reg_num2, (officeNameET.getText().toString()),
-                            (officeNumET.getText().toString()), (officeAddressET.getText().toString()), (managerNameET.getText().toString()), (managerNumET.getText().toString()), rListener);  // Request 처리 클래스
+                        };
+                        UpdateOfficeInfoRequest updateOfficeInfoRequest = new UpdateOfficeInfoRequest("UpdateOfficeInfo", business_reg_num2, (officeNameET.getText().toString()),
+                                (officeNumET.getText().toString()), (officeAddressET.getText().toString()), (managerNameET.getText().toString()), (managerNumET.getText().toString()), rListener);  // Request 처리 클래스
 
-                    RequestQueue queue = Volley.newRequestQueue(WriteOfficeInfoActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
-                    queue.add(updateOfficeInfoRequest);  // Volley로 구현된 큐에 ValidateRequest 객체를 넣어둠으로써 실제로 서버 연동 발생
-                } else {  // 회원 가입
-                    Intent intent = new Intent(WriteOfficeInfoActivity.this, LocalSelectActivity.class);
-                    intent.putExtra("business_reg_num", business_reg_num);
-                    intent.putExtra("manager_pw", manager_pw);
-                    intent.putExtra("manager_represent_name", manager_represent_name);
-                    intent.putExtra("manager_office_name", officeNameET.getText().toString());
-                    intent.putExtra("manager_office_telnum", officeNumET.getText().toString());
-                    intent.putExtra("manager_office_address", officeAddressET.getText().toString());
-                    intent.putExtra("manager_name", managerNameET.getText().toString());
-                    intent.putExtra("manager_phonenum", managerNumET.getText().toString());
-                    startActivity(intent);
-                }
+                        RequestQueue queue = Volley.newRequestQueue(WriteOfficeInfoActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
+                        queue.add(updateOfficeInfoRequest);  // Volley로 구현된 큐에 ValidateRequest 객체를 넣어둠으로써 실제로 서버 연동 발생
+                    }
+                    else {  // 회원 가입
+                        Intent intent = new Intent(WriteOfficeInfoActivity.this, LocalSelectActivity.class);
+
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("business_reg_num", business_reg_num);
+                        intent.putExtra("manager_pw", manager_pw);
+                        intent.putExtra("manager_represent_name", manager_represent_name);
+                        intent.putExtra("manager_office_name", officeNameET.getText().toString());
+                        intent.putExtra("manager_office_telnum", officeNumET.getText().toString());
+                        intent.putExtra("manager_office_address", officeAddressET.getText().toString());
+                        intent.putExtra("manager_name", managerNameET.getText().toString());
+                        intent.putExtra("manager_phonenum", managerNumET.getText().toString());
+                        startActivity(intent);
+                    }
 
                 //}
             }

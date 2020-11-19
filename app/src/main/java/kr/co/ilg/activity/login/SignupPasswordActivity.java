@@ -42,6 +42,7 @@ public class SignupPasswordActivity extends AppCompatActivity {
                     Toast.makeText(SignupPasswordActivity.this, "설정 완료", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignupPasswordActivity.this, WriteOfficeInfoActivity.class);
                     intent.putExtra("business_reg_num", business_reg_num);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("manager_represent_name", manager_represent_name);
                     intent.putExtra("manager_pw", passwdET.getText().toString());
                     startActivity(intent);

@@ -62,7 +62,7 @@ public class ReviewmanageActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        business_reg_num = Sharedpreference.get_business_reg_num(mContext,"business_reg_num");
+        business_reg_num = Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo");
         String[] facilityList = {
                 "작성한 후기", "등록된 후기"
         };

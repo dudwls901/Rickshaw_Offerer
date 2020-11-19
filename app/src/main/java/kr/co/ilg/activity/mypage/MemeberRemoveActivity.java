@@ -38,7 +38,7 @@ public class MemeberRemoveActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num");
+                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num","managerinfo");
                 manager_pw = passwdET.getText().toString();
                 manager_check_pw = checkPwET.getText().toString();
 
@@ -62,6 +62,8 @@ public class MemeberRemoveActivity extends Activity {
 
                                         Intent intent = new Intent(getApplicationContext(), com.example.capstone2.MainActivity.class);
                                         startActivity(intent);
+                                        Sharedpreference.clear(mContext,"autologin1");
+                                        Sharedpreference.set_state(mContext, "switch1",false,"state1");
                                     } else {
                                         Toast.makeText(mContext, "비밀번호와 비밀번호 확인이 다릅니다.", Toast.LENGTH_SHORT).show();
                                     }
