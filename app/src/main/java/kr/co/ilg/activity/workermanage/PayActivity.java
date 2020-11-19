@@ -75,6 +75,7 @@ int[] btn_num= {R.id.btn0,R.id.btn1,R.id.btn2,R.id.btn3,R.id.btn4,R.id.btn5,R.id
                 intent.putExtra("money",money);
                 intent.putExtra("field_code",field_code);
                 startActivity(intent);
+                finish();
             }
         });
     erasebtn.setOnClickListener(new View.OnClickListener() {
