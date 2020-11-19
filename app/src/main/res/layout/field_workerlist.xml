@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginLeft="70dp"
             android:text="현장별 구직자 목록"
             android:textColor="@color/WhiteColor"
             android:textSize="20sp" />
@@ -47,7 +47,6 @@
         android:layout_marginEnd="0dp"
         android:background="@color/WhiteColor"
         app:itemIconSize="30dp"
-        app:itemTextColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:menu="@menu/menu_bottom"

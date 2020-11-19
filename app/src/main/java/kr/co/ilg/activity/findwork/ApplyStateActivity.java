@@ -64,6 +64,7 @@ public class ApplyStateActivity extends AppCompatActivity {
     View listView;
     int position = 9;
     int wklist_size;
+    int[] worker_age;
     String[] pw_worker_email, pw_worker_name;
     boolean[] pw_picked;
     ArrayList<ApplyStateRVItem> wkList;
@@ -133,9 +134,6 @@ public class ApplyStateActivity extends AppCompatActivity {
                     Log.d("pppppp2", jsonArray_worker.toString());
                     jp_title = new String[jsonArray_jp.length()];
                     jp_job_date = new String[jsonArray_jp.length()];
-                    worker_name = new String[jsonArray_worker.length()];
-                    worker_birth = new String[jsonArray_worker.length()];
-                    worker_phonenum = new String[jsonArray_worker.length()];
                     jp_num = new String[jsonArray_jp.length()];
                     //  wkList =new ArrayList<>();
                     wklist_size = jsonArray_worker.length();
@@ -161,24 +159,12 @@ public class ApplyStateActivity extends AppCompatActivity {
                             fieldSpnList.add(jp_title[i]);
 
                         }
-//
-//                        FieldListAdapter fieldadapter = new FieldListAdapter(getApplicationContext(), workInfoArrayList);
-//                        recyclerView.setAdapter(fieldadapter);
-//                        //fieldadapter.notifyDataSetChanged();
 
 
                         Log.d("dddddate", today + String.valueOf(y) + m + d);
                         Log.d("dddddate", String.valueOf(today));
                     }
-//                    for (int i = 0; i < jsonArray_worker.length(); i++) {
-//                        worker_name[i] = jsonArray_worker.getJSONObject(i).getString("worker_name");
-//                        worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
-//                        worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
-//                        wkList.add(new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i],false));
-//                    }
-//                    mRecyclerView.setLayoutManager(mLayoutManager);
-//                    myAdapter = new ApplyStateRVAdapter(getApplication(), wkList);
-//                    mRecyclerView.setAdapter(myAdapter);
+
 
 
                     Log.d("ssssssssss", String.valueOf(fieldSpnList.size()));
@@ -293,7 +279,7 @@ public class ApplyStateActivity extends AppCompatActivity {
 
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
-
+        
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -351,6 +337,7 @@ public class ApplyStateActivity extends AppCompatActivity {
 
                     worker_name = new String[jsonArray_worker.length()];
                     worker_birth = new String[jsonArray_worker.length()];
+                    worker_age = new int[jsonArray_worker.length()];
                     worker_phonenum = new String[jsonArray_worker.length()];
                     worker_email = new String[jsonArray_worker.length()];
                     wkList = new ArrayList<>();
@@ -361,9 +348,10 @@ public class ApplyStateActivity extends AppCompatActivity {
                     for (int i = 0; i < jsonArray_worker.length(); i++) {
                         worker_name[i] = jsonArray_worker.getJSONObject(i).getString("worker_name");
                         worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
+                        worker_age[i] = y-Integer.parseInt(worker_birth[i].substring(0,4))+1;
                         worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
                         worker_email[i] = jsonArray_worker.getJSONObject(i).getString("worker_email");
-                        wkList.add(new ApplyStateRVItem(R.drawable.user, worker_name[i], worker_birth[i], worker_phonenum[i], false, worker_email[i]));
+                        wkList.add(new ApplyStateRVItem(R.drawable.user, worker_name[i], String.valueOf(worker_age[i]), worker_phonenum[i], false, worker_email[i]));
                     }
                     pw_worker_email = new String[wklist_size];
                     pw_picked = new boolean[wklist_size];
@@ -382,8 +370,9 @@ public class ApplyStateActivity extends AppCompatActivity {
                                     for (int i = 0; i < jsonArray_worker.length(); i++) {
                                         worker_name[i] = jsonArray_worker.getJSONObject(i).getString("worker_name");
                                         worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
+                                        worker_age[i] = y-Integer.parseInt(worker_birth[i].substring(0,4))+1;
                                         worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
-                                        wkList.set(i, new ApplyStateRVItem(R.drawable.user, worker_name[i], worker_birth[i], worker_phonenum[i], true, worker_email[i]));
+                                        wkList.set(i, new ApplyStateRVItem(R.drawable.user, worker_name[i], String.valueOf(worker_age[i]), worker_phonenum[i], true, worker_email[i]));
                                         //wkList.add(new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], true));
 
                                     }
@@ -391,8 +380,9 @@ public class ApplyStateActivity extends AppCompatActivity {
                                     for (int i = 0; i < jsonArray_worker.length(); i++) {
                                         worker_name[i] = jsonArray_worker.getJSONObject(i).getString("worker_name");
                                         worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
+                                        worker_age[i] = y-Integer.parseInt(worker_birth[i].substring(0,4))+1;
                                         worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
-                                        wkList.set(i, new ApplyStateRVItem(R.drawable.user, worker_name[i], worker_birth[i], worker_phonenum[i], false, worker_email[i]));
+                                        wkList.set(i, new ApplyStateRVItem(R.drawable.user, worker_name[i], String.valueOf(worker_age[i]), worker_phonenum[i], false, worker_email[i]));
                                         //wkList.add(new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], true));
 
                                     }

@@ -462,8 +462,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
-
+        bottomNavigationView = findViewById(R.id.bottomNavigationView_main); //프래그먼트 생성
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

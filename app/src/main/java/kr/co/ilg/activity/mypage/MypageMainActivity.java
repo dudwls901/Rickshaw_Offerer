@@ -81,6 +81,7 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
         list.add("인력거안내");
         list.add("로그아웃");
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
+        bottomNavigationView.getMenu().findItem(R.id.tab3).setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

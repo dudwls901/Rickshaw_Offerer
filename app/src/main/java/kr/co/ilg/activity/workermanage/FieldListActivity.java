@@ -2,12 +2,15 @@ package kr.co.ilg.activity.workermanage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +52,7 @@ public class FieldListActivity extends AppCompatActivity {
     //오늘,지난 날의 내 구인글들만 현장목록으로 뜸
     //바텀네비에 나의 현장 누르는 곳마다 다 intent값 넘기는 거 바꿔줘야함
     //메인액티비티->여기, 여기->여기 만 바꿔논 상태
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,7 +147,7 @@ public class FieldListActivity extends AppCompatActivity {
 
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
-
+        bottomNavigationView.getMenu().findItem(R.id.tab2).setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

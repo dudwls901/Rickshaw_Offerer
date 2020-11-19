@@ -222,17 +222,6 @@ public class WritePostingActivity extends AppCompatActivity {
                 final AlertDialog.Builder dlg = new AlertDialog.Builder(WritePostingActivity.this);
 
                 webView.setVisibility(View.VISIBLE);
-//                dlg.setView(juso_diaolg);
-//         //       Log.e("wwwwwwwwwwwwww",juso_diaolg.toString());
-//                dlg.setTitle("현장 주소 입력");
-//
-//                dlg.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//                });
-
 
             }
         });

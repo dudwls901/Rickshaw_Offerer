@@ -58,7 +58,7 @@ public class PickStateActivity extends AppCompatActivity {
     Toolbar toolbar;
     String business_reg_num_MY, jp_num_MY, jp_title_MY;
     String[] jp_title, jp_job_date, worker_name, worker_birth, worker_phonenum, jp_num, worker_email;
-    int[] jp_job_tot_people;
+    int[] jp_job_tot_people, worker_age;
     int y, m, d;
     Date today = null;
     Date jp_job_date_dateform = null;
@@ -361,9 +361,9 @@ public class PickStateActivity extends AppCompatActivity {
 
                     worker_name = new String[jsonArray_worker.length()];
                     worker_birth = new String[jsonArray_worker.length()];
+                    worker_age = new int[jsonArray_worker.length()];
                     worker_phonenum = new String[jsonArray_worker.length()];
                     worker_email = new String[jsonArray_worker.length()];
-
                     wkList = new ArrayList<>();
 
                     Log.d("pppppppppppp", String.valueOf(jsonArray_jp.length()));
@@ -372,9 +372,10 @@ public class PickStateActivity extends AppCompatActivity {
                     for (int i = 0; i < jsonArray_worker.length(); i++) {
                         worker_name[i] = jsonArray_worker.getJSONObject(i).getString("worker_name");
                         worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
+                        worker_age[i] = y-Integer.parseInt(worker_birth[i].substring(0,4))+1;
                         worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
                         worker_email[i] = jsonArray_worker.getJSONObject(i).getString("worker_email");
-                        wkList.add(new PickStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], false, worker_email[i]));
+                        wkList.add(new PickStateRVItem(R.drawable.user, worker_name[i], String.valueOf(worker_age[i]), worker_phonenum[i], false, worker_email[i]));
                     }
                     pw_worker_email = new String[wklist_size];
                     pw_picked = new boolean[wklist_size];
@@ -393,8 +394,9 @@ public class PickStateActivity extends AppCompatActivity {
                                     for (int i = 0; i < jsonArray_worker.length(); i++) {
                                         worker_name[i] = jsonArray_worker.getJSONObject(i).getString("worker_name");
                                         worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
+                                        worker_age[i] = y-Integer.parseInt(worker_birth[i].substring(0,4))+1;
                                         worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
-                                        wkList.set(i, new PickStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], true, worker_email[i]));
+                                        wkList.set(i, new PickStateRVItem(R.drawable.user, worker_name[i], String.valueOf(worker_age[i]), worker_phonenum[i], true, worker_email[i]));
                                         //wkList.add(new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], true));
 
                                     }
@@ -402,8 +404,9 @@ public class PickStateActivity extends AppCompatActivity {
                                     for (int i = 0; i < jsonArray_worker.length(); i++) {
                                         worker_name[i] = jsonArray_worker.getJSONObject(i).getString("worker_name");
                                         worker_birth[i] = jsonArray_worker.getJSONObject(i).getString("worker_birth");
+                                        worker_age[i] = y-Integer.parseInt(worker_birth[i].substring(0,4))+1;
                                         worker_phonenum[i] = jsonArray_worker.getJSONObject(i).getString("worker_phonenum");
-                                        wkList.set(i, new PickStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], false, worker_email[i]));
+                                        wkList.set(i, new PickStateRVItem(R.drawable.user, worker_name[i], String.valueOf(worker_age[i]), worker_phonenum[i], false, worker_email[i]));
                                         //wkList.add(new ApplyStateRVItem(R.drawable.man, worker_name[i], worker_birth[i], worker_phonenum[i], true));
 
                                     }
