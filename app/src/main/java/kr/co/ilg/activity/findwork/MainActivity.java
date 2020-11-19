@@ -290,8 +290,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         spinner_who_array = new ArrayList();
 
-        spinner_who_array.add("                                             전체");
-        spinner_who_array.add("                                         내 구인글");
+        spinner_who_array.add("                                          전체");
+        spinner_who_array.add("                                      내 구인글");
 
 
 
