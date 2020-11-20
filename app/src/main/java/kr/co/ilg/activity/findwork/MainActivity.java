@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String[] localSidoList;
     int sigugunCnt[];
     String[][] localSigugunList;
+    MainBackPressCloseHandler mainBackPressCloseHandler;
     Button resetjobpost;
     View dialogview, dialogview1;
     TextView sltTV1;
@@ -107,6 +108,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.d("qqqqqqqqqnewtext", newText);
+                SelectJobPosting searchView_req = new SelectJobPosting("0",newText, responseListener);  // Request 처리 클래스
+                searchView_req.setRetryPolicy(new DefaultRetryPolicy(
+                        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                        0,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)); ////////값띄울때 충돌방지용
+
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
+                queue.add(searchView_req);
                 return false;
             }
         });
@@ -139,9 +148,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /*spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);*/
         mContext = this;
+        mainBackPressCloseHandler =  new MainBackPressCloseHandler(this);
 
-        local_sido = Sharedpreference.get_local_sido(mContext,"local_sido");
-        local_sigugun = Sharedpreference.get_local_sigugun(mContext,"local_sigugun");
+        local_sido = Sharedpreference.get_local_sido(mContext,"local_sido","managerinfo");
+        local_sigugun = Sharedpreference.get_local_sigugun(mContext,"local_sigugun","managerinfo");
         business_reg_num_MY = "0";
 
         resetjobpost = findViewById(R.id.resetjobpost); // 선택버튼
@@ -188,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView localsetting = findViewById(R.id.localsetting); // 메인액티비티 로컬선택 다이얼로그 - 버튼으로 하면 크기가 너무 커서 텍스트로했음
         TextView jobsetting = findViewById(R.id.jobsetting); // ***
 
-        localsetting.setText(Sharedpreference.get_local_code(mContext,"local_sido")+" "+Sharedpreference.get_local_code(mContext,"local_sigugun"));
+        localsetting.setText(Sharedpreference.get_local_code(mContext,"local_sido","managerinfo")+" "+Sharedpreference.get_local_code(mContext,"local_sigugun","managerinfo"));
         // 첫 액티비티 들어갔을 때 초기값 설정
 
         jobsetting.setText("전체");
@@ -352,8 +362,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         spinner_who_array = new ArrayList();
 
-        spinner_who_array.add("                                             전체");
-        spinner_who_array.add("                                         내 구인글");
+        spinner_who_array.add("                                          전체");
+        spinner_who_array.add("                                      내 구인글");
 
 
 
@@ -505,7 +515,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 1) {
 
-                     business_reg_num_MY =Sharedpreference.get_business_reg_num(mContext,"business_reg_num");
+                     business_reg_num_MY =Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo");
 //                    finish();
 //                    Intent intent = new Intent(MainActivity.this, MyPosting.class);
 //                    startActivity(intent);
@@ -526,8 +536,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
-
+        bottomNavigationView = findViewById(R.id.bottomNavigationView_main); //프래그먼트 생성
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -557,6 +566,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 //        Log.d("=======================", String.valueOf(arrayList1.length) +"     " + String.valueOf(arrayList1[0].length) +"     " + String.valueOf(arrayList1[1].length) +"     " + String.valueOf(arrayList1[17].length));
+    }
+    @Override
+    public void onBackPressed() {
+        mainBackPressCloseHandler.onBackPressed();
     }
 
     @Override

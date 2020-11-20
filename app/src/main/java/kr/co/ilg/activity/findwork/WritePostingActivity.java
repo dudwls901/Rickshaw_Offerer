@@ -218,17 +218,6 @@ public class WritePostingActivity extends AppCompatActivity {
                 final AlertDialog.Builder dlg = new AlertDialog.Builder(WritePostingActivity.this);
 
                 webView.setVisibility(View.VISIBLE);
-//                dlg.setView(juso_diaolg);
-//         //       Log.e("wwwwwwwwwwwwww",juso_diaolg.toString());
-//                dlg.setTitle("현장 주소 입력");
-//
-//                dlg.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//                });
-
 
             }
         });
@@ -311,7 +300,7 @@ public class WritePostingActivity extends AppCompatActivity {
         postingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num");
+                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num","managerinfo");
                 String jp_title = title.getText().toString();
                 String jp_job_cost = pay.getText().toString();
                 String jp_job_tot_people = people_num.getText().toString();

@@ -9,13 +9,13 @@
 
     <ImageView
         android:id="@+id/profileIV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@drawable/man"
-        android:layout_marginLeft="30dp"
+        android:src="@drawable/user"
+        android:layout_marginLeft="20dp"
 
         />
 
@@ -26,8 +26,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/profileIV"
-        app:layout_constraintRight_toLeftOf="@+id/arrowR"
+
         android:layout_marginTop="15dp"
+        android:layout_marginLeft="18dp"
         android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
@@ -104,7 +105,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:backgroundTint="@color/WhiteColor"
+        android:background="@android:color/transparent"
         android:src="@drawable/arrow_right"
         android:layout_marginRight="5dp"
         />

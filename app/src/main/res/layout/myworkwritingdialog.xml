@@ -6,7 +6,7 @@
 <Button
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:text="게시글 상세"
+    android:text="구인글 상세"
     android:textSize="20dp"
     android:textColor="@color/colorPrimaryDark"
     android:id="@+id/btnWorkInfo"

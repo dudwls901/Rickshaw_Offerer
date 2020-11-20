@@ -60,8 +60,8 @@
         </activity>
 
         <activity android:name="kr.co.ilg.activity.login.LoginActivity" android:label="로그인"/>
-        <activity android:name="com.example.capstone2.MainActivity" android:label="로그인"/>
-        <activity android:name="kr.co.ilg.activity.findwork.MainActivity" android:label="일자리 찾기"/>
+        <activity android:name="com.example.capstone2.MainActivity" android:label="로그인" android:launchMode="singleTop"/>
+        <activity android:name="kr.co.ilg.activity.findwork.MainActivity" android:label="일자리 찾기" android:launchMode="singleTop"/>
         <activity android:name="kr.co.ilg.activity.login.BusinessLicenseConfirmActivity" android:label="사업자 등록번호 인증"/>
         <activity android:name="kr.co.ilg.activity.login.SignupPasswordActivity" android:label="비밀번호 설정"/>
         <activity android:name="kr.co.ilg.activity.mypage.WriteOfficeInfoActivity" android:label="사무소 정보 입력"/>
@@ -74,9 +74,9 @@
         <activity android:name="kr.co.ilg.activity.findwork.OfficeInfoActivity" android:label="인력사무소 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.WorkMapActivity" android:label="일자리 지도"/>
         <activity android:name="kr.co.ilg.activity.findwork.WritePostingActivity" android:label=""/>
-        <activity android:name="kr.co.ilg.activity.workermanage.FieldListActivity" android:label="인력 관리"/>
+        <activity android:name="kr.co.ilg.activity.workermanage.FieldListActivity" android:label="인력 관리" android:launchMode="singleTop"/>
         <activity android:name="kr.co.ilg.activity.workermanage.FieldWorkerListActivity" android:label="인력 관리"/>
-        <activity android:name="kr.co.ilg.activity.mypage.MypageMainActivity" android:label="내 정보"/>
+        <activity android:name="kr.co.ilg.activity.mypage.MypageMainActivity" android:label="내 정보" android:launchMode="singleTop"/>
         <activity android:name="kr.co.ilg.activity.mypage.MyOfficeInfoManageActivity" android:label="내 정보"/>
         <activity android:name="kr.co.ilg.activity.findwork.ApplyStateActivity" android:label="지원 현황"/>
         <activity android:name="kr.co.ilg.activity.findwork.PickStateActivity" android:label="선발자 현황"/>

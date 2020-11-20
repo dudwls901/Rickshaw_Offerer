@@ -31,7 +31,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
     String jp_title, field_address, manager_office_name, job_name, jp_job_cost, jp_job_date, jp_job_start_time, jp_job_finish_time, jp_job_tot_people, jp_contents,business_reg_num,jp_num,field_name,jp_is_urgency, field_code, manager_phonenum;
     Context mContext;
     Intent intent;
-
+    String mapAddress;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +60,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
         Intent receiver = getIntent();
         jp_title = receiver.getExtras().getString("jp_title");
         field_address = receiver.getExtras().getString("field_address");
+        mapAddress = field_address;
         manager_office_name = receiver.getExtras().getString("manager_office_name");
         job_name = receiver.getExtras().getString("job_name");
         jp_job_cost = receiver.getExtras().getString("jp_job_cost");
@@ -85,7 +86,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
         people_tv.setText(jp_job_tot_people+"명");
         contents_tv.setText(jp_contents);
         address_tv.setText(field_address);
-        if(business_reg_num.equals(Sharedpreference.get_business_reg_num(mContext,"business_reg_num")))
+        if(business_reg_num.equals(Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo")))
         {
 
         }else
@@ -99,6 +100,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WorkInfoActivity.this, WorkMapActivity.class);
+                intent.putExtra("mapAddress",mapAddress);
                 startActivity(intent);
             }
         });

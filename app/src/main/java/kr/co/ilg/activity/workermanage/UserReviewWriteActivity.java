@@ -19,12 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.capstone2.R;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import kr.co.ilg.activity.login.Sharedpreference;
-import kr.co.ilg.activity.mypage.AccountAddActivity;
-import kr.co.ilg.activity.mypage.ManagerDBRequest;
 
 public class UserReviewWriteActivity extends AppCompatActivity {
     TextView review_object;
@@ -36,7 +31,7 @@ Context mContext;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.field_manager_review);
+        setContentView(R.layout.write_worker_review);
         mContext = this;
 
         Intent receiver = getIntent();
@@ -77,7 +72,7 @@ Context mContext;
                         }
                     }
                 };
-                WorkerReviewRequest reviewInsert = new WorkerReviewRequest(jp_num,Sharedpreference.get_business_reg_num(mContext,"business_reg_num"),worker_email,review_text.getText().toString() , responseListener);
+                WorkerReviewRequest reviewInsert = new WorkerReviewRequest(jp_num,Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo"),worker_email,review_text.getText().toString() , responseListener);
                 RequestQueue queue = Volley.newRequestQueue(UserReviewWriteActivity.this);
                 queue.add(reviewInsert);
             }

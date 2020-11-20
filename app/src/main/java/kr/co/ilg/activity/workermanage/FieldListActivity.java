@@ -2,12 +2,15 @@ package kr.co.ilg.activity.workermanage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +32,7 @@ import java.util.Date;
 import kr.co.ilg.activity.findwork.FieldListAdapter;
 import kr.co.ilg.activity.findwork.ListViewItem;
 import kr.co.ilg.activity.findwork.MainActivity;
+import kr.co.ilg.activity.findwork.MainBackPressCloseHandler;
 import kr.co.ilg.activity.findwork.SelectMyField;
 import kr.co.ilg.activity.login.Sharedpreference;
 import kr.co.ilg.activity.mypage.MypageMainActivity;
@@ -44,17 +48,21 @@ public class FieldListActivity extends AppCompatActivity {
     Date today = null;
     Date jp_job_date_dateform = null;
     Context mContext;
-
+    MainBackPressCloseHandler mainBackPressCloseHandler;
 
     //오늘,지난 날의 내 구인글들만 현장목록으로 뜸
     //바텀네비에 나의 현장 누르는 곳마다 다 intent값 넘기는 거 바꿔줘야함
     //메인액티비티->여기, 여기->여기 만 바꿔논 상태
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fieldlist);
         mContext =this;
-        business_reg_num_MY = Sharedpreference.get_business_reg_num(mContext,"business_reg_num");
+        business_reg_num_MY = Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo");
+
+        mainBackPressCloseHandler =  new MainBackPressCloseHandler(this);
+
 
         // 현재 날짜 가져오기 위한 Calendar 클래스
         Calendar calendar = Calendar.getInstance();
@@ -143,7 +151,7 @@ public class FieldListActivity extends AppCompatActivity {
 
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
-
+        bottomNavigationView.getMenu().findItem(R.id.tab2).setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -160,7 +168,7 @@ public class FieldListActivity extends AppCompatActivity {
 
 
                         intent = new Intent(FieldListActivity.this, FieldListActivity.class);
-                        intent.putExtra("business_reg_num", Sharedpreference.get_business_reg_num(mContext,"business_reg_num"));
+                        intent.putExtra("business_reg_num", Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo"));
                         startActivity(intent);
 
                         return false;
@@ -176,5 +184,9 @@ public class FieldListActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        mainBackPressCloseHandler.onBackPressed();
     }
 }

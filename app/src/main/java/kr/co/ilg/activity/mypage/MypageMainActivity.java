@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.ilg.activity.findwork.MainActivity;
+import kr.co.ilg.activity.findwork.MainBackPressCloseHandler;
 import kr.co.ilg.activity.login.Sharedpreference;
 import kr.co.ilg.activity.workermanage.FieldListActivity;
 
@@ -34,6 +35,7 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
     Intent intent;
     Context mContext;
     TextView username;
+    MainBackPressCloseHandler mainBackPressCloseHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,12 +43,14 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.mypage_main);
         mContext = this;
 
+        mainBackPressCloseHandler =  new MainBackPressCloseHandler(this);
+
         for(int i=0; i<3; i++){
             buttons[i] = (Button) findViewById(buttonsid[i]);
             buttons[i].setOnClickListener(this);
         }
         username = findViewById(R.id.username);
-        username.setText(Sharedpreference.get_manager_name(mContext,"manager_name"));
+        username.setText(Sharedpreference.get_manager_name(mContext,"manager_name","managerinfo"));
 
 
         final ListView listview = (ListView) findViewById(R.id.listview);
@@ -70,7 +74,9 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
                         startActivity(intent); break;
                     case 2 : intent = new Intent(MypageMainActivity.this, ilgIntroductionActivity.class);
                         startActivity(intent); break;
-                    case 3 : intent = new Intent(MypageMainActivity.this, kr.co.ilg.activity.login.LoginActivity.class);
+                    case 3 : intent = new Intent(MypageMainActivity.this, com.example.capstone2.MainActivity.class);
+                        Sharedpreference.clear(mContext,"autologin");
+                        Sharedpreference.set_state(mContext,"switch1",false,"state1");
                         startActivity(intent); break;
                 }
             }
@@ -81,6 +87,7 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
         list.add("인력거안내");
         list.add("로그아웃");
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
+        bottomNavigationView.getMenu().findItem(R.id.tab3).setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -116,6 +123,10 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
 
 
     }
+    @Override
+    public void onBackPressed() {
+        mainBackPressCloseHandler.onBackPressed();
+    }
 
     @Override
     public void onClick(View v) {
@@ -123,10 +134,13 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
 
         switch (v.getId()){
             case R.id.myinform : intent = new Intent(getApplicationContext(),MyOfficeInfoManageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);break;
             case R.id.accountmanage : intent = new Intent(getApplicationContext(),AccountManageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);break;
             case R.id.reviewmanage : intent = new Intent(getApplicationContext(),ReviewmanageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);break;
         }
 
