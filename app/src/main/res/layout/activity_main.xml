@@ -98,17 +98,16 @@
             android:layout_marginLeft="5dp"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="45dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@+id/jobsetting"
+            app:layout_constraintBottom_toBottomOf="@+id/jobsetting"
             app:layout_constraintRight_toRightOf="parent"
             android:text="선택"
             android:id="@+id/resetjobpost"
             android:background="@drawable/mainbutton"
             android:textSize="12sp"
             android:padding="10dp"
-            android:layout_marginVertical="5dp"
             android:layout_gravity="right"
             android:layout_marginHorizontal="8dp"/>
 

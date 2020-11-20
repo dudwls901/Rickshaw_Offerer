@@ -44,7 +44,7 @@
             android:id="@+id/ceoNameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/blnumET"
+            app:layout_constraintBottom_toTopOf="@id/ll"
             app:layout_constraintLeft_toLeftOf="parent"
             android:paddingLeft="130dp" />
 
@@ -52,40 +52,50 @@
             android:id="@+id/blnumTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/blnumET"
-            app:layout_constraintBottom_toBottomOf="@+id/blnumET"
+            app:layout_constraintTop_toTopOf="@id/ll"
+            app:layout_constraintBottom_toBottomOf="@+id/ll"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_weight="1.3"
             android:text="사업자 등록번호  "
             android:textSize="17sp" />
 
-        <EditText
-            android:id="@+id/blnumET"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/ceoNameET"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:inputType="number"
-            android:paddingLeft="130dp"
-            android:hint="000 - 00 - 00000"
-            />
-        <TextView
-            android:id="@+id/searchbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ceoNameTV"
-            app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/mainbutton"
-            android:padding="7dp"
-            android:layout_marginTop="22dp"
-            android:text=" 조회 "
-            android:textSize="18sp"/>
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <EditText
+                android:id="@+id/blnumET"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:inputType="number"
+                android:paddingLeft="130dp"
+                android:layout_weight="4"
+                android:hint="000 - 00 - 00000"
+                />
+
+            <Button
+                android:id="@+id/searchbtn"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="조회"
+                android:textSize="15sp"
+                />
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/confirmBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/blnumET"
+            app:layout_constraintTop_toBottomOf="@id/ll"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@drawable/custom_btn_mainclr"

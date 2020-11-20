@@ -2,16 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
         <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/out_tv"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginLeft="70dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="출근 X"
             android:textColor="@color/colorPrimaryDark"
@@ -20,16 +24,19 @@
             />
 
         <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/in_tv"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginLeft="80dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="퇴근 X"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             android:id="@+id/out_tv"
             />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btnPay"
