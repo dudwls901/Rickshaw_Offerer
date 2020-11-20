@@ -34,6 +34,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,24 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ListAdapter urgencyAdapter;
     Context mContext;
     String local_sido="", local_sigugun="";
-    final String[][] arrayList1 = {{},{"종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구"}
-            , {"중구", "서구", "동구", "영도구", "부산진구", "동래구", "남구", "북구", "해운대구", "사하구", "금정구", "강서구", "연제구", "수영구", "사상구", "기장군"}
-            , {"중구", "서구", "동구", "남구", "북구", "수성구", "달서구", "달성군"}
-            , {"중구", "동구", "남구", "연수구", "남동구", "부평구", "계양구", "서구", "미추홀구", "강화군", "옹진군"}
-            , {"중구", "서구", "동구", "유성구", "대덕구"}
-            , {"동구", "서구", "남구", "북구", "광산구"}
-            , {"중구", "남구", "동구", "북구", "울주군"}
-            , {"세종시"}
-            , {"수원시", "성남시", "의정부시", "안양시", "부천시", "광명시", "평택시", "동두천시", "안산시", "고양시", "과천시", "구리시", "남양주시", "오산시", "시흥시", "군포시", "의왕시", "하남시", "용인시", "파주시", "이천시", "안성시", "김포시", "화성시", "광주시", "양주시", "포천시", "여주시", "경기 여주군", "연천군", "가평군", "양평군"}
-            , {"춘천시", "원주시", "강릉시", "동해시", "태백시", "속초시", "삼척시", "홍천군", "횡성군", "영월군", "평창군", "정선군", "철원군", "화천군", "양구군", "인제군", "고성군", "양양군"}
-            , {"청주시", "충주시", "제천시", "청주시", "청원군", "보은군", "옥천군", "영동군", "진천군", "괴산군", "음성군", "단양군", "증평군"}
-            , {"천안시", "공주시", "보령시", "아산시", "서산시", "논산시", "계룡시", "당진시", "금산군", "연기군", "부여군", "서천군", "청양군", "홍성군", "예산군", "태안군", "당진군"}
-            , {"전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군"}
-            , {"목포시", "여수시", "순천시", "나주시", "광양시", "담양군", "곡성군", "구례군", "고흥군", "보성군", "화순군", "장흥군", "강진군", "해남군", "영암군", "무안군", "함평군", "영광군", "장성군", "완도군", "진도군", "신안군"}
-            , {"포항시", "경주시", "김천시", "안동시", "구미시", "영주시", "영천시", "상주시", "문경시", "경산시", "군위군", "의성군", "청송군", "영양군", "영덕군", "청도군", "고령군", "성주군", "칠곡군", "예천군", "봉화군", "울진군", "울릉군"}
-            , {"창원시", "마산시", "진해시", "통영시", "사천시", "김해시", "밀양시", "거제시", "양산시", "의령군", "함안군", "창녕군", "고성군", "남해군", "하동군", "산청군", "함양군", "거창군", "합천군"}
-            , {"제주시", "서귀포시"}
-    };
+    String[] localSidoList;
+    int sigugunCnt[];
+    String[][] localSigugunList;
     Button resetjobpost;
     View dialogview, dialogview1;
     TextView sltTV1;
@@ -87,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             R.id.btn12, R.id.btn13, R.id.btn14, R.id.btn15, R.id.btn16};
     int check[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0};
     int[] job_code= new int[]{0, 0, 0};;
+    String[] jobnames = new String[16];
+    boolean f=false;
     String jobs = "";
     int q=0, w=0,i,k,a, j=0;
     String business_reg_num_MY;
@@ -166,6 +154,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             job[i].setOnClickListener(this);
         } // 잡 다이얼로그 속 버튼들 인플레이션
 
+        Response.Listener aListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+
+                    JSONArray a = jResponse.getJSONArray("response");
+                    Log.d("ttttttttttttttt", String.valueOf(a.length()));
+                    for(int i=0; i<a.length(); i++){
+                        JSONObject item=  a.getJSONObject(i);
+                        jobnames[i] = item.getString("jobname");
+                        job[i+1].setText(jobnames[i]);
+                        Log.d("asdf",jobnames[i]);
+                        f=true;
+                    }
+                } catch (Exception e) {
+                    Log.d("mytest1111111", e.toString()); // 오류 출력
+                }
+
+            }
+        };
+        GetJobsRequest lRequest = new GetJobsRequest(aListener); // Request 처리 클래스
+        RequestQueue queue1 = Volley.newRequestQueue(MainActivity.this); // 데이터 전송에 사용할 Volley의 큐 객체 생
+        queue1.add(lRequest);
+
         sltTV1 = dialogview1.findViewById(R.id.sltTV); // 잡다이얼로그 속 상단 텍스트뷰 인플레이션
         TextView sltTV = dialogview.findViewById(R.id.sltTV); // ***
 
@@ -181,7 +194,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         jobsetting.setText("전체");
         // ***
 
+        // 지역 가져오기
+        Response.Listener bListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // 서버연동 시 try-catch문으로 예외 처리하기
+                try {
+                    JSONArray jsonArray_sido = new JSONArray(response.substring(response.indexOf("["), response.indexOf("]") + 1));
+                    int index_search_start = response.indexOf("[") + 1;
+                    int index_search_end = response.indexOf("]") + 1;
+                    JSONArray jsonArray_sigugun = new JSONArray(response.substring(response.indexOf("[", index_search_start), response.indexOf("]", index_search_end) + 1));
+                    int index_search_start2 = response.indexOf("[", index_search_start) + 1;
+                    int index_search_end2 = response.indexOf("]", index_search_end) + 1;
+                    JSONArray jsonArray_sigugunNum = new JSONArray(response.substring(response.indexOf("[", index_search_start2), response.indexOf("]", index_search_end2) + 1));
 
+                    int cnt = jsonArray_sido.length();
+                    sigugunCnt = new int[cnt];
+                    localSidoList = new String[cnt+1];
+                    localSidoList[0] = "전체";
+
+                    for (int i = 0; i < cnt; i++) {
+                        localSidoList[i+1] = jsonArray_sido.getJSONObject(i).getString("local_sido");
+                        sigugunCnt[i] = Integer.parseInt(jsonArray_sigugunNum.getJSONObject(i).getString("singugunNum"));
+                    }
+
+                    localSigugunList = new String[cnt+1][];
+                    localSigugunList[0] = new String[0];
+
+                    int c = 0;
+                    for (int i = 1; i <= cnt; i++) {
+                        int n = sigugunCnt[i-1];
+                        localSigugunList[i] = new String[n];
+                        for (int j = 0; j < n; j++) {
+                            localSigugunList[i][j] = jsonArray_sigugun.getJSONObject(c).getString("local_sigugun");
+                            c++;
+                        }
+                    }
+                    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, localSidoList); // Adapter 생성
+                    listview.setAdapter(adapter); //Adapter 연결
+                    listview.setSelection(0); // 첫 인덱스 설정
+
+                } catch (Exception e) {
+                    Log.d("mytest", e.toString() + "bbbbbbbbb" + response);
+                }
+            }
+        };
+        GetLocalRequest glRequest = new GetLocalRequest(bListener); // Request 처리 클래스
+        RequestQueue queue2 = Volley.newRequestQueue(MainActivity.this); // 데이터 전송에 사용할 Volley의 큐 객체 생
+        queue2.add(glRequest);
+
+        /*
         ///////////////잡다이얼로그 값 넣기 부분 및 클릭 시 값띄우기 부분
         final String[] arrayList = {"전체","서울", "부산", "대구", "인천", "대전", "광주", "울산", "세종", "경기",
                 "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"}; // 첫번째 지역선택에 들어갈 배열
@@ -189,15 +251,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayList); // Adapter 생성
         listview.setAdapter(adapter); //Adapter 연결
         listview.setSelection(0); // 첫 인덱스 설정
+
+         */
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                local_sido = arrayList[position];
-                sltTV.setText(arrayList[position]); // 선택한 지역 상단에 띄우기
+                local_sido = localSidoList[position];
+                sltTV.setText(localSidoList[position]); // 선택한 지역 상단에 띄우기
                 k = position;
                 q=1; w=0; // local_sido만 선택했을시 제어할 변수
 
-                ArrayAdapter adapter2 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, arrayList1[position]); // Adapter 생성
+                ArrayAdapter adapter2 = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, localSigugunList[position]); // Adapter 생성
                 listview1.setAdapter(adapter2); //Adapter 연결
                 listview1.setSelection(0); // 첫 인덱스 설정
 
@@ -206,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         w=1;
                         if(local_sido != "전체") {
-                            local_sigugun = arrayList1[k][position];
+                            local_sigugun = localSigugunList[k][position];
                             sltTV.setText(local_sido + " " + local_sigugun);
                         }
                         else local_sigugun="0";
@@ -491,6 +555,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+
+//        Log.d("=======================", String.valueOf(arrayList1.length) +"     " + String.valueOf(arrayList1[0].length) +"     " + String.valueOf(arrayList1[1].length) +"     " + String.valueOf(arrayList1[17].length));
     }
 
     @Override

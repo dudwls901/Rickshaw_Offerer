@@ -79,7 +79,7 @@ public class WritePostingActivity extends AppCompatActivity {
     int y, m, d, timeFlag;
     String jp_is_urgency = "0";
     String job_code = "-1";
-    String business_reg_num, jp_job_start_time, jp_job_finish_time,job_name,job_name_MY,key, jp_num;
+    String business_reg_num, jp_job_start_time, jp_job_finish_time, job_name, job_name_MY, key, jp_num;
 
 
     @Override
@@ -124,11 +124,11 @@ public class WritePostingActivity extends AppCompatActivity {
         key = receiver.getExtras().getString("key");
         //메인에서 팹버튼으로 들어올 때 (구인글 작성)
         if (key.equals("0")) {
-            job_name_MY="-1";
+            job_name_MY = "-1";
         }
         //내 게시글 상세에서 수정버튼으로 들어올 때 (구인글 수정)
         else if (key.equals("1")) {
-             jp_num = receiver.getExtras().getString("jp_num");
+            jp_num = receiver.getExtras().getString("jp_num");
             String jp_title = receiver.getExtras().getString("jp_title");
             String field_name = receiver.getExtras().getString("field_name");
             String field_address = receiver.getExtras().getString("field_address");
@@ -150,12 +150,9 @@ public class WritePostingActivity extends AppCompatActivity {
             //startTimeBtn.setText();
             detail_info.setText(jp_contents);
 
-            if(jp_is_urgency.equals("0"))
-            {
+            if (jp_is_urgency.equals("0")) {
                 radio_usually.setChecked(true);
-            }
-            else if(jp_is_urgency.equals("1"))
-            {
+            } else if (jp_is_urgency.equals("1")) {
                 radio_urgency.setChecked(true);
             }
             startTimeBtn.setText(jp_job_start_time);
@@ -186,7 +183,7 @@ public class WritePostingActivity extends AppCompatActivity {
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject jArrayItem = jArray.getJSONObject(i);
                         String job_code = jArrayItem.getString("job_code");
-                         job_name = jArrayItem.getString("job_name");
+                        job_name = jArrayItem.getString("job_name");
 
                         spinner_job_array.add(job_name);
                         Log.d("---------flog--------", job_code + job_name);
@@ -194,19 +191,18 @@ public class WritePostingActivity extends AppCompatActivity {
 
                     spinner_job_Adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinner_job_array);
                     spinner_job.setAdapter(spinner_job_Adapter);
-                    for(int i =0; i<spinner_job_array.size();i++) {
-                        Log.d("wwwwwwww",job_name_MY+spinner_job_array.get(i));
+                    for (int i = 0; i < spinner_job_array.size(); i++) {
+                        Log.d("wwwwwwww", job_name_MY + spinner_job_array.get(i));
 
-                        if (job_name_MY.equals(spinner_job_array.get(i)))
-                        {
+                        if (job_name_MY.equals(spinner_job_array.get(i))) {
                             spinner_job.setSelection(i);
                         }
                     }
-                    } catch (JSONException je) {
+                } catch (JSONException je) {
                     je.printStackTrace();
-                    Log.d("mytest", je.toString()+"aaaaaaaaaa"+response);
+                    Log.d("mytest", je.toString() + "aaaaaaaaaa" + response);
                 } catch (Exception e) {
-                    Log.d("mytest", e.toString()+"bbbbbbbbb"+response);
+                    Log.d("mytest", e.toString() + "bbbbbbbbb" + response);
                 }
             }
 
@@ -242,7 +238,7 @@ public class WritePostingActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 job_code = String.valueOf(position + 1);
-                Log.d("wwww짃종스피너",job_code);
+                Log.d("wwww짃종스피너", job_code);
                 Toast.makeText(WritePostingActivity.this, position + "코드 : " + job_code, Toast.LENGTH_SHORT).show();
             }
 
@@ -334,7 +330,7 @@ public class WritePostingActivity extends AppCompatActivity {
                         try {
                             //String을 JSON으로 패킹(변환)하기
                             JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
-                            Log.d("mytest1",response);
+                            Log.d("mytest1", response);
                             // php에서 DB처리 후 결과(응답) 얻어서 변수에 저장
                             boolean success = jResponse.getBoolean("success");  // String 결과 변수에서 "isExistEmail" 키의 값에 접근해 추출
                             if (success) {  // ID가 존재 하면
@@ -345,26 +341,24 @@ public class WritePostingActivity extends AppCompatActivity {
                                 Toast.makeText(WritePostingActivity.this, "실패", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
-                            Log.d("mytest", e.toString()+response);
+                            Log.d("mytest", e.toString() + response);
                         }
                     }
                 };
 //                Log.d("wwwwwww",key +jp_num+ business_reg_num+ jp_title+ jp_job_cost+ jp_job_tot_people+ jp_job_date+ jp_contents+ field_name+
 //                        field_address+ jp_is_urgency+ job_code+ jp_job_start_time+ jp_job_finish_time);
-              if(jp_num!=null) {
-                  WritePostingRequest wpRequest = new WritePostingRequest(key, jp_num, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
-                          field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
-                  RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
-                  queue.add(wpRequest);
-              }
-              else
-              {
-                  WritePostingRequest wpRequest = new WritePostingRequest(key, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
-                          field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
-                  RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
-                  queue.add(wpRequest);
-              }
-              }
+                if (jp_num != null) {
+                    WritePostingRequest wpRequest = new WritePostingRequest(key, jp_num, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
+                            field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
+                    RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
+                    queue.add(wpRequest);
+                } else {
+                    WritePostingRequest wpRequest = new WritePostingRequest(key, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
+                            field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
+                    RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
+                    queue.add(wpRequest);
+                }
+            }
         });
     }
 
