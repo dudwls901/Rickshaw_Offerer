@@ -1,6 +1,7 @@
 package kr.co.ilg.activity.mypage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -28,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.co.ilg.activity.findwork.OfficeInfoActivity;
 import kr.co.ilg.activity.findwork.ReviewAdapter;
@@ -39,16 +41,17 @@ public class ReviewmanageActivity extends AppCompatActivity {
 
 
     reviewinputinfo_adapter myAdapter;
+    ArrayList<reviewinputinfo_item> cList;
     mypagereviewAdapter myAdapter1;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     Response.Listener rListener;
     Response.Listener aListener;
     Spinner spinner;
-    String key[],name[], contents[], datetime[],fieldname[],business_reg_num;
+    String key[],name[], contents[], datetime[],fieldname[],business_reg_num,workerEmail[],jpNum[],wr_datetime[];
     String name1[], contents1[], datetime1[],fieldname1[];
     Context mContext;
-    int k,a;
+    int k,a,c;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +100,12 @@ public class ReviewmanageActivity extends AppCompatActivity {
                     fieldname = new String[k];
                     contents = new String[k];
                     datetime = new String[k];
+                    workerEmail = new String[k];
+                    jpNum = new String[k];
+                    wr_datetime = new String[k];
                     //key =  new String[k];
 
-                    final ArrayList<reviewinputinfo_item> cList = new ArrayList<>();
+                    cList = new ArrayList<>();
 
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject MainRequest = array.getJSONObject(i);
@@ -107,17 +113,54 @@ public class ReviewmanageActivity extends AppCompatActivity {
                         contents[i] = MainRequest.getString("contents");
                         datetime[i] = MainRequest.getString("date");
                         fieldname[i]= MainRequest.getString("fieldname");
+                        workerEmail[i] = MainRequest.getString("workerEmail");
+                        jpNum[i] = MainRequest.getString("jpNum");
+                        wr_datetime[i]= MainRequest.getString("wr_datetime");
                         //key[i] = MainRequest.getString("key");
                         /*Log.d("ttttttttttttttt",key[i]+"           "+name[i]);
                         if(key[i].equals("0")) {
                             cList.add(new mypagereviewitem(name[i], contents[i], datetime[i]));
                             Log.d("asdfasdfasdf",name[i] + " " + contents[i]+ " "+ datetime[i]);
                         }*/
-                        cList.add(new reviewinputinfo_item(name[i],fieldname[i], contents[i], datetime[i]));
+                        cList.add(new reviewinputinfo_item(name[i],fieldname[i], contents[i], datetime[i], workerEmail[i], jpNum[i], wr_datetime[i]));
                     } // 값넣기*/
-                    myAdapter = new reviewinputinfo_adapter(cList);
+                    myAdapter = new reviewinputinfo_adapter(getApplication(), cList);
                     mRecyclerView.setAdapter(myAdapter);
 
+                    myAdapter.setOnItemClickListener(new reviewinputinfo_adapter.OnItemClickListener() { // 리싸이클러뷰 속 버튼이 클릭될 시 이벤트
+
+                        @Override
+                        public void onItemClick(View view, int position, String bnum, String jpNum, String workerEmail, String dt) {
+                            Intent intent = new Intent(getApplicationContext(), ReviewmanageActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Response.Listener aListener = new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+
+                                    try {
+                                        JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                                        boolean DeleteRVSuccess = jResponse.getBoolean("DeleteRVSuccess");
+                                        if (DeleteRVSuccess) {
+                                            Toast.makeText(getApplicationContext(), "리뷰가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                            startActivity(intent);
+//                                    myAdapter = new reviewinputinfo_adapter(getApplication(), cList);
+//                                    mRecyclerView.setAdapter(myAdapter);
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "리뷰 삭제 실패 : DB Error", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (Exception e) {
+                                        Log.d("mytest", e.toString());
+                                    }
+                                }
+                            };
+                            DeleteReviewRequest deleteReviewRequest = new DeleteReviewRequest("WR", bnum, jpNum, workerEmail, dt, aListener);  // Request 처리 클래스
+
+                            RequestQueue queue1 = Volley.newRequestQueue(getApplicationContext());  // 데이터 전송에 사용할 Volley의 큐 객체 생성
+                            queue1.add(deleteReviewRequest);
+
+                        }
+                    });
 
                 } catch (Exception e) {
                     Log.d("mytest", e.toString());
@@ -137,9 +180,9 @@ public class ReviewmanageActivity extends AppCompatActivity {
                 if(position==0){
                     final ArrayList<reviewinputinfo_item> cList = new ArrayList<>();
                     for (int i=0; i<k; i++){
-                            cList.add(new reviewinputinfo_item(name[i],fieldname[i], contents[i], datetime[i]));
+                            cList.add(new reviewinputinfo_item(name[i],fieldname[i], contents[i], datetime[i], workerEmail[i], jpNum[i], wr_datetime[i]));
                     }
-                    myAdapter = new reviewinputinfo_adapter(cList);
+                    myAdapter = new reviewinputinfo_adapter(getApplication(), cList);
                     mRecyclerView.setAdapter(myAdapter);
 
                 }

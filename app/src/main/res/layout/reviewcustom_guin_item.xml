@@ -6,6 +6,17 @@
     android:padding="10dp">
 
     <TextView
+        android:id="@+id/dltBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/line"
+        android:padding="3dp"
+        android:text="삭제"
+        />
+
+    <TextView
         android:id="@+id/reviewname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +37,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:text="내용내용내용내용"
         android:id="@+id/contents"
+        />
+
+    <TextView
+        android:id="@+id/writeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/reviewname"
+        app:layout_constraintLeft_toRightOf="@+id/reviewname"
+        android:text="2020-04-08"
+        android:paddingLeft="10dp"
         />
     <TextView
         android:id="@+id/reviewfield"
@@ -50,7 +71,7 @@
         android:textColor="@android:color/black"
         android:gravity="center"
         app:layout_constraintRight_toLeftOf="@id/reviewdate"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="@+id/reviewfield"/>
 
     <TextView
         android:id="@+id/reviewdate"

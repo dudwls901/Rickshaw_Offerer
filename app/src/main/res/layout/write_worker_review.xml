@@ -57,7 +57,7 @@
         android:layout_marginTop="13dp"
         android:scrollbars="vertical"
         android:gravity="start"
-        android:hint="내용을 입력하세요"
+        android:hint="리뷰 내용을 입력해 주세요."
         />
 
     <Button
