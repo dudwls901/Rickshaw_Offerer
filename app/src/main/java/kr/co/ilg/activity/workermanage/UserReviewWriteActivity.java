@@ -52,29 +52,33 @@ Context mContext;
         });
 
 
-        review_object.setText("To."+worker_name);
+        review_object.setText("To. "+worker_name);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Response.Listener responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                if(((review_text.getText().toString()).trim()).equals("")) {
+                    Toast.makeText(UserReviewWriteActivity.this, "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+                } else {
+                    Response.Listener responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
-                        try {
-                            Log.d("mytesstt", response);
-                            //           JSONObject jsonResponse = new JSONObject(response);
-                        //    JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"),response.lastIndexOf("}")+1));
-                            Toast.makeText(UserReviewWriteActivity.this, "리뷰가 등록되었습니다.",Toast.LENGTH_SHORT).show();
-                            finish();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.d("mytest3",e.toString());
+                            try {
+                                Log.d("mytesstt", response);
+                                //           JSONObject jsonResponse = new JSONObject(response);
+                                //    JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"),response.lastIndexOf("}")+1));
+                                Toast.makeText(UserReviewWriteActivity.this, "리뷰가 등록되었습니다.",Toast.LENGTH_SHORT).show();
+                                finish();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.d("mytest3",e.toString());
+                            }
                         }
-                    }
-                };
-                WorkerReviewRequest reviewInsert = new WorkerReviewRequest(jp_num,Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo"),worker_email,review_text.getText().toString() , responseListener);
-                RequestQueue queue = Volley.newRequestQueue(UserReviewWriteActivity.this);
-                queue.add(reviewInsert);
+                    };
+                    WorkerReviewRequest reviewInsert = new WorkerReviewRequest(jp_num,Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo"),worker_email,review_text.getText().toString() , responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(UserReviewWriteActivity.this);
+                    queue.add(reviewInsert);
+                }
             }
         });
     }

@@ -3,6 +3,7 @@ package kr.co.ilg.activity.findwork;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -238,10 +239,14 @@ public class ApplyStateActivity extends AppCompatActivity {
                                 public void onResponse(String response) {
 
                                     try {
-                                        Log.d("mytesstt", response);
-                                        //              JSONObject jsonResponse = new JSONObject(response);
-                                        //         JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
-                                        Log.d("mytesstt", response);
+                                        JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                                        String message = jsonResponse.getString("fieldname")+"에 배치되었습니다";
+                                        String token = jsonResponse.getString("token");
+
+                                        String msg = "http://14.63.220.50/sendtest.php?token="+token+"&title=선발완료&body="+message;
+
+                                        com.example.capstone2.executePHP executePHP = new com.example.capstone2.executePHP();
+                                        executePHP.execute(msg);
 
 
                                     } catch (Exception e) {
@@ -257,9 +262,20 @@ public class ApplyStateActivity extends AppCompatActivity {
                             message += pw_worker_name[i] + " ,";
 //                wkList.remove(i);
 //                minus++;
-                            myAdapter.notifyDataSetChanged();
-                            mRecyclerView.setAdapter(myAdapter);
-                            recycle_renew();
+
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    myAdapter.notifyDataSetChanged();
+                                    mRecyclerView.setAdapter(myAdapter);
+                                    recycle_renew();
+                                }
+                            }, 300); //딜레이 타임 조절 0.3초
+
+//                            myAdapter.notifyDataSetChanged();
+//                            mRecyclerView.setAdapter(myAdapter);
+//                            recycle_renew();
                         }
                     }
                     //    wklist_size-=minus;
@@ -270,7 +286,7 @@ public class ApplyStateActivity extends AppCompatActivity {
 //                    finish();
 //                    startActivity(intent);
                 } catch (Exception e) {
-                    Log.d("mytest3", e.toString());
+                    Log.d("mytest4", e.toString());
                     Toast.makeText(ApplyStateActivity.this, "근로자를 선택하세요.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -390,7 +406,7 @@ public class ApplyStateActivity extends AppCompatActivity {
 
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Log.d("mytest3", e.toString());
+                                Log.d("mytest5", e.toString());
                             }
                             //   myAdapter.notifyDataSetChanged();
                             Log.d("zdzd", "zzdzfdzfd");
@@ -408,7 +424,7 @@ public class ApplyStateActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.d("mytest3", e.toString());
+                    Log.d("mytest6", e.toString());
                 }
 
 //                        myAdapter.setOnItemClickListener(new ApplyStateRVAdapter.OnItemClickListener() {

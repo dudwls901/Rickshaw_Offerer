@@ -54,7 +54,7 @@ public class FieldWorkerListActivity extends AppCompatActivity {
     int length = 0;
     String[] receive_title_array, receive_jp_num_array;
     String jp_title_MY, jp_num_MY;
-    String [] worker_name, worker_birth, worker_phonenum, worker_email, mf_is_choolgeun, mf_is_toigeun, worker_bankname, worker_bankaccount, field_code;
+    String [] worker_name, worker_birth, worker_phonenum, worker_email, mf_is_choolgeun, mf_is_toigeun, worker_bankname, worker_bankaccount, field_code,mf_is_paid;
     int [] worker_age;
     ArrayList<String> title_array = new ArrayList<>();
     ArrayList<String >jp_num_array = new ArrayList<>();
@@ -84,7 +84,7 @@ public class FieldWorkerListActivity extends AppCompatActivity {
                 length++;
                 title_array.add(receive_title_array[i]);
                 jp_num_array.add(receive_jp_num_array[i]);
-                Log.d("uuuuuuu", title_array.get(i)+jp_num_array.get(i));
+                //Log.d("uuuuuuu", title_array.get(i)+jp_num_array.get(i));
 
             }
 
@@ -179,6 +179,7 @@ public class FieldWorkerListActivity extends AppCompatActivity {
                             worker_bankaccount = new String[jsonArray_worker.length()];
                             worker_bankname = new String[jsonArray_worker.length()];
                             field_code = new String[jsonArray_myfield.length()];
+                            mf_is_paid = new String[jsonArray_myfield.length()];
                             Log.d("pppppppppppp", String.valueOf(jsonArray_worker.length()));
                             Log.d("pppppppppppp", String.valueOf(jsonArray_myfield.length()));
 
@@ -193,7 +194,8 @@ public class FieldWorkerListActivity extends AppCompatActivity {
                                 worker_bankaccount[i] = jsonArray_worker.getJSONObject(i).getString("worker_bankaccount");
                                 worker_bankname[i] = jsonArray_worker.getJSONObject(i).getString("worker_bankname");
                                 field_code[i] = jsonArray_myfield.getJSONObject(i).getString("field_code");
-                                wkList.add(new PickStateRVItem(R.drawable.user,jp_num_MY, worker_name[i], String.valueOf(worker_age[i]), worker_phonenum[i], worker_email[i],mf_is_choolgeun[i],mf_is_toigeun[i], worker_bankname[i], worker_bankaccount[i],field_code[i]));
+                                mf_is_paid[i] = jsonArray_myfield.getJSONObject(i).getString("mf_is_paid");
+                                wkList.add(new PickStateRVItem(R.drawable.user,jp_num_MY, worker_name[i], String.valueOf(worker_age[i]), worker_phonenum[i], worker_email[i],mf_is_choolgeun[i],mf_is_toigeun[i], worker_bankname[i], worker_bankaccount[i],field_code[i],mf_is_paid[i]));
                             }
 
 
@@ -216,15 +218,15 @@ public class FieldWorkerListActivity extends AppCompatActivity {
                 queue.add(fieldrequest);
             }
 
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
-
         bottomNavigationView = findViewById(R.id.bottomNavigationView); //프래그먼트 생성
-
+        bottomNavigationView.getMenu().findItem(R.id.tab2).setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Sharedpreference {
-    //public static final String PREFERENCES_NAME = "managerinfo";
+    //로컬 DB처럼 사용할 수 있는 파일을 생성
+    //사용 목적에 따라 파일이름을 다르게 하여 제어 가능
+    //로그인 관련 정보들은 로그아웃, 탈퇴 시 clear하게 설정
 
     private static SharedPreferences getPreferences(String name, Context context) {
 
@@ -21,6 +23,18 @@ public class Sharedpreference {
     public static Boolean get_state(Context context, String key, String name) {
         SharedPreferences prefs = getPreferences(name,context);
         Boolean value = prefs.getBoolean(key, false);
+        return value;
+    }
+    public static void set_state1(Context context, String key, Boolean value, String name) {
+        SharedPreferences prefs = getPreferences(name,context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+
+    }
+    public static Boolean get_state1(Context context, String key, String name) {
+        SharedPreferences prefs = getPreferences(name,context);
+        Boolean value = prefs.getBoolean(key, true);
         return value;
     }
     public static void clear(Context context,String name) {

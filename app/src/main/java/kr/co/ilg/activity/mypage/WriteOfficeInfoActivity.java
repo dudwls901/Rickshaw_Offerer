@@ -57,7 +57,7 @@ public class WriteOfficeInfoActivity extends Activity {
         Intent modifyIntent = getIntent();
         isUpdate = modifyIntent.getIntExtra("isUpdate", 0);  // modify
 
-        Toast.makeText(getApplicationContext(), "어디서 왔나~ " + isUpdate, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "어디서 왔나~ " + isUpdate, Toast.LENGTH_SHORT).show();
 
         // WebView 초기화
         init_webView();
@@ -74,9 +74,14 @@ public class WriteOfficeInfoActivity extends Activity {
             }
         });
 
-        if (isUpdate == 1)
+        if (isUpdate == 1) {
             writeBtn.setText("수 정");
-        else {
+            officeNameET.setText(Sharedpreference.get_manager_office_name(getApplicationContext(), "manager_office_name", "managerinfo"));
+            officeNumET.setText(Sharedpreference.get_manager_office_telnum(getApplicationContext(), "manager_office_telnum", "managerinfo"));
+            officeAddressET.setText(Sharedpreference.get_manager_office_address(getApplicationContext(), "manager_office_address", "managerinfo"));
+            managerNameET.setText(Sharedpreference.get_manager_name(getApplicationContext(), "manager_name", "managerinfo"));
+            managerNumET.setText(Sharedpreference.get_manager_phonenum(getApplicationContext(), "manager_phonenum", "managerinfo"));
+        } else {
             Intent receiver = getIntent();
             business_reg_num = receiver.getExtras().getString("business_reg_num");
             manager_represent_name = receiver.getExtras().getString("manager_represent_name");
@@ -88,15 +93,15 @@ public class WriteOfficeInfoActivity extends Activity {
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if ((officeNameET.getText().toString()).equals("") || (officeNumET.getText().toString()).equals("") || (officeAddressET.getText().toString()).equals("") || (managerNameET.getText().toString()).equals("") || (managerNumET.getText().toString()).equals(""))
-//                    Toast.makeText(WriteOfficeInfoActivity.this, "모든 값을 입력해주세요.", Toast.LENGTH_SHORT).show();
-//                else {
+                if (((officeNameET.getText().toString()).trim()).equals("") || ((officeNumET.getText().toString()).trim()).equals("") || ((officeAddressET.getText().toString()).trim()).equals("") || ((managerNameET.getText().toString()).trim()).equals("") || ((managerNumET.getText().toString()).trim()).equals(""))
+                    Toast.makeText(WriteOfficeInfoActivity.this, "값을 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
+                else {
                     if (isUpdate == 1) {  // 수정
-                        String business_reg_num2 = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num","managerinfo");
+                        String business_reg_num2 = Sharedpreference.get_business_reg_num(getApplicationContext(), "business_reg_num", "managerinfo");
 
-                    Response.Listener rListener = new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
+                        Response.Listener rListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
 
                                 try {
                                     JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
@@ -104,11 +109,11 @@ public class WriteOfficeInfoActivity extends Activity {
                                     Intent updateIntent = new Intent(WriteOfficeInfoActivity.this, MyOfficeInfoManageActivity.class);
                                     updateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     if (updateSuccess2) {
-                                        Sharedpreference.set_manager_office_name(getApplicationContext(), "manager_office_name", officeNameET.getText().toString(),"managerinfo");
-                                        Sharedpreference.set_manager_office_telnum(getApplicationContext(), "manager_office_telnum", officeNumET.getText().toString(),"managerinfo");
-                                        Sharedpreference.set_manager_office_address(getApplicationContext(), "manager_office_address", officeAddressET.getText().toString(),"managerinfo");
-                                        Sharedpreference.set_manager_name(getApplicationContext(), "manager_name", managerNameET.getText().toString(),"managerinfo");
-                                        Sharedpreference.set_manager_phonenum(getApplicationContext(), "manager_phonenum", managerNumET.getText().toString(),"managerinfo");
+                                        Sharedpreference.set_manager_office_name(getApplicationContext(), "manager_office_name", officeNameET.getText().toString(), "managerinfo");
+                                        Sharedpreference.set_manager_office_telnum(getApplicationContext(), "manager_office_telnum", officeNumET.getText().toString(), "managerinfo");
+                                        Sharedpreference.set_manager_office_address(getApplicationContext(), "manager_office_address", officeAddressET.getText().toString(), "managerinfo");
+                                        Sharedpreference.set_manager_name(getApplicationContext(), "manager_name", managerNameET.getText().toString(), "managerinfo");
+                                        Sharedpreference.set_manager_phonenum(getApplicationContext(), "manager_phonenum", managerNumET.getText().toString(), "managerinfo");
 
                                         Toast.makeText(WriteOfficeInfoActivity.this, "수정 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     } else
@@ -125,8 +130,7 @@ public class WriteOfficeInfoActivity extends Activity {
 
                         RequestQueue queue = Volley.newRequestQueue(WriteOfficeInfoActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
                         queue.add(updateOfficeInfoRequest);  // Volley로 구현된 큐에 ValidateRequest 객체를 넣어둠으로써 실제로 서버 연동 발생
-                    }
-                    else {  // 회원 가입
+                    } else {  // 회원 가입
                         Intent intent = new Intent(WriteOfficeInfoActivity.this, LocalSelectActivity.class);
 
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -141,11 +145,9 @@ public class WriteOfficeInfoActivity extends Activity {
                         startActivity(intent);
                     }
 
-                //}
+                }
             }
         });
-
-
     }
 
     public void init_webView() {
@@ -162,10 +164,10 @@ public class WriteOfficeInfoActivity extends Activity {
         // 두 번째 파라미터는 사용될 php에도 동일하게 사용해야함
         webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
         // web client 를 chrome 으로 설정
-       // webView.setWebChromeClient(new MyWebChromeClient());
+        // webView.setWebChromeClient(new MyWebChromeClient());
         // webview url load
         webView.setWebChromeClient(new MyWebChromeClient());
-        webView.loadUrl("http://14.63.162.160/getAddress.php");
+        webView.loadUrl("http://14.63.220.50/getAddress.php");
     }
 
     private class AndroidBridge {
@@ -207,9 +209,9 @@ public class WriteOfficeInfoActivity extends Activity {
                 }
             });
 
-          //  newWebView.setWebChromeClient(this);
+            //  newWebView.setWebChromeClient(this);
 
-           // webView.addView(newWebView);
+            // webView.addView(newWebView);
             WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
             transport.setWebView(newWebView);
             resultMsg.sendToTarget();

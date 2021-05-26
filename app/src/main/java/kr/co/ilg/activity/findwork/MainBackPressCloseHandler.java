@@ -23,7 +23,7 @@ public class MainBackPressCloseHandler {
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
             activity.finish();
-            ActivityCompat.finishAffinity(activity);
+            ActivityCompat.finishAffinity(activity); //앱 꺼버림
             toast.cancel();
         }
     }

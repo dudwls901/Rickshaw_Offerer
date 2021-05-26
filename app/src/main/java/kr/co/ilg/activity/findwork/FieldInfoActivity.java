@@ -61,7 +61,7 @@ public class FieldInfoActivity extends AppCompatActivity {
         d = calendar.get(Calendar.DAY_OF_MONTH);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        responseListener = new Response.Listener<String>() {
+        responseListener = new Response.Listener<String>() { // 필드의 정보들을 출력하기위해 웹서버 연동하여 일치하는 값들 갖고오기
             @Override
             public void onResponse(String response) {
 
@@ -119,8 +119,6 @@ public class FieldInfoActivity extends AppCompatActivity {
                         jp_num[i] = jsonArray_jp.getJSONObject(i).getString("jp_num");
                         field_name[i] = jsonArray_field.getJSONObject(i).getString("field_name");
                         field_code[i]= jsonArray_field.getJSONObject(i).getString("field_code");
-                        //                       Log.d("mmmmmm1111111",jp_title[i]);
-                        //                       Log.d("mmmmmmm3333333",jp_title[i]+jp_job_date[i]+jp_job_cost[i]+job_name[i]+field_address[i]+manager_office_name[i]+jp_job_tot_people[i]);
 
                         try {
                             today = dateFormat.parse(String.format("%d", y) + "-" + String.format("%02d", (m + 1)) + "-" + String.format("%02d", d));
@@ -138,9 +136,8 @@ public class FieldInfoActivity extends AppCompatActivity {
 
 
                     }
-//                    Log.d("aaaaaaaaa",jp_title[0]);
                     work_info_RecyclerView.setLayoutManager(layoutManager);
-                    workAdapter=new ListAdapter(getApplicationContext(),workInfoArrayList);
+                    workAdapter=new ListAdapter(getApplicationContext(),workInfoArrayList,work_info_RecyclerView);
 
                     work_info_RecyclerView.setAdapter(workAdapter);
                     workAdapter.notifyDataSetChanged() ;
@@ -164,15 +161,11 @@ public class FieldInfoActivity extends AppCompatActivity {
         review_layoutManager=new LinearLayoutManager(this);
         review_RecyclerView.setLayoutManager(review_layoutManager);
 
-        Response.Listener responseListener = new Response.Listener<String>() {
+        Response.Listener responseListener = new Response.Listener<String>() {// 필드의 현장리뷰 정보들을 출력하기위해 웹서버 연동하여 일치하는 값들 갖고오기
             @Override
             public void onResponse(String response) {
 
                 try {
-
-                    //              JSONObject jsonResponse = new JSONObject(response);
-                    //         JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
-                  //  Log.d("mytesstt", response);
 
                     Log.d("mytesstt", response);
                     int index_search_start;
@@ -205,11 +198,6 @@ public class FieldInfoActivity extends AppCompatActivity {
         SelectFieldReview selectFieldReview = new SelectFieldReview(field_code_MY, responseListener);
         RequestQueue queue1 = Volley.newRequestQueue(FieldInfoActivity.this);
         queue1.add(selectFieldReview);
-
-
-
-
-
 
     }
 

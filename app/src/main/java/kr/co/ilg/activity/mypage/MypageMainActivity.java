@@ -3,6 +3,7 @@ package kr.co.ilg.activity.mypage;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,8 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.capstone2.R;
+import com.example.capstone2.TokenRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +57,7 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
         }
         username = findViewById(R.id.username);
         username.setText(Sharedpreference.get_manager_name(mContext,"manager_name","managerinfo"));
+        // 메인에 필요한값들 Sharedpreference에서 값받아와 setText시키기
 
 
         final ListView listview = (ListView) findViewById(R.id.listview);
@@ -77,7 +84,23 @@ public class MypageMainActivity extends AppCompatActivity implements View.OnClic
                     case 3 : intent = new Intent(MypageMainActivity.this, com.example.capstone2.MainActivity.class);
                         Sharedpreference.clear(mContext,"autologin");
                         Sharedpreference.set_state(mContext,"switch1",false,"state1");
-                        startActivity(intent); break;
+                        String token = FirebaseInstanceId.getInstance().getToken();
+                        Log.d("asdfasdf",token);
+                        Response.Listener kListener = new Response.Listener<String>() {  // Generics를 String타입으로 한정
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+
+                                } catch (Exception e) {
+                                    Log.d("mytest", e.toString());
+                                }
+                            }
+                        };
+                        TokenRequest tokenRequest = new TokenRequest("0",token,kListener);
+                        RequestQueue queue3 = Volley.newRequestQueue(MypageMainActivity.this);
+                        queue3.add(tokenRequest);
+
+                        startActivity(intent); break; // 로그아웃시 필요한 행동들
                 }
             }
         });

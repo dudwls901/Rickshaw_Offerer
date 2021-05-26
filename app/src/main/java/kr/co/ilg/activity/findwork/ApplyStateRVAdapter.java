@@ -93,9 +93,7 @@ public class ApplyStateRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mListener.onItemClick(buttonView, position, wkList.get(position).wk_email, wkList.get(position).wkName, isChecked);
-                //   if(isChecked)
-                Log.d("zdzd", "되냐고마냐고ㅡ");
-
+                // 리스너를 통해 메인에서 제어할 수 있게 넘겨줌
             }
         });
 

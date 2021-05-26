@@ -1,9 +1,10 @@
 package kr.co.ilg.activity.mypage;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.capstone2.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class noticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -44,6 +44,21 @@ public class noticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         myViewHolder.noticetitle.setText(List.get(position).noticetitle);
         myViewHolder.noticedate.setText(List.get(position).noticedate);
+
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Context context=view.getContext();
+                Intent intent=new Intent(context, NoticeInfoActivity.class);
+                intent.putExtra("noticetitle", List.get(position).noticetitle);
+                intent.putExtra("noticedate", List.get(position).noticedate);
+                intent.putExtra("user",List.get(position).user);
+                intent.putExtra("content",List.get(position).content);
+                context.startActivity(intent);
+            }
+
+        });
     }
 
     @Override

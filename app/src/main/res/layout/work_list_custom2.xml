@@ -9,8 +9,7 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-
+        android:layout_height="110dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:orientation="vertical"
@@ -42,14 +41,14 @@
             android:text="위치 : "
             android:textSize="14dp"
             />
+
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/place"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="place"
-            android:textSize="14dp"
-            android:id="@+id/place"
-            />
+            android:textSize="14dp" />
     </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"

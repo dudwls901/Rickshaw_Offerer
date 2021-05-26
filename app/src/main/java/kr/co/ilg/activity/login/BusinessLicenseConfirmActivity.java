@@ -55,13 +55,15 @@ public class BusinessLicenseConfirmActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        try {
+                        try { // 사업자 번호를 조회하는 공용 API를 따라 만든 임시 DB를 조회하여 사업자 번호 유뮤 조회
 
                             JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                             inquiry = jsonResponse. getBoolean("tryinquiry");
                             Log.d("mytesstt", String.valueOf(inquiry));
                             if(inquiry){
                                 Toast.makeText(BusinessLicenseConfirmActivity.this, "조회 완료",Toast.LENGTH_SHORT).show();
+                                ceoNameET.setFocusable(false);
+                                blnumET.setFocusable(false);
                             }
                             else{
                                 Toast.makeText(BusinessLicenseConfirmActivity.this, "일치하는 정보가 없습니다",Toast.LENGTH_SHORT).show();

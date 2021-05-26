@@ -67,6 +67,7 @@
             app:layout_constraintTop_toBottomOf="@id/officeNameET"
             app:layout_constraintLeft_toLeftOf="parent"
             android:inputType="number"
+            android:maxLength="10"
             android:paddingLeft="115dp" />
 
         <TextView
@@ -138,6 +139,7 @@
             app:layout_constraintTop_toBottomOf="@id/managerNameET"
             app:layout_constraintLeft_toLeftOf="parent"
             android:inputType="number"
+            android:maxLength="10"
             android:paddingLeft="115dp" />
 
         <Button

@@ -51,6 +51,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -74,7 +76,9 @@ public class WritePostingActivity extends AppCompatActivity {
     private Context mContext;
     public WebView webView;
     private Handler handler;
-
+String token[];
+int p;
+boolean success;
 
     int y, m, d, timeFlag;
     String jp_is_urgency = "0";
@@ -228,7 +232,7 @@ public class WritePostingActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 job_code = String.valueOf(position + 1);
                 Log.d("wwww짃종스피너", job_code);
-                Toast.makeText(WritePostingActivity.this, position + "코드 : " + job_code, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(WritePostingActivity.this, position + "코드 : " + job_code, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -300,7 +304,7 @@ public class WritePostingActivity extends AppCompatActivity {
         postingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num","managerinfo");
+                business_reg_num = Sharedpreference.get_business_reg_num(mContext, "business_reg_num", "managerinfo");
                 String jp_title = title.getText().toString();
                 String jp_job_cost = pay.getText().toString();
                 String jp_job_tot_people = people_num.getText().toString();
@@ -308,44 +312,61 @@ public class WritePostingActivity extends AppCompatActivity {
                 String jp_contents = detail_info.getText().toString();
                 String field_name = field_name_et.getText().toString();
                 String field_address = field_address_et.getText().toString();
-                // jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time
-
+                if ((business_reg_num.trim()).equals("") || (jp_title.trim()).equals("") || (jp_job_cost.trim()).equals("") || (jp_job_tot_people.trim()).equals("") || (jp_job_date.trim()).equals("") || (field_name.trim()).equals("") || (field_address.trim()).equals("") || ((startTimeBtn.getText().toString()).equals("출근시간")) || ((finishTimeBtn.getText().toString()).equals("퇴근시간"))) {
+                    Toast.makeText(WritePostingActivity.this, "필수값은 모두 입력해주시기 바랍니다.", Toast.LENGTH_SHORT).show();
+                } else {
 //                Log.d("=======php 보낼 값=======",jp_title + jp_job_cost+ jp_job_tot_people+jp_job_date+ jp_contents+ field_name+
 //                        field_address+ jp_is_urgency+ job_code+ jp_job_start_time+ jp_job_finish_time);
 
-                Response.Listener rListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            //String을 JSON으로 패킹(변환)하기
-                            JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
-                            Log.d("mytest1", response);
-                            // php에서 DB처리 후 결과(응답) 얻어서 변수에 저장
-                            boolean success = jResponse.getBoolean("success");  // String 결과 변수에서 "isExistEmail" 키의 값에 접근해 추출
-                            if (success) {  // ID가 존재 하면
+                    Response.Listener rListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                //String을 JSON으로 패킹(변환)하기
+
+                                JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                                if (jp_is_urgency == "1") {
+                                    JSONArray array = jResponse.getJSONArray("response");
+                                    p = array.length();
+                                    token = new String[p];
+                                    String message = "희망근무지역에 긴급구인글이 올라왔어요!! 확인해보세요!!";
+
+                                    for (int i = 0; i < p; i++) {
+                                        JSONObject a = array.getJSONObject(i);
+                                        token[i] = a.getString("token");
+                                        Log.d("로그다 임마", token[i]);
+
+                                        String msg = "http://14.63.220.50/sendtest.php?token=" + token[i] + "&title=긴급구인알림&body=" + message;
+
+                                        com.example.capstone2.executePHP executePHP = new com.example.capstone2.executePHP();
+                                        executePHP.execute(msg);
+                                    }
+
+                                    Log.d("mytest1", response);
+                                    // php에서 DB처리 후 결과(응답) 얻어서 변수에 저장
+                                }
                                 Toast.makeText(WritePostingActivity.this, "글이 게시되었습니다", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(WritePostingActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            } else {  // ID가 존재 하지 않는다면
-                                Toast.makeText(WritePostingActivity.this, "실패", Toast.LENGTH_SHORT).show();
+                                startActivity(intent); // 글 게시 후 메인으로 돌아오기
+
+                            } catch (Exception e) {
+                                Log.d("mytest", e.toString() + response);
                             }
-                        } catch (Exception e) {
-                            Log.d("mytest", e.toString() + response);
                         }
-                    }
-                };
+                    };
 //                Log.d("wwwwwww",key +jp_num+ business_reg_num+ jp_title+ jp_job_cost+ jp_job_tot_people+ jp_job_date+ jp_contents+ field_name+
 //                        field_address+ jp_is_urgency+ job_code+ jp_job_start_time+ jp_job_finish_time);
-                if (jp_num != null) {
-                    WritePostingRequest wpRequest = new WritePostingRequest(key, jp_num, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
-                            field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
-                    RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
-                    queue.add(wpRequest);
-                } else {
-                    WritePostingRequest wpRequest = new WritePostingRequest(key, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
-                            field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
-                    RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
-                    queue.add(wpRequest);
+                    if (jp_num != null) {
+                        WritePostingRequest wpRequest = new WritePostingRequest(key, jp_num, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
+                                field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
+                        RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
+                        queue.add(wpRequest);
+                    } else {
+                        WritePostingRequest wpRequest = new WritePostingRequest(key, business_reg_num, jp_title, jp_job_cost, jp_job_tot_people, jp_job_date, jp_contents, field_name,
+                                field_address, jp_is_urgency, job_code, jp_job_start_time, jp_job_finish_time, rListener);
+                        RequestQueue queue = Volley.newRequestQueue(WritePostingActivity.this);
+                        queue.add(wpRequest);
+                    }
                 }
             }
         });
@@ -383,7 +404,7 @@ public class WritePostingActivity extends AppCompatActivity {
         // webView.setWebChromeClient(new MyWebChromeClient());
         // webview url load
         webView.setWebChromeClient(new MyWebChromeClient());
-        webView.loadUrl("http://14.63.162.160/getAddress.php");
+        webView.loadUrl("http://14.63.220.50/getAddress.php");
     }
 
 

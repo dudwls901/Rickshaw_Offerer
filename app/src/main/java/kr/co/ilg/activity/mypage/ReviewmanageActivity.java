@@ -47,6 +47,7 @@ public class ReviewmanageActivity extends AppCompatActivity {
     RecyclerView.LayoutManager mLayoutManager;
     Response.Listener rListener;
     Response.Listener aListener;
+    TextView nonereview;
     Spinner spinner;
     String key[],name[], contents[], datetime[],fieldname[],business_reg_num,workerEmail[],jpNum[],wr_datetime[];
     String name1[], contents1[], datetime1[],fieldname1[];
@@ -61,6 +62,7 @@ public class ReviewmanageActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.reviewrecycle);
         spinner = findViewById(R.id.reviewspinner);
+        nonereview = findViewById(R.id.nonereview);
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -124,6 +126,10 @@ public class ReviewmanageActivity extends AppCompatActivity {
                         }*/
                         cList.add(new reviewinputinfo_item(name[i],fieldname[i], contents[i], datetime[i], workerEmail[i], jpNum[i], wr_datetime[i]));
                     } // 값넣기*/
+                    if(array.length()==0){
+                        nonereview.setVisibility(View.VISIBLE);
+                    }
+                    else nonereview.setVisibility(View.INVISIBLE);
                     myAdapter = new reviewinputinfo_adapter(getApplication(), cList);
                     mRecyclerView.setAdapter(myAdapter);
 
@@ -173,7 +179,7 @@ public class ReviewmanageActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(ReviewmanageActivity.this);  // 데이터 전송에 사용할 Volley의 큐 객체 생성
         queue.add(mainRequest);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { // 스피너로 리뷰의 종류 구분, 누르면 바로 값 구분해줌
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -182,6 +188,10 @@ public class ReviewmanageActivity extends AppCompatActivity {
                     for (int i=0; i<k; i++){
                             cList.add(new reviewinputinfo_item(name[i],fieldname[i], contents[i], datetime[i], workerEmail[i], jpNum[i], wr_datetime[i]));
                     }
+                    if(k==0){
+                        nonereview.setVisibility(View.VISIBLE);
+                    }
+                    else nonereview.setVisibility(View.INVISIBLE);
                     myAdapter = new reviewinputinfo_adapter(getApplication(), cList);
                     mRecyclerView.setAdapter(myAdapter);
 
@@ -210,6 +220,10 @@ public class ReviewmanageActivity extends AppCompatActivity {
                                     datetime1[i] = MainRequest.getString("datetime");
                                     reviewList.add(new mypagereviewitem(name1[i], contents1[i], datetime1[i]));
                                 } // 값넣기*/
+                                if(a==0){
+                                    nonereview.setVisibility(View.VISIBLE);
+                                }
+                                else nonereview.setVisibility(View.INVISIBLE);
                                 myAdapter1 = new mypagereviewAdapter(reviewList);
                                 mRecyclerView.setAdapter(myAdapter1);
 

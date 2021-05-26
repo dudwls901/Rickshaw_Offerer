@@ -84,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Date jp_job_date_dateform = null;
     @Override
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
+    public boolean onCreateOptionsMenu(Menu menu) { // 상단의 Search 바에서 검색을 했을 경우
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_maintop, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
@@ -145,8 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         spinner_who = findViewById(R.id.spinner_who);
-        /*spinner1 = findViewById(R.id.spinner1);
-        spinner2 = findViewById(R.id.spinner2);*/
         mContext = this;
         mainBackPressCloseHandler =  new MainBackPressCloseHandler(this);
 
@@ -187,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
         GetJobsRequest lRequest = new GetJobsRequest(aListener); // Request 처리 클래스
         RequestQueue queue1 = Volley.newRequestQueue(MainActivity.this); // 데이터 전송에 사용할 Volley의 큐 객체 생
-        queue1.add(lRequest);
+        queue1.add(lRequest); // 직업들을 서버에서 갖고와 버튼 텍스트에 넣어줌
 
         sltTV1 = dialogview1.findViewById(R.id.sltTV); // 잡다이얼로그 속 상단 텍스트뷰 인플레이션
         TextView sltTV = dialogview.findViewById(R.id.sltTV); // ***
@@ -253,16 +250,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RequestQueue queue2 = Volley.newRequestQueue(MainActivity.this); // 데이터 전송에 사용할 Volley의 큐 객체 생
         queue2.add(glRequest);
 
-        /*
-        ///////////////잡다이얼로그 값 넣기 부분 및 클릭 시 값띄우기 부분
-        final String[] arrayList = {"전체","서울", "부산", "대구", "인천", "대전", "광주", "울산", "세종", "경기",
-                "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"}; // 첫번째 지역선택에 들어갈 배열
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayList); // Adapter 생성
-        listview.setAdapter(adapter); //Adapter 연결
-        listview.setSelection(0); // 첫 인덱스 설정
-
-         */
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -346,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                         if(a==0){
-                            jobsetting.setText("선택안함");
+                            jobsetting.setText("전체");
                         }
                         else jobsetting.setText(text2);
                     }
@@ -362,8 +349,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         spinner_who_array = new ArrayList();
 
-        spinner_who_array.add("                                          전체");
-        spinner_who_array.add("                                      내 구인글");
+        spinner_who_array.add("                                                     전체");
+        spinner_who_array.add("                                                내 구인글");
 
 
 
@@ -464,7 +451,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 //                    Log.d("aaaaaaaaa",jp_title[0]);
                     urgency_RecyclerView.setLayoutManager(layoutManager);
-                    urgencyAdapter = new ListAdapter(getApplicationContext(), workInfoArrayList);
+                    urgencyAdapter = new ListAdapter(getApplicationContext(), workInfoArrayList,urgency_RecyclerView);
                     urgency_RecyclerView.setAdapter(urgencyAdapter);
                     urgencyAdapter.notifyDataSetChanged() ;
 
@@ -477,7 +464,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
         /////////////////////////메인 액티비티 들어가자마자 띄울 구인글들 REQUEST
-        Log.d("444444444444",business_reg_num_MY+local_sido+local_sigugun+job_code[0]+job_code[1]+job_code[2]);
         SelectJobPosting selectJobPosting = new SelectJobPosting("1",business_reg_num_MY,local_sido,local_sigugun,job_code[0],job_code[1],job_code[2], responseListener);
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         queue.add(selectJobPosting);
@@ -516,15 +502,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (position == 1) {
 
                      business_reg_num_MY =Sharedpreference.get_business_reg_num(mContext,"business_reg_num","managerinfo");
-//                    finish();
-//                    Intent intent = new Intent(MainActivity.this, MyPosting.class);
-//                    startActivity(intent);
 
                 }
                 else if(position ==0)
                 {
                     business_reg_num_MY ="0";
-
                 }
             }
 
@@ -565,15 +547,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-//        Log.d("=======================", String.valueOf(arrayList1.length) +"     " + String.valueOf(arrayList1[0].length) +"     " + String.valueOf(arrayList1[1].length) +"     " + String.valueOf(arrayList1[17].length));
     }
     @Override
     public void onBackPressed() {
         mainBackPressCloseHandler.onBackPressed();
-    }
+    } // 뒤로가기 빠르게 두번 누를 시 앱 종료
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v) { // 직업들의 버튼 뷰들을 클릭할때마다 jobcode 생성 , 또한 4개 이상은 선택 못하도록 제어
         jobs = "";
         a=0;
 
@@ -587,7 +568,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 } else {
                     j -= 1;
-                    job[k].setBackground(getDrawable(R.drawable.custom_btn_lightclr)); // wrap 텍스트뷰 3개 만들어서 상단바 제어
+                    job[k].setBackground(getDrawable(R.drawable.custom_btn_lightclr));
                     check[k] = 0;
                 }
             }

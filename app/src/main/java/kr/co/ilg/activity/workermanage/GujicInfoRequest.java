@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class GujicInfoRequest extends StringRequest {
 
-    final static private String URL = "http://14.63.162.160/GujicInfo.php";
+    final static private String URL = "http://14.63.220.50/GujicInfo.php";
     private Map<String, String> parameters;
 
     public GujicInfoRequest(String worker_email, Response.Listener<String> listener) { //생성자 부분이라 콜백메소드는 생략

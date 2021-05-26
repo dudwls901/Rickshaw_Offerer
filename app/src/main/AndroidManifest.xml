@@ -32,15 +32,15 @@
         >
 
         <meta-data
-        android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version"/>
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCPDPoKy_UbzVcIcrEtVKAtNaafvx42Nio"/>
-        <activity android:name="kr.co.ilg.activity.login.SplashActivity" android:theme="@style/SplashTheme" android:label="스플래시">
+        <activity android:name="kr.co.ilg.activity.login.SplashActivity" android:theme="@style/SplashTheme" android:label="인력거_구인자">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,8 +58,25 @@
                 android:scheme="kakao8e5b23f94289b616cbaf1e3fbe58d41c" />
             </intent-filter>
         </activity>
+        <service android:name="com.example.capstone2.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name="com.example.capstone2.MyFirebaseInstanceservice">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name="com.example.capstone2.MyJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
 
-        <activity android:name="kr.co.ilg.activity.login.LoginActivity" android:label="로그인"/>
         <activity android:name="com.example.capstone2.MainActivity" android:label="로그인" android:launchMode="singleTop"/>
         <activity android:name="kr.co.ilg.activity.findwork.MainActivity" android:label="일자리 찾기" android:launchMode="singleTop"/>
         <activity android:name="kr.co.ilg.activity.login.BusinessLicenseConfirmActivity" android:label="사업자 등록번호 인증"/>

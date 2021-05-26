@@ -51,11 +51,15 @@ public class AccountManageActivity extends AppCompatActivity { // implements Vie
         TextView bankname = findViewById(R.id.bankname);
         TextView managerName = findViewById(R.id.managerName);
         ImageButton accountDelete = findViewById(R.id.accountDelete);
-        managerName.setText(Sharedpreference.get_manager_name(mContext, "manager_name","managerinfo"));
-        bankaccount.setText(Sharedpreference.get_manager_bankaccount(mContext,"manager_bankaccount","managerinfo"));
-        bankname.setText(Sharedpreference.get_manager_bankname(mContext,"manager_bankname","managerinfo"));
+        managerName.setText(Sharedpreference.get_manager_name(mContext, "manager_name", "managerinfo"));
+        bankaccount.setText(Sharedpreference.get_manager_bankaccount(mContext, "manager_bankaccount", "managerinfo"));
+        if(!Sharedpreference.get_manager_bankaccount(mContext, "manager_bankaccount", "managerinfo").equals("")) {
+            bankaccount.setText(Sharedpreference.get_manager_bankaccount(mContext, "manager_bankaccount", "managerinfo"));
+        }
+        else bankaccount.setText("계좌를 추가해주세요");
+        bankname.setText(Sharedpreference.get_manager_bankname(mContext, "manager_bankname", "managerinfo"));
 
-        accountmodify.setOnClickListener(new View.OnClickListener() {
+        accountmodify.setOnClickListener(new View.OnClickListener() { // 계좌 수정 클릭리스너
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AccountAddActivity.class);
@@ -65,10 +69,10 @@ public class AccountManageActivity extends AppCompatActivity { // implements Vie
             }
         });
 
-        accountDelete.setOnClickListener(new View.OnClickListener() {
+        accountDelete.setOnClickListener(new View.OnClickListener() { // 계좌 삭제 클릭 리스너
             @Override
             public void onClick(View v) {
-                String bnum = Sharedpreference.get_business_reg_num(mContext, "business_reg_num","managerinfo");
+                String bnum = Sharedpreference.get_business_reg_num(mContext, "business_reg_num", "managerinfo");
                 Response.Listener rListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -77,8 +81,8 @@ public class AccountManageActivity extends AppCompatActivity { // implements Vie
                             JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                             boolean deleteSuccess = jResponse.getBoolean("deleteSuccess");
                             if (deleteSuccess) {
-                                Sharedpreference.set_manager_bankaccount(getApplicationContext(), "manager_bankaccount", "","managerinfo");
-                                Sharedpreference.set_manager_bankname(getApplicationContext(), "manager_bankname", "","managerinfo");
+                                Sharedpreference.set_manager_bankaccount(getApplicationContext(), "manager_bankaccount", "", "managerinfo");
+                                Sharedpreference.set_manager_bankname(getApplicationContext(), "manager_bankname", "", "managerinfo");
                                 bankaccount.setText("");
                                 bankname.setText("");
                                 Toast.makeText(AccountManageActivity.this, "삭제되었습니다", Toast.LENGTH_SHORT).show();
@@ -97,86 +101,6 @@ public class AccountManageActivity extends AppCompatActivity { // implements Vie
 
             }
         });
-
-/*
-        fix = findViewById(R.id.fix);
-
-        fix.setOnClickListener(this);
-
-        String[] spinnerlist = {
-                "전체내역", "출금내역","입금내역"
-        };
-
-        Spinner accountspinner = (Spinner)findViewById(R.id.accountspinner);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerlist);
-        accountspinner.setAdapter(adapter);
-        accountspinner.setSelection(0);
-
-        mRecyclerView = findViewById(R.id.bankrecycle);
-
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // 구분선 넣기
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),new LinearLayoutManager(this).getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-        cList = new ArrayList<>();
-        cList.add(new bankitem("5.15","버섯 건물","20:40","입금","684,243","681,241,873"));
-
-        myAdapter = new bankAdapter(cList);
-        mRecyclerView.setAdapter(myAdapter);
-*/
-
-
-
-        /*final GestureDetector gestureDetector = new GestureDetector(AccountManageActivity.this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                return true;
-            }
-        });
-
-        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-
-                View child = rv.findChildViewUnder(e.getX(), e.getY());
-
-                if(child!=null&&gestureDetector.onTouchEvent(e))
-                {
-                    //현재 터치된 곳의 position을 가져옴
-                    int position = rv.getChildAdapterPosition(child);
-
-                    TextView bName = rv.getChildViewHolder(child).itemView.findViewById(R.id.fieldname);
-                    Toast.makeText(getApplicationContext(), position+"번 째 항목 선택", Toast.LENGTH_SHORT).show();
-
-                }
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });*/
     }
-
-/*
-    @Override
-    public void onClick(View v) {
-        Intent intent;
-        if(v.getId()==R.id.fix) {
-            intent = new Intent(getApplicationContext(), AccountAddActivity.class);
-            startActivity(intent);
-        }
-    }
-*/
 }
 

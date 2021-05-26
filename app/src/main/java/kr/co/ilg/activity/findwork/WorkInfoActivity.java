@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
     Context mContext;
     Intent intent;
     String mapAddress;
+    WorkMapActivity workMapActivity = new WorkMapActivity();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +102,18 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WorkInfoActivity.this, WorkMapActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("mapAddress",mapAddress);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);;
                 startActivity(intent);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        workMapActivity.setMapCenter(mapAddress);
+                    }
+                }, 100); //딜레이 타임 조절 0.3초
             }
         });
 
@@ -109,6 +121,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WorkInfoActivity.this, FieldInfoActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("field_code",field_code);
                 intent.putExtra("field_name",field_name);
                 intent.putExtra("field_address",field_address);
@@ -120,6 +133,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WorkInfoActivity.this, OfficeInfoActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("business_reg_num", business_reg_num);
                 startActivity(intent);
             }
@@ -129,6 +143,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WorkInfoActivity.this, WritePostingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("key","1");
                 intent.putExtra("jp_num",jp_num);
                 intent.putExtra("jp_title",jp_title);
@@ -159,6 +174,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
                                 manager_phonenum = jResponse.getString("manager_phonenum");
                                 Uri uri = Uri.parse("tel:" + manager_phonenum);
                                 intent = new Intent(Intent.ACTION_DIAL, uri);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(WorkInfoActivity.this, "연락처 로드 실패", Toast.LENGTH_SHORT).show();
@@ -187,6 +203,7 @@ public class WorkInfoActivity extends AppCompatActivity { //일자리 정보화�
                             if (selectTelNum) {
                                 manager_phonenum = jResponse.getString("manager_phonenum");
                                 intent = new Intent(Intent.ACTION_SENDTO);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("sms_body", "인력거 보고 연락드립니다.");
                                 intent.setData(Uri.parse("smsto:" + Uri.encode(manager_phonenum)));
                                 startActivity(intent);

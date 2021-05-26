@@ -69,7 +69,12 @@ public class MyOfficeInfoManageActivity extends AppCompatActivity {
                         office_address.setText(jResponse.getString("manager_office_address"));
                         office_manager_name.setText(jResponse.getString("manager_name"));
                         office_manager_tel.setText(jResponse.getString("manager_phonenum"));
-                        office_introduce.setText(jResponse.getString("manager_office_info"));
+                        if(jResponse.getString("manager_office_info").equals("null")) {
+                            office_introduce.setText("안녕하세요. "+jResponse.getString("manager_office_name")+"입니다");
+                        }
+                        else {
+                            office_introduce.setText(jResponse.getString("manager_office_info"));
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), "사무소 정보 로드 실패", Toast.LENGTH_SHORT).show();
                     }
@@ -99,15 +104,16 @@ public class MyOfficeInfoManageActivity extends AppCompatActivity {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MyOfficeInfoManageActivity.this);
                 dialogview = (View) View.inflate(MyOfficeInfoManageActivity.this, R.layout.mp_office_info_dlg, null);
 
+                edit_office_detail_info = dialogview.findViewById(R.id.edit_office_detail_info);
+                edit_office_detail_info.setText(office_introduce.getText().toString());
+
                 dlg.setView(dialogview);
                 dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        edit_office_detail_info = dialogview.findViewById(R.id.edit_office_detail_info);
                         Response.Listener rListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-
                                 try {
                                     JSONObject jResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
                                     boolean updateSuccess = jResponse.getBoolean("updateSuccess");

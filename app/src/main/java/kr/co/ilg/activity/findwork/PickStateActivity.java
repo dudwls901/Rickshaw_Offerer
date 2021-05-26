@@ -3,6 +3,7 @@ package kr.co.ilg.activity.findwork;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.example.capstone2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import kr.co.ilg.activity.mypage.AccountAddActivity;
 import kr.co.ilg.activity.mypage.MypageMainActivity;
 import kr.co.ilg.activity.workermanage.FieldListActivity;
 
@@ -271,10 +274,14 @@ public class PickStateActivity extends AppCompatActivity {
                                 public void onResponse(String response) {
 
                                     try {
-                                        Log.d("mytesstt", response);
-                                        //              JSONObject jsonResponse = new JSONObject(response);
-                                        //         JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
-                                        Log.d("mytesstt", response);
+                                        JSONObject jsonResponse = new JSONObject(response.substring(response.indexOf("{"), response.lastIndexOf("}") + 1));
+                                        String message = jsonResponse.getString("fieldname")+"에서 선발취소되었습니다";
+                                        String token = jsonResponse.getString("token");
+
+                                        String msg = "http://14.63.220.50/sendtest.php?token="+token+"&title=선발취소&body="+message;
+
+                                        com.example.capstone2.executePHP executePHP = new com.example.capstone2.executePHP();
+                                        executePHP.execute(msg);
 
 
                                     } catch (Exception e) {
@@ -288,9 +295,19 @@ public class PickStateActivity extends AppCompatActivity {
                             RequestQueue queue = Volley.newRequestQueue(PickStateActivity.this);
                             queue.add(pickState);
                             message += pw_worker_name[i] + " ,";
-                            myAdapter.notifyDataSetChanged();
-                            mRecyclerView.setAdapter(myAdapter);
-                            recycle_renew();
+
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    myAdapter.notifyDataSetChanged();
+                                    mRecyclerView.setAdapter(myAdapter);
+                                    recycle_renew();
+                                }
+                            }, 300); //딜레이 타임 조절 0.3초
+
+
+
                         }
                     }
                     //    wklist_size-=minus;

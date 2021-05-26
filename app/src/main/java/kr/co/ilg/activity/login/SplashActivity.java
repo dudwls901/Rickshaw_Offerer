@@ -69,9 +69,7 @@ public class SplashActivity extends Activity {
                             Sharedpreference.set_manager_bankname(mContext, "manager_bankname", manager_bankname,"managerinfo");
                             Sharedpreference.set_manager_office_info(mContext, "manager_office_info", manager_office_info,"managerinfo");
                             Sharedpreference.set_manager_bankaccount(mContext, "manager_bankaccount", manager_bankaccount,"managerinfo");
-
-                            //Sharedpreference.set_Hope_local_sido(applicationContext(), "hope_local_sido", hope_local_sido)
-                            //Sharedpreference.set_Hope_local_sigugun(applicationContext(), "hope_local_sigugun", hope_local_sigugun)// 파일에 맵핑형식으로 저장
+                            //파일을 맵핑 형식으로 저장
 
                             Toast.makeText(SplashActivity.this, "로그인성공", Toast.LENGTH_SHORT).show();
                         } else {  // 회원이 존재하지 않는다면
